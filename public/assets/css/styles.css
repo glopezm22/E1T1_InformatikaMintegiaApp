@@ -1,0 +1,117 @@
+/* Font-a inportatzen*/
+@font-face {
+    font-family: 'Open Sans';
+    font-weight: 400;
+    font-style: normal;
+    
+    src: url('../fonts/OpenSans-Regular.woff2') format('woff2'),
+         url('../fonts/OpenSans-Regular.woff') format('woff');
+}
+/* ----------- */
+
+html, body {
+    height: 100%; 
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* LOGIN */
+.body-login {
+    background-image: url("../img/background_login.jpg"); 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+    background-position: center center; 
+}
+
+.login-container {
+    width: 25%;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+.form-label {
+    font-weight: 500;
+}
+.btn-primary {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.1rem;
+    margin-top: 15px;
+}
+
+.text-center a:hover {
+    text-decoration: underline;
+}
+/* ----------- */
+
+
+/* REGISTER */
+.register-container {
+    width: 35%;
+    padding: 70px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+/* ----------- */
+
+/* HEADER */
+.nav-item {
+    margin-left: 1.5rem;
+}
+
+/* .nav-item:hover,
+.nav-item:focus {
+
+} */
+
+.navbar-toggler {
+    border: none;
+    padding: 0;
+    width: 40px; 
+    height: 40px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.hamburger-lines {
+    width: 25px;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.line {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: #000000;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.navbar-toggler:not(.collapsed) .line1 {
+    transform: translateY(8px) rotate(45deg);
+}
+.navbar-toggler:not(.collapsed) .line2 {
+    opacity: 0;
+}
+.navbar-toggler:not(.collapsed) .line3 {
+    transform: translateY(-8px) rotate(-45deg);
+}
+/* ----------- */
+
+/* HOME */
+
+/* ----------- */
