@@ -24,5 +24,5 @@
   </table>
 
 </div>
-<script src="../assets/js/inbentarioa.js"></script>
+<script type="module" src="../assets/js/inbentarioa.js"></script>
 <?php require_once "partials/footer.html" ?>
