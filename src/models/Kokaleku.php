@@ -1,0 +1,44 @@
+<?php
+/**
+ * Kokalekuen taula kudeatzen duen klasea.
+ */
+class Kokaleku {
+    private $db;
+
+    public function __construct($db){ $this->db = $db; }
+
+    public function getAll() {
+        $emaitza = $this->db->getKonexioa()->query("SELECT * FROM kokalekua");
+        if(!$emaitza) die("ERROREA: Ezin izan dira kokalekuak eskuratu.");
+        $datuak = [];
+        while($row = $emaitza->fetch_assoc()) $datuak[] = $row;
+        return $datuak;
+    }
+
+    public function get($etiketa,$hasieraData){
+        $stmt = $this->db->getKonexioa()->prepare("SELECT * FROM kokalekua WHERE etiketa = ? AND hasieraData = ?");
+        $stmt->bind_param("ss",$etiketa,$hasieraData);
+        $stmt->execute();
+        $emaitza = $stmt->get_result();
+        $stmt->close();
+        return $emaitza->num_rows ? $emaitza->fetch_assoc() : null;
+    }
+
+    public function create($etiketa,$idGela,$hasieraData,$amaieraData){
+        $stmt = $this->db->getKonexioa()->prepare(
+            "INSERT INTO kokalekua (etiketa,idGela,hasieraData,amaieraData) VALUES (?,?,?,?)"
+        );
+        $stmt->bind_param("siss",$etiketa,$idGela,$hasieraData,$amaieraData);
+        $emaitza = $stmt->execute();
+        $stmt->close();
+        return $emaitza;
+    }
+
+    public function delete($etiketa,$hasieraData){
+        $stmt = $this->db->getKonexioa()->prepare("DELETE FROM kokalekua WHERE etiketa = ? AND hasieraData = ?");
+        $stmt->bind_param("ss",$etiketa,$hasieraData);
+        $emaitza = $stmt->execute();
+        $stmt->close();
+        return $emaitza;
+    }
+}
