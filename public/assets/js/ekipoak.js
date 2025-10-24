@@ -1,13 +1,13 @@
-import inbentarioaService from './services/inbentarioaService.js';
+import ekipoakService from './services/ekipoakService.js';
 document.addEventListener('DOMContentLoaded', async () => {
-    const produktuak = await inbentarioaService.getAll();
+    const produktuak = await ekipoakService.getAll();
     renderizarTabla(produktuak);
 });
 
 
 
 function renderizarTabla(produktuak) {
-    const tbody = document.querySelector('#tabla-inbentarioa tbody');
+    const tbody = document.querySelector('#tabla-ekipoak tbody');
     tbody.innerHTML = '';
 
     produktuak.forEach(p => {
@@ -34,7 +34,7 @@ function renderizarTabla(produktuak) {
 
 
 function ikusiProduktoa(produktua) {
-  const modalBody = document.querySelector('#inbentarioaModal .modal-body');
+  const modalBody = document.querySelector('#ekipoakModal .modal-body');
   modalBody.innerHTML = `
     <p><strong>ID:</strong> ${produktua.id}</p>
     <p><strong>Izena:</strong> ${produktua.izena}</p>
@@ -43,6 +43,6 @@ function ikusiProduktoa(produktua) {
     <p><strong>Kantitatea:</strong> ${produktua.kantitatea}</p>
     <p><strong>Deskribapena:</strong> ${produktua.deskribapena}</p>
   `;
-  const modal = new bootstrap.Modal(document.getElementById('inbentarioaModal'));
+  const modal = new bootstrap.Modal(document.getElementById('ekipoakModal'));
   modal.show();
 }

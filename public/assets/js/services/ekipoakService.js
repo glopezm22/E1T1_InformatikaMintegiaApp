@@ -1,6 +1,6 @@
-const API_URL = '../api/inbentarioa.php'; //Cuando tengamos la ruta del back la cambiamos
+const API_URL = '../api/ekipoak.php'; //Cuando tengamos la ruta del back la cambiamos
 
-const inbentarioaService = {
+const ekipoakService = {
     async getAll() {
         try {
             //DESCOMENTAR CUANDO TENGAMOS BACK
@@ -23,4 +23,4 @@ const inbentarioaService = {
     }
 };
 
-export default inbentarioaService;
+export default ekipoakService;
