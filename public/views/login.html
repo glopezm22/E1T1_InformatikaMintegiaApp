@@ -12,9 +12,10 @@
     <body class="d-flex justify-content-center align-items-center body-login">
         <div class="login-container">
             <img class="mb-4 mx-auto d-block" src="../assets/img/logo/FPSanturtzi_Logo.png" alt="FP Santurtzi Logo" style="max-width: 180px;" />
-            <form action="#" method="POST"> <div class="mb-3">
-                    <label for="email" class="form-label">Email-a:</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="adibidea@fpsanturtzilh.eus" required>
+            <div id="alertContainer"></div>
+            <form id="loginForm" action="#" method="POST"> <div class="mb-3">
+                    <label for="username" class="form-label">Erabiltzailea:</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="adibidea" required>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Pasahitza:</label>
@@ -24,9 +25,10 @@
                     <input type="checkbox" class="form-check-input" id="rememberMe">
                     <label class="form-check-label" for="rememberMe">Gogoratu</label>
                 </div>
-                <button type="submit" class="btn btn-primary">Sartu</button>
+                <button id="btnSubmit" type="submit" class="btn btn-primary">Sartu</button>
             </form>
         </div>
+        <script src="../assets/js/login.js"></script>
         <script src="../assets/vendor/bootstrap.min.js"></script>
     </body>
 </html>
