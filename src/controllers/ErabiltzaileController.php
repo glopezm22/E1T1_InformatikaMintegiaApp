@@ -1,6 +1,8 @@
 <?php
 require '../db.php';
 require '../models/Erabiltzaile.php';
+require_once __DIR__ . '/../AuthMiddleware.php';
+$user = requireAuth();
 
 $db = new DB();
 $db->konektatu();

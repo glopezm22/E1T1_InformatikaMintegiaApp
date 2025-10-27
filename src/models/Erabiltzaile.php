@@ -26,6 +26,15 @@ class Erabiltzaile {
         return $emaitza->num_rows ? $emaitza->fetch_assoc() : null;
     }
 
+    public function findByUsername($erabiltzaile) {
+        $stmt = $this->db->getKonexioa()->prepare("SELECT * FROM erabiltzailea WHERE erabiltzailea = ?");
+        $stmt->bind_param("s", $erabiltzaile);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $stmt->close();
+        return $res->num_rows ? $res->fetch_assoc() : null;
+    }
+
     public function create($nan, $izena, $abizena, $erabiltzailea, $pasahitza, $rola) {
         $stmt = $this->db->getKonexioa()->prepare(
             "INSERT INTO erabiltzailea (nan, izena, abizena, erabiltzailea, pasahitza, rola) VALUES (?, ?, ?, ?, ?, ?)"
@@ -42,5 +51,15 @@ class Erabiltzaile {
         $emaitza = $stmt->execute();
         $stmt->close();
         return $emaitza;
+    }
+
+    public function authenticateSimple($erabiltzaile, $pasahitza) {
+        $row = $this->findByUsername($erabiltzaile);
+        if (!$row) return null;
+        if (hash_equals((string)$row['pasahitza'], (string)$pasahitza)) {
+            unset($row['pasahitza']);
+            return $row;
+        }
+        return null;
     }
 }
