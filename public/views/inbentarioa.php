@@ -52,3 +52,24 @@
     </div>
   </div>
 </div>
+
+
+
+
+<div class="modal fade" id="confirmEzabatuModal" tabindex="-1" aria-labelledby="confirmEzabatuModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="confirmEzabatuModalLabel">Ezabatzea berretsi</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Itxi"></button>
+      </div>
+      <div class="modal-body">
+        <p id="confirmEzabatuText"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Utzi</button>
+        <button type="button" class="btn btn-danger" id="btnConfirmEzabatu">Ezabatu</button>
+      </div>
+    </div>
+  </div>
+</div>

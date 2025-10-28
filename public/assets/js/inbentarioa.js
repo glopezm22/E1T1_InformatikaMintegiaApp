@@ -1,4 +1,5 @@
-import inbentarioaService from './services/inbentarioaService.js';
+import inbentarioaService from './services/inbentarioaService.js'
+let produktuaEzabatzeko = null;;
 document.addEventListener('DOMContentLoaded', async () => {
     const produktuak = await inbentarioaService.getAll();
     renderizarTabla(produktuak);
@@ -33,15 +34,12 @@ function renderizarTabla(produktuak) {
     `;
         tr.querySelector('.btnIkusi').addEventListener('click', () => ikusiProduktoa(p));
 
-        tr.querySelector('.btnEzabatu').addEventListener('click', async () => {
-            if (confirm(`Ziur zaude ezabatu nahi duzula "${p.izena}"?`)) {
-                const result = await inbentarioaService.delete(p.id);
-                console.log(result);
-
-
-                const berriak = await inbentarioaService.getAll();
-                renderizarTabla(berriak);
-            }
+        tr.querySelector('.btnEzabatu').addEventListener('click', () => {
+            produktuaEzabatzeko = p;
+            document.querySelector('#confirmEzabatuText').textContent = 
+                `"${p.izena}" ezabatu nahi duzu?`;
+            const modal = new bootstrap.Modal(document.getElementById('confirmEzabatuModal'));
+            modal.show();
         });
         tbody.appendChild(tr);
     });
@@ -61,3 +59,18 @@ function ikusiProduktoa(produktua) {
     const modal = new bootstrap.Modal(document.getElementById('inbentarioaModal'));
     modal.show();
 }
+
+document.querySelector('#btnConfirmEzabatu').addEventListener('click', async () => {
+    if (produktuaEzabatzeko) {
+        const result = await inbentarioaService.delete(produktuaEzabatzeko.id);
+        console.log(result);
+ 
+        const berriak = await inbentarioaService.getAll();
+        renderizarTabla(berriak);
+
+        const modal = bootstrap.Modal.getInstance(document.getElementById('confirmEzabatuModal'));
+        modal.hide();
+
+        produktuaEzabatzeko = null;
+    }
+});
