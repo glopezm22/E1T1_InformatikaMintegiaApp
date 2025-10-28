@@ -19,23 +19,38 @@ function renderizarTabla(produktuak) {
             <td>${p.kategoria}</td>
             <td>${p.kantitatea}</td>
             <td>
-                <button class="btnIkusi">
+                <button class="btnIkusi btn btn-sm btn-warning">
                     <i class="fa-solid fa-eye"></i>
                 </button>
             </td>
             <td>
-                <button class="btnEditatu"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="btnEditatu btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
             </td>
+            <td>
+                <button class="btnEzabatu btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
+            </td>
+            
     `;
-    tr.querySelector('.btnIkusi').addEventListener('click', () => ikusiProduktoa(p));
+        tr.querySelector('.btnIkusi').addEventListener('click', () => ikusiProduktoa(p));
+
+        tr.querySelector('.btnEzabatu').addEventListener('click', async () => {
+            if (confirm(`Ziur zaude ezabatu nahi duzula "${p.izena}"?`)) {
+                const result = await inbentarioaService.delete(p.id);
+                console.log(result);
+
+
+                const berriak = await inbentarioaService.getAll();
+                renderizarTabla(berriak);
+            }
+        });
         tbody.appendChild(tr);
     });
 }
 
 
 function ikusiProduktoa(produktua) {
-  const modalBody = document.querySelector('#inbentarioaModal .modal-body');
-  modalBody.innerHTML = `
+    const modalBody = document.querySelector('#inbentarioaModal .modal-body');
+    modalBody.innerHTML = `
     <p><strong>ID:</strong> ${produktua.id}</p>
     <p><strong>Izena:</strong> ${produktua.izena}</p>
     <p><strong>Modeloa:</strong> ${produktua.modeloa}</p>
@@ -43,6 +58,6 @@ function ikusiProduktoa(produktua) {
     <p><strong>Kantitatea:</strong> ${produktua.kantitatea}</p>
     <p><strong>Deskribapena:</strong> ${produktua.deskribapena}</p>
   `;
-  const modal = new bootstrap.Modal(document.getElementById('inbentarioaModal'));
-  modal.show();
+    const modal = new bootstrap.Modal(document.getElementById('inbentarioaModal'));
+    modal.show();
 }

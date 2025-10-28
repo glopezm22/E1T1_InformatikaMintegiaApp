@@ -1,7 +1,10 @@
 <?php require_once "partials/header.html" ?>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-  integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  referrerpolicy="no-referrer"
+/>
 <div class="contenedor my-5">
   <h1 class="mb-5">Inbentarioa</h1>
 
@@ -15,6 +18,7 @@
         <th scope="col">Modeloa</th>
         <th scope="col">Kategoria</th>
         <th scope="col">Kantitatea</th>
+        <th scope="col"></th>
         <th scope="col"></th>
         <th scope="col"></th>
       </tr>
