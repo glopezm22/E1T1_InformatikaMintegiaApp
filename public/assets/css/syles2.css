@@ -1,0 +1,18 @@
+.contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    
+}
+
+
+
+th{
+    background-color: #BBD0EA !important;
+}
+
+.btnIkusi, .btnEditatu{
+    border: none !important;
+    background-color: white;
+}
