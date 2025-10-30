@@ -4,7 +4,6 @@
     const abizenaEl = document.getElementById('abizena');
     const erabiltzaileaEl = document.getElementById('erabiltzailea');
     const rolaEl = document.getElementById('rola');
-    const logoutBtn = document.getElementById('logoutBtn');
 
     async function erabiltzaileaKargatu() {
         try {
@@ -26,7 +25,7 @@
                 }
             } else {
                 alert('Ez zaude saioan sartuta.');
-                window.location.href = 'login.html';
+                window.location.href = 'login';
             }
         } catch (err) {
             console.error(err);
@@ -34,20 +33,5 @@
         }
     }
 
-    async function logout() {
-        try {
-            const res = await fetch('../../src/controllers/AuthController.php?action=logout', {
-                method: 'POST',
-                credentials: 'same-origin'
-            });
-            const data = await res.json();
-            alert(data.message || 'Saioa itxi da.');
-            window.location.href = 'login.html';
-        } catch(err) {
-            console.error(err);
-        }
-    }
-
-    logoutBtn.addEventListener('click', logout);
     erabiltzaileaKargatu();
 })();
