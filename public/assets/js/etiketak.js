@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   select1.addEventListener('change', async (e) => {
     const id = e.target.value;
     if (id && id !== "Hautatu ekipoa") {
-      const produktua = await inbentarioaService.getById(id);
+      const produktua = await ekipoakService.getById(id);
       console.log("Produktu hautatua:", produktua);
     }
   });

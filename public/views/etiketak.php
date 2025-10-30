@@ -17,7 +17,7 @@
                     <label for="select2" class="form-label fw-bold">Kokapena</label>
                     <select id="select2" class="form-select"></select>
                 </div>
-                <button type="button" class="btn btn-outline-primary mt-4" title="Kokapen berria">
+                <button type="button" class="btn btn-outline-primary align-self-end" title="Kokapen berria">
                     <i class="fa-solid fa-plus"></i> 
                 </button>
             </div>

@@ -16,3 +16,15 @@ th{
     border: none !important;
     background-color: white;
 }
+
+.btn {
+    background-color: #224461;
+    border-color: #224461;
+    color: white;
+}
+
+.btn:hover {
+    background-color: #021b31;
+    border-color: #021b31;
+    
+}
