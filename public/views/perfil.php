@@ -37,7 +37,7 @@ $CURRENT_USER = require_auth_view('login');
 
                                     <hr class="mt-4 mb-3">
 
-                                    <button id="logoutBtn" class="text-decoration-none btn btn-danger fw-medium d-inline-block align-items-center">
+                                    <button id="logoutBtnProfile" class="text-decoration-none btn btn-danger fw-medium d-inline-block align-items-center">
                                         <i class="fas fa-sign-out-alt me-1"></i> Saioa Itxi
                                     </button>
                                 </div>
@@ -51,5 +51,4 @@ $CURRENT_USER = require_auth_view('login');
 
 <?php require_once "partials/footer.html" ?>
 
-<script src="../assets/vendor/bootstrap.min.js"></script>
 <script src="../assets/js/profileLoad.js"></script>
