@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const produktuak = await ekipoakService.getAll();
   const select1 = document.querySelector('#select1');
 
- select1.innerHTML = '<option selected>Hautatu ekipoa</option>';
+ select1.innerHTML = '<option selected disabled hidden>Hautatu ekipoa</option>';
   produktuak.forEach(p => {
     const option = document.createElement('option');
     option.value = p.id;

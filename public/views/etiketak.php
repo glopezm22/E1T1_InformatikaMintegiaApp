@@ -7,27 +7,27 @@
     <div class="contenedorEtiketa">
         <h1 class="mb-5">Etiketak</h1>
         <form class="p-4 border rounded-3 shadow-sm bg-light">
-            <h2 class="mb-5">Etiketa berria</h2>
+            <h2 class="mb-5">Etiketa berriak sortu</h2>
             <div class="mb-3">
                 <label for="select1" class="form-label fw-bold">Hautatu ekipoa</label>
-                <select id="select1" class="form-select">
-                    <option selected>Hautatu ekipoa</option>
-                </select>
+                <select id="select1" class="form-select"></select>
             </div>
             <div class="mb-3 d-flex align-items-center gap-2">
                 <div class="flex-grow-1">
                     <label for="select2" class="form-label fw-bold">Kokapena</label>
-                    <select id="select2" class="form-select">
-                        <option selected>Kokapena</option>
-                    </select>
+                    <select id="select2" class="form-select"></select>
                 </div>
                 <button type="button" class="btn btn-outline-primary mt-4" title="Kokapen berria">
                     <i class="fa-solid fa-plus"></i> 
                 </button>
             </div>
+            <div class="mb-3">
+                <label for="select3" class="form-label fw-bold">Ekipo kopurua</label>
+                <select id="select3" class="form-select"></select>
+            </div>
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary">
-                    <i class="fa-solid"></i> Etiketa sortu
+                    Etiketa sortu
                 </button>
             </div>
         </form>
