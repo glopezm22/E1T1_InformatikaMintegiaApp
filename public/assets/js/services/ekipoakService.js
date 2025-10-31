@@ -13,6 +13,25 @@ const ekipoakService = {
         }
     },
 
+    // Erregistro bat lortu ID bidez
+    async getById(id) {
+        if (typeof id === 'undefined' || id === null) {
+            throw new Error('getById: id beharrezkoa da');
+        }
+        try {
+            const url = `${API_URL}?id=${encodeURIComponent(id)}`;
+            const response = await fetch(url, { method: 'GET' });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.error || 'Ekipamendua: Errorea ekipoa lortzean.');
+            }
+            return data;
+        } catch (error) {
+            console.error(`Errorea ekipoa (id=${id}) lortzean:`, error);
+            throw error;
+        }
+    },
+
     // Erregistro berria sortu
     async create(izena, deskribapena, marka, modelo, stock, idKategoria) {
         try {

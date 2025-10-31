@@ -13,6 +13,25 @@ const erabiltzaileakService = {
         }
     },
 
+    // Erregistro bat lortu NAN bidez
+    async getByNan(nan) {
+        if (typeof nan === 'undefined' || nan === null) {
+            throw new Error('getByNan: nan beharrezkoa da');
+        }
+        try {
+            const url = `${API_URL}?nan=${encodeURIComponent(nan)}`;
+            const response = await fetch(url, { method: 'GET' });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.error || 'Erabiltzaileak: Errorea datuak lortzean.');
+            }
+            return data;
+        } catch (error) {
+            console.error(`Errorea erabiltzailea (NAN: ${nan}) lortzean:`, error);
+            return null;
+        }
+    },
+
     // Erregistro berria sortu
     async create(nan, izena, abizena, erabiltzailea, pasahitza, rol) {
         try {

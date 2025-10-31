@@ -13,6 +13,25 @@ const inbentarioaService = {
         }
     },
 
+    // Erregistro bat lortu etiketa bidez
+    async getByEtiketa(etiketa) {
+        if (typeof etiketa === 'undefined' || etiketa === null) {
+            throw new Error('getByEtiketa: etiketa beharrezkoa da');
+        }
+        try {
+            const url = `${API_URL}?etiketa=${encodeURIComponent(etiketa)}`;
+            const response = await fetch(url, { method: 'GET' });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.error || 'Inbentarioa: Errorea inbentarioa lortzean.');
+            }
+            return data;
+        } catch (error) {
+            console.error(`Errorea inbentarioa (etiketa=${etiketa}) lortzean:`, error);
+            throw error;
+        }
+    },
+
     // Erregistro berria sortu
     async create(etiketa, idEkipamendu, erosketaData) {
         try {

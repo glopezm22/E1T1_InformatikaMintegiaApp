@@ -10,10 +10,21 @@ $ekipoDB = new Ekipo($db);
 
 header('Content-Type: application/json; charset=utf-8');
 
-// GET: bueltatu equipo guztiak
+// GET: bueltatu ekipo guztiak edo bakarra ID bidez
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $data = $ekipoDB->getAll();
-    echo json_encode($data);
+    if (isset($_GET['id'])) {
+        $id = intval($_GET['id']);
+        $data = $ekipoDB->get($id);
+        if ($data) {
+            echo json_encode($data);
+        } else {
+            http_response_code(404);
+            echo json_encode(['error' => 'Ez da aurkitu']);
+        }
+    } else {
+        $data = $ekipoDB->getAll();
+        echo json_encode($data);
+    }
     exit();
 }
 

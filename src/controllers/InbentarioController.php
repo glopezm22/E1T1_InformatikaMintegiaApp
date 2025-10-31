@@ -10,10 +10,21 @@ $inbentarioDB = new Inbentario($db);
 
 header('Content-Type: application/json; charset=utf-8');
 
-// GET: bueltatu registro guztiak.
+// GET: bueltatu registro guztiak edo bakarra etiketa bidez
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $data = $inbentarioDB->getAll();
-    echo json_encode($data);
+    if (isset($_GET['etiketa'])) {
+        $etiketa = $_GET['etiketa'];
+        $data = $inbentarioDB->get($etiketa);
+        if ($data) {
+            echo json_encode($data);
+        } else {
+            http_response_code(404);
+            echo json_encode(['error' => 'Ez da aurkitu']);
+        }
+    } else {
+        $data = $inbentarioDB->getAll();
+        echo json_encode($data);
+    }
     exit();
 }
 

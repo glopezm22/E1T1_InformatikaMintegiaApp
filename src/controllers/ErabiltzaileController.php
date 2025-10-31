@@ -10,10 +10,21 @@ $erabiltzaileDB = new Erabiltzaile($db);
 
 header('Content-Type: application/json; charset=utf-8');
 
-// GET: bueltatu registro guztiak.
+// GET: bueltatu registro guztiak edo bakarra NAN bidez
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $data = $erabiltzaileDB->getAllNoPasahitza();
-    echo json_encode($data);
+    if (isset($_GET['nan'])) {
+        $nan = $_GET['nan'];
+        $data = $erabiltzaileDB->getNoPasahitza($nan);
+        if ($data) {
+            echo json_encode($data);
+        } else {
+            http_response_code(404);
+            echo json_encode(['error' => 'Ez da aurkitu']);
+        }
+    } else {
+        $data = $erabiltzaileDB->getAllNoPasahitza();
+        echo json_encode($data);
+    }
     exit();
 }
 
