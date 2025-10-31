@@ -32,10 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $body = json_decode(file_get_contents('php://input'), true) ?: $_POST;
 
-    // Campos obligatorios
     if (!isset($body['izena'], $body['deskribapena'], $body['marka'], $body['modelo'], $body['stock'], $body['idKategoria'])) {
         http_response_code(400);
-        echo json_encode(['error' => 'Faltan datos obligatorios']);
+        echo json_encode(['error' => 'Falta dira derrigorrezko datuak']);
         exit();
     }
 
@@ -57,13 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
-// DELETE: kendu equipo
+// DELETE: kendu ekipoa
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $body = json_decode(file_get_contents('php://input'), true) ?: $_GET;
 
     if (!isset($body['id'])) {
         http_response_code(400);
-        echo json_encode(['error' => 'Falta el campo id']);
+        echo json_encode(['error' => 'ID falta da']);
         exit();
     }
 

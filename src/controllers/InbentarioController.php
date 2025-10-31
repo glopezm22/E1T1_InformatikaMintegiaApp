@@ -10,7 +10,7 @@ $inbentarioDB = new Inbentario($db);
 
 header('Content-Type: application/json; charset=utf-8');
 
-// GET: bueltatu registro guztiak edo bakarra etiketa bidez
+// GET: bueltatu inbentarioa osorik edo bakarra etiketa bidez
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['etiketa'])) {
         $etiketa = $_GET['etiketa'];
@@ -28,40 +28,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     exit();
 }
 
-// POST: sortu erregistro berriak.
+// POST: sortu inbentario erregistro berriak
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $body = json_decode(file_get_contents('php://input'), true) ?: $_POST;
+
     if (!isset($body['etiketa'], $body['idEkipamendu'], $body['erosketaData'])) {
         http_response_code(400);
-        echo json_encode(['error' => 'Faltan datos obligatorios']);
+        echo json_encode(['error' => 'Falta dira derrigorrezko datuak']);
         exit();
     }
 
-    $res = $inbentarioDB->create($body['etiketa'], $body['idEkipamendu'], $body['erosketaData']);
+    $res = $inbentarioDB->create(
+        $body['etiketa'],
+        $body['idEkipamendu'],
+        $body['erosketaData']
+    );
+
     if ($res) {
-        echo json_encode(['message' => 'Creado con éxito']);
+        echo json_encode(['message' => 'Inbentarioa sortuta']);
     } else {
         http_response_code(500);
-        echo json_encode(['error' => 'No se pudo crear el registro']);
+        echo json_encode(['error' => 'Errorea sortzean']);
     }
     exit();
 }
 
-// DELETE: kendu erregistroak.
+// DELETE: kendu inbentario erregistroa
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $body = json_decode(file_get_contents('php://input'), true) ?: $_GET;
+
     if (!isset($body['etiketa'])) {
         http_response_code(400);
-        echo json_encode(['error' => 'Falta el campo etiketa']);
+        echo json_encode(['error' => 'Etiketa falta da']);
         exit();
     }
 
     $res = $inbentarioDB->delete($body['etiketa']);
+    
     if ($res) {
-        echo json_encode(['message' => 'Borrado con éxito']);
+        echo json_encode(['message' => 'Inbentario erregistroa ezabatuta']);
     } else {
         http_response_code(500);
-        echo json_encode(['error' => 'No se pudo eliminar']);
+        echo json_encode(['error' => 'Errorea ezabatzean']);
     }
     exit();
 }
