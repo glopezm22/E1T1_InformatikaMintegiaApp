@@ -1,11 +1,11 @@
 import ekipoakService from './services/ekipoakService.js'
-import gelaService from './services/gelaService.js'
+import gelakService from './services/gelakService.js'
 import inbentarioService from './services/inbentarioaService.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const produktuak = await ekipoakService.getAll();
   const select1 = document.querySelector('#select1');
-  const gelak = await gelaService.getAll();
+  const gelak = await gelakService.getAll();
   const select2 = document.querySelector('#select2');
   const kokapenaForm = document.querySelector('#kokapenaForm');
   const inbentarioForm = document.querySelector('#inbentarioForm');
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
     try {
-      await gelaService.create(izena, taldea);
+      await gelakService.create(izena, taldea);
       kokapenaForm.reset();
 
       const kokapenaModal = bootstrap.Modal.getInstance(document.getElementById('kokapenaModal'));
