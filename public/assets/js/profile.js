@@ -42,5 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     logoutBtnMenu.addEventListener('click', logout);
-    logoutBtnProfile.addEventListener('click', logout);
+    if (window.location.pathname.endsWith('/kontua')) {
+        logoutBtnProfile.addEventListener('click', logout);
+    }
 });
