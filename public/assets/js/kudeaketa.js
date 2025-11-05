@@ -3,14 +3,14 @@ import kategoriaService from './services/kategoriaService.js';
 import gelaService from './services/gelaService.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        const kokalekuak = await kokalekuService.getAll();
-        renderizarKokalekuak(kokalekuak);
-        const kategoriak = await kategoriaService.getAll();
-        renderizarKategoriak(kategoriak);
-        const gelak = await gelaService.getAll();
-        renderizarGelak(gelak);
-    } catch (errorea) {
+  try {
+    const kokalekuak = await kokalekuService.getAll();
+    renderizarKokalekuak(kokalekuak);
+    const kategoriak = await kategoriaService.getAll();
+    renderizarKategoriak(kategoriak);
+    const gelak = await gelaService.getAll();
+    renderizarGelak(gelak);
+  } catch (errorea) {
     console.error('Errorea datuak kargatzean:', errorea);
   }
 });
@@ -29,6 +29,7 @@ function renderizarKokalekuak(kokalekuak) {
       <td>${p.amaieraData || '-'}</td>
       <td><button class="btn btn-sm btn-outline-primary btnIkusi"><i class="fa-solid fa-eye"></i></button></td>
       <td><button class="btn btn-sm btn-outline-secondary btnEditatu"><i class="fa-solid fa-pen-to-square"></i></button></td>
+      <td><button class="btnEzabatu btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button></td>
     `;
     tr.querySelector('.btnIkusi').addEventListener('click', () => ikusiKokalekua(p));
     tbody.appendChild(tr);
@@ -46,6 +47,8 @@ function renderizarKategoriak(kategoriak) {
       <td>${k.izena}</td>
       <td><button class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-eye"></i></button></td>
       <td><button class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-pen-to-square"></i></button></td>
+      <td><button class="btnEzabatu btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button></td>
+
     `;
     tbody.appendChild(tr);
   });
@@ -63,6 +66,8 @@ function renderizarGelak(gelak) {
       <td>${g.taldea}</td>
       <td><button class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-eye"></i></button></td>
       <td><button class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-pen-to-square"></i></button></td>
+      <td><button class="btnEzabatu btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button></td>
+
     `;
     tbody.appendChild(tr);
   });
