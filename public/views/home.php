@@ -16,7 +16,7 @@ $CURRENT_USER = require_auth_view('login');
                 FP Santurtzi LH
             </h2>
 
-            <a href="./kontua" class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill shadow-lg text-decoration-none">
+            <a href="./kontua" class="btn btn-lg px-5 py-3 rounded-pill shadow-lg text-decoration-none">
                 Ikusi Profila
             </a>
         </div>

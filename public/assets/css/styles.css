@@ -445,3 +445,38 @@ footer a.text-white-50:hover {
     z-index: 10;       
   }
 /* ------------ */
+
+/* BOTONES */
+.btnEditatu {
+    transition: 300ms;
+}
+
+.btnIkusi {
+    transition: 300ms;
+}
+
+.btnEzabatu{
+    background-color: rgb(197, 0, 0) !important;
+    border: none;
+    transition: 300ms;
+}
+
+.btnEzabatu:hover {
+    background-color: rgb(129, 0, 0) !important;
+}
+/* ------------- */
+
+/* BILATU */
+.bilatuInput {
+    transition: 300ms;
+}
+
+.bilatuInput:focus {
+    border-color: #BBD0EA;
+    box-shadow: 0 0 0 4px #bbd0ea7c; 
+}
+
+.input-group-text{
+    background-color: #bbd0ea94;
+}
+/* ---------- */

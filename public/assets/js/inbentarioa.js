@@ -4,6 +4,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderizarTabla(produktuak);
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const inputBusqueda = document.querySelector('.bilatuInput');
+    const tabla = document.getElementById('tabla-inbentarioa');
+    const filasTabla = tabla.querySelector('tbody').rows; 
+
+    inputBusqueda.addEventListener('keyup', function() {
+        const filtro = inputBusqueda.value.toLowerCase().trim();
+
+        for (let i = 0; i < filasTabla.length; i++) {
+            const celdaEtiketa = filasTabla[i].cells[0]; 
+
+            if (celdaEtiketa) {
+                const textoEtiketa = celdaEtiketa.textContent.toLowerCase().trim();
+
+                if (textoEtiketa.includes(filtro)) {
+                    filasTabla[i].style.display = ''; 
+                } else {
+                    filasTabla[i].style.display = 'none';
+                }
+            }
+        }
+    });
+});
 
 
 function renderizarTabla(produktuak) {

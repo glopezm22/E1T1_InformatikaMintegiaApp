@@ -8,22 +8,26 @@ $CURRENT_USER = require_auth_view('login');
   <div class="container bg-light p-5 rounded-2">
     <div class="contenedor my-5">
       <h1 class="mb-5 text-dark">Inbentarioa</h1>
-        <div style="overflow-y: auto; max-height: 500px;">
-            <table class="table table-hover" id="tabla-inbentarioa">
-                <thead>
-                    <tr>
-                        <th scope="col">Etiketa</th>
-                        <th scope="col">idEkipamendu</th>
-                        <th scope="col">erosketaData</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
+      <div class="input-group mb-4 bilatu">
+        <input type="text" class="form-control bilatuInput" placeholder="Etiketa bidez bilatu ...">
+        <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+      </div>
+      <div style="overflow-y: auto; max-height: 500px;">
+        <table class="table table-hover" id="tabla-inbentarioa">
+          <thead>
+            <tr>
+              <th scope="col">Etiketa</th>
+              <th scope="col">idEkipamendu</th>
+              <th scope="col">erosketaData</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </main>
