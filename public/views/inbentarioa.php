@@ -17,6 +17,7 @@ $CURRENT_USER = require_auth_view('login');
                         <th scope="col">erosketaData</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>

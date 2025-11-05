@@ -12,11 +12,6 @@ th{
     background-color: #BBD0EA !important;
 }
 
-.btnIkusi, .btnEditatu{
-    border: none !important;
-    background-color: white;
-}
-
 .btn {
     background-color: #224461;
     border-color: #224461;
@@ -27,4 +22,16 @@ th{
     background-color: #021b31;
     border-color: #021b31;
     
+}
+
+.btnIkusi,.btnEditatu{
+    border-color: #2d5980 !important;
+    background-color: #2d5980;
+    color: white;
+}
+
+.btnIkusi:hover, .btnEditatu:hover{
+    border-color: black !important;
+    background-color: black !important;
+    color: white;
 }

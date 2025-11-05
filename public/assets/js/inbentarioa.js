@@ -17,12 +17,15 @@ function renderizarTabla(produktuak) {
             <td>${p.idEkipamendu}</td>
             <td>${p.erosketaData}</td>
             <td>
-                <button class="btnIkusi">
+                <button class="btnIkusi btn btn-sm btn-warning">
                     <i class="fa-solid fa-eye"></i>
                 </button>
             </td>
             <td>
-                <button class="btnEditatu"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="btnEditatu btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+            </td>
+            <td>
+                <button class="btnEzabatu btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
             </td>
     `;
     tr.querySelector('.btnIkusi').addEventListener('click', () => ikusi(p));
