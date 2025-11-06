@@ -49,7 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $conn->begin_transaction();
 
-        // Kantitatea hartu
         $available = $inbentarioDB->getEtiketatuGabeById($idE);
         if ($available === null) {
             $conn->rollback();
