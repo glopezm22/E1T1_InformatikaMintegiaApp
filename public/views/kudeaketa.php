@@ -47,8 +47,7 @@ $CURRENT_USER = require_auth_view('login');
                         <th scope="col">id</th>
                         <th scope="col">izena</th>
                         <th scope="col">taldea</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
+                        <th scope="col" colspan="2"></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -65,9 +64,8 @@ $CURRENT_USER = require_auth_view('login');
                         <th scope="col">id gela</th>
                         <th scope="col">hasiera data</th>
                         <th scope="col">amaiera data</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        
+                        <th scope="col" colspan="2"></th>
+
                       </tr>
                     </thead>
                     <tbody>
@@ -82,9 +80,8 @@ $CURRENT_USER = require_auth_view('login');
                       <tr>
                         <th scope="col">id</th>
                         <th scope="col">izena</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
+                        <th scope="col" colspan="2"></th>
+                        
                       </tr>
                     </thead>
                     <tbody>
@@ -103,20 +100,44 @@ $CURRENT_USER = require_auth_view('login');
 <script type="module" src="../assets/js/kudeaketa.js"></script>
 <?php require_once "partials/footer.html" ?>
 
+
+<!-- Editatzeko modal -->
 <div class="modal fade" id="kudeaketaModal" tabindex="-1" aria-labelledby="inbentarioaModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header d-flex justify-content-between">
-        <h5 class="modal-title" id="inbentarioaModalLabel">Produktu Inbentariatua</h5>
+        <h5 class="modal-title" id="inbentarioaModalLabel"></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-
       <div class="modal-body">
-        ...
+        <!-- modalaren edulia hemen agertzen da -->
       </div>
-
       <div class="modal-footer">
         <button type="button" class="btn btn-primary">Gorde</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ezabatzeko modal -->
+<div class="modal fade" id="ezabatuModal" tabindex="-1" aria-labelledby="ezabatuModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ezabatuModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Ziur zaude elementu hori ezabatu nahi duzula?</p>
+        <p class="text-danger">Ekintza hau ez da itzulgarria</p>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Utzi</button>
+        <button type="button" class="btn btn-danger btnEzabatu" id="confirmEzabatuBtn">Ezabatu</button>
+
       </div>
     </div>
   </div>
