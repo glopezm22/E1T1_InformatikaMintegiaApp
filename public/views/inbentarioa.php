@@ -2,27 +2,30 @@
 require_once __DIR__ . '/../../src/require_auth.php';
 $CURRENT_USER = require_auth_view('login');
 ?>
-<?php require_once "partials/header.html" ?>
+<?php require_once "partials/header.php" ?>
 
 <main class="container-fluid text-white d-block align-items-center justify-content-center p-3 p-md-5 container-home">
-  <div class="container bg-light p-5 rounded-2">
+  <div class="container bg-light p-md-5 pt-5 rounded-2">
     <div class="contenedor my-5">
       <h1 class="mb-5 text-dark">Inbentarioa</h1>
-        <div style="overflow-y: auto; max-height: 500px;">
-            <table class="table table-hover" id="tabla-inbentarioa">
-                <thead>
-                    <tr>
-                        <th scope="col">Etiketa</th>
-                        <th scope="col">idEkipamendu</th>
-                        <th scope="col">erosketaData</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
+      <div class="input-group mb-4 bilatu">
+        <input type="text" class="form-control bilatuInput" placeholder="Etiketa bidez bilatu ...">
+        <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+      </div>
+      <div style="overflow-y: auto; max-height: 500px;">
+        <table class="table table-hover" id="tabla-inbentarioa">
+          <thead>
+            <tr>
+              <th scope="col">Etiketa</th>
+              <th scope="col">idEkipamendu</th>
+              <th scope="col">erosketaData</th>
+              <th scope="col" colspan="3"></th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </main>
@@ -33,7 +36,7 @@ $CURRENT_USER = require_auth_view('login');
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header d-flex justify-content-between">
-        <h5 class="modal-title" id="inbentarioaModalLabel">Produktu Inbentariatua</h5>
+        <h5 class="modal-title" id="inbentarioaModalLabel"><i class="fa-solid fa-truck-ramp-box me-2"></i> Produktu Inbentariatua</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 

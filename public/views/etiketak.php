@@ -1,4 +1,4 @@
-<?php require_once "partials/header.html" ?>
+<?php require_once "partials/header.php" ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />

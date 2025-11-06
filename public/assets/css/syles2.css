@@ -6,25 +6,30 @@
     
 }
 
-
-
 th{
     background-color: #BBD0EA !important;
 }
 
-.btnIkusi, .btnEditatu{
-    border: none !important;
-    background-color: white;
-}
-
-.btn {
-    background-color: #224461;
-    border-color: #224461;
+.btnIkusi {
+    border-color: #2d5980 !important;
+    background-color: #2d5980;
     color: white;
 }
 
-.btn:hover {
-    background-color: #021b31;
-    border-color: #021b31;
-    
+.btnIkusi:hover, .btnIkusi:focus, .btnIkusi:focus-visible {
+    border-color: #152838 !important;
+    background-color: #152838 !important;
+    color: white !important;
+}
+
+.btnEditatu {
+    border-color: #4b779e !important;
+    background-color: #4b779e;
+    color: white;
+}
+
+.btnEditatu:hover, .btnEditatu:focus, .btnEditatu:focus-visible{
+    border-color: #083b68 !important;
+    background-color: #083b68 !important;
+    color: white !important;
 }

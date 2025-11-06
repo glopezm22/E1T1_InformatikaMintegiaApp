@@ -4,6 +4,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderizarTabla(produktuak);
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const inputBusqueda = document.querySelector('.bilatuInput');
+    const tabla = document.getElementById('tabla-inbentarioa');
+    const filasTabla = tabla.querySelector('tbody').rows; 
+
+    inputBusqueda.addEventListener('keyup', function() {
+        const filtro = inputBusqueda.value.toLowerCase().trim();
+
+        for (let i = 0; i < filasTabla.length; i++) {
+            const celdaEtiketa = filasTabla[i].cells[0]; 
+
+            if (celdaEtiketa) {
+                const textoEtiketa = celdaEtiketa.textContent.toLowerCase().trim();
+
+                if (textoEtiketa.includes(filtro)) {
+                    filasTabla[i].style.display = ''; 
+                } else {
+                    filasTabla[i].style.display = 'none';
+                }
+            }
+        }
+    });
+});
 
 
 function renderizarTabla(produktuak) {
@@ -17,12 +40,11 @@ function renderizarTabla(produktuak) {
             <td>${p.idEkipamendu}</td>
             <td>${p.erosketaData}</td>
             <td>
-                <button class="btnIkusi">
-                    <i class="fa-solid fa-eye"></i>
-                </button>
-            </td>
-            <td>
-                <button class="btnEditatu"><i class="fa-solid fa-pen-to-square"></i></button>
+                <div class="d-flex gap-3 justify-content-end"> 
+                    <button class="btnIkusi btn btn-sm btn-warning" alt='Informazio gehiago'><i class="fa-solid fa-eye"></i></button>
+                    <button class="btnEditatu btn btn-sm btn-warning" alt='Editatu objektua'><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button class="btnEzabatu btn btn-sm btn-danger" alt='Ezabatu objektua'><i class="fa-solid fa-trash"></i></button>
+                </div>
             </td>
     `;
     tr.querySelector('.btnIkusi').addEventListener('click', () => ikusi(p));

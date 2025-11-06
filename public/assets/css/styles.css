@@ -37,6 +37,15 @@ body {
 /* ----------- */
 
 /* HEADER */
+.btnPerf {
+    background-color: #0b5ed7 !important;
+    border: none !important;
+}
+
+.btnPerf:hover {
+    background-color: #064ab1 !important;
+}
+
 header .navbar {
     background-color: white !important; 
     box-shadow: 0px 0px 8px 0px #000000 !important;
@@ -304,6 +313,17 @@ footer a.text-white-50:hover {
 .subtitle-home {
     color: #7cc4ff;
 }
+
+.btnHome {
+    background-color: #224461;
+    font-size: 1.2rem;
+    color: white;
+    transition: 300ms;
+}
+
+.btnHome:hover {
+    background-color: #142738 !important;
+}
 /* ------------- */
 
 /* PERFIL */
@@ -445,3 +465,71 @@ footer a.text-white-50:hover {
     z-index: 10;       
   }
 /* ------------ */
+
+/* BOTONES */
+.btnEditatu {
+    transition: 300ms;
+}
+
+.btnIkusi {
+    transition: 300ms;
+}
+
+.btnEzabatu{
+    background-color: rgb(197, 0, 0) !important;
+    border: none;
+    transition: 300ms;
+}
+
+.btnEzabatu:hover {
+    background-color: rgb(129, 0, 0) !important;
+}
+/* ------------- */
+
+/* BILATU */
+.bilatuInput {
+    transition: 300ms;
+}
+
+.bilatuInput:focus {
+    border-color: #BBD0EA;
+    box-shadow: 0 0 0 4px #bbd0ea7c; 
+}
+
+.input-group-text{
+    background-color: #bbd0ea94;
+}
+/* ---------- */
+
+/* SUMAR */
+.btnSumar {
+    border-radius: 100px;
+    padding: 10px 15px;
+    transition: 300ms;
+    background-color: #2d5980  !important;
+    color: white !important;
+}
+
+.btnSumar:hover, .btnSumar:focus {
+    background-color: #0c1b29 !important;
+    color: white !important;
+}
+
+.btnSumar:focus-visible {
+    background-color: #224461 !important;
+    border-color: #224461 !important;
+    color: white !important;
+}
+/* ---------- */
+
+/* BOTOIA */
+.btnSaiItx {
+    background-color: rgb(228, 56, 56) !important;
+    border: none !important;
+    transition: 300ms;
+}
+
+.btnSaiItx:hover {
+    background-color: rgb(187, 32, 32) !important;
+}
+/* --------- */

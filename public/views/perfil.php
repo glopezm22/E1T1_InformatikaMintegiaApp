@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../../src/require_auth.php';
 $CURRENT_USER = require_auth_view('login');
 ?>
-<?php require_once "partials/header.html" ?>
+<?php require_once "partials/header.php" ?>
 
     <main class="container-fluid text-white vh-100 d-flex align-items-center justify-content-center p-5 container-home">
         <div class="container mb-5">
@@ -37,7 +37,7 @@ $CURRENT_USER = require_auth_view('login');
 
                                     <hr class="mt-4 mb-3">
 
-                                    <button id="logoutBtnProfile" class="text-decoration-none btn btn-danger fw-medium d-inline-block align-items-center">
+                                    <button id="logoutBtnProfile" class="text-decoration-none btn btn-danger btnSaiItx fw-medium d-inline-block align-items-center" alt="Saioa Itxi">
                                         <i class="fas fa-sign-out-alt me-1"></i> Saioa Itxi
                                     </button>
                                 </div>
