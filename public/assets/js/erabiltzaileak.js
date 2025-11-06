@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderizarTabla(erabiltzaileak);
 });
 
+document.querySelector('#sumarErabiltzaile').addEventListener('click', () => ikusiGehituErab());
+
 document.querySelector('.bilatuInput').addEventListener('keyup', function () {
     let input, filter, table, tr, tdNAN, tdIzena, tdErabiltzailea, i, txtValue;
     input = document.querySelector('.bilatuInput');
@@ -79,5 +81,10 @@ function ikusi(erabiltzailea) {
     <p><strong>Rola:</strong> ${rolaTxt}</p>
   `;
     const modal = new bootstrap.Modal(document.getElementById('erabiltzaileakModal'));
+    modal.show();
+}
+
+function ikusiGehituErab() {
+    const modal = new bootstrap.Modal(document.getElementById('erabiltzaileaGehituModal'));
     modal.show();
 }

@@ -36,7 +36,7 @@ $CURRENT_USER = require_auth_view('login');
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header d-flex justify-content-between">
-        <h5 class="modal-title" id="inbentarioaModalLabel">Produktu Inbentariatua</h5>
+        <h5 class="modal-title" id="inbentarioaModalLabel"><i class="fa-solid fa-truck-ramp-box me-2"></i> Produktu Inbentariatua</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 

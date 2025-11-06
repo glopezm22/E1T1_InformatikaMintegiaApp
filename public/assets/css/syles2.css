@@ -6,16 +6,8 @@
     
 }
 
-
-
 th{
     background-color: #BBD0EA !important;
-}
-
-.btn {
-    background-color: #224461;
-    border-color: #224461;
-    color: white;
 }
 
 .btnIkusi {
@@ -24,10 +16,10 @@ th{
     color: white;
 }
 
-.btnIkusi:hover {
+.btnIkusi:hover, .btnIkusi:focus, .btnIkusi:focus-visible {
     border-color: #152838 !important;
     background-color: #152838 !important;
-    color: white;
+    color: white !important;
 }
 
 .btnEditatu {
@@ -36,8 +28,8 @@ th{
     color: white;
 }
 
-.btnEditatu:hover{
+.btnEditatu:hover, .btnEditatu:focus, .btnEditatu:focus-visible{
     border-color: #083b68 !important;
     background-color: #083b68 !important;
-    color: white;
+    color: white !important;
 }

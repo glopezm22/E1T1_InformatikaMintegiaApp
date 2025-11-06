@@ -506,11 +506,19 @@ footer a.text-white-50:hover {
     border-radius: 100px;
     padding: 10px 15px;
     transition: 300ms;
+    background-color: #2d5980  !important;
+    color: white !important;
 }
 
-.btnSumar:hover {
-    background-color: #0c1b29;
-    color: white;
+.btnSumar:hover, .btnSumar:focus {
+    background-color: #0c1b29 !important;
+    color: white !important;
+}
+
+.btnSumar:focus-visible {
+    background-color: #224461 !important;
+    border-color: #224461 !important;
+    color: white !important;
 }
 /* ---------- */
 

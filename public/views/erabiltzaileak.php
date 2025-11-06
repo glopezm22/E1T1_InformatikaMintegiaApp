@@ -8,9 +8,9 @@ $CURRENT_USER = require_admin_view('login', 'home');
 <main class="container-fluid text-white d-block align-items-center justify-content-center p-3 p-md-5 container-home">
   <div class="container bg-light p-md-5 pt-5 rounded-2">
     <div class="contenedor my-5">
-      <h1 class="mb-5 text-dark">Erabiltzaileak</h1>
+      <h1 class="mb-3 text-dark">Erabiltzaileak</h1>
       <div class="mb-4 me-3 d-flex justify-content-end">
-        <button class="btn btn-sm btnSumar"><i class="fa-solid fa-plus"></i></button>
+        <button class="btn btn-sm btnSumar" id="sumarErabiltzaile"><i class="fa-solid fa-plus"></i></button>
       </div>
       <div class="input-group mb-4 bilatu">
         <input type="text" class="form-control bilatuInput" placeholder="NAN, Izena edo Erabiltzaile bidez bilatu ...">
@@ -44,18 +44,38 @@ $CURRENT_USER = require_admin_view('login', 'home');
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header d-flex justify-content-between">
-        <h5 class="modal-title" id="erabiltzaileakModalLabel">Erabiltzailea</h5>
+        <h5 class="modal-title" id="erabiltzaileakModalLabel"><i class="fa-solid fa-user me-2"></i>Erabiltzailea</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
       <div class="modal-body">
         ...
       </div>
+    </div>
+  </div>
+</div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+<div class="modal fade" id="erabiltzaileaGehituModal" tabindex="-1" aria-labelledby="erabiltzaileaGehituModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-between">
+        <h5 class="modal-title" id="erabiltzaileaGehituModalLabel"><i class="fa-solid fa-plus me-2"></i> Sortu Erabiltzailea</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+
+      <form method="post" action="#" class="modal-body pe-5 ps-5">
+        <label for="nan" class="form-label">NAN:</label>
+        <input type="text" class="form-control" id="nan" aria-describedby="nan">
+        <label for="izena" class="form-label mt-2">Izena:</label>
+        <input type="text" class="form-control" id="izena" aria-describedby="izena">
+        <label for="abizena" class="form-label mt-2">Abizena:</label>
+        <input type="text" class="form-control" id="abizena" aria-describedby="abizena">
+        <label for="erabiltzailea" class="form-label mt-2">Erabiltzailea:</label>
+        <input type="text" class="form-control" id="erabiltzailea" aria-describedby="erabiltzailea">
+        <div class="d-flex justify-content-center mt-4 mb-2">
+          <button class="btn btn-primary" type="submit">Sortu</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

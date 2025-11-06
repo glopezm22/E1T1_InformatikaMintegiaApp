@@ -4,10 +4,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderizarTabla(ekipoak);
 });
 
-  document.addEventListener('DOMContentLoaded', () => {
+document.querySelector('#sumarEkipo').addEventListener('click', () => ikusiGehitu());
+
+    document.addEventListener('DOMContentLoaded', () => {
     const inputBusqueda = document.querySelector('.bilatuInput');
     const tabla = document.getElementById('tabla-ekipoak');
-    
+
     const filasTabla = tabla.querySelector('tbody').rows; 
     const indicesBusqueda = [1, 3, 4];
 
@@ -81,5 +83,10 @@ function ikusi(ekipoa) {
     <p><strong>Kategoria ID:</strong> ${ekipoa.idKategoria}</p>
   `;
     const modal = new bootstrap.Modal(document.getElementById('ekipoakModal'));
+    modal.show();
+}
+
+function ikusiGehitu() {
+    const modal = new bootstrap.Modal(document.getElementById('ekipoakGehituModal'));
     modal.show();
 }
