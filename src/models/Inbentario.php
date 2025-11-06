@@ -45,4 +45,37 @@ class Inbentario {
         $stmt->close();
         return $emaitza;
     }
+
+    // Inbentario taulatik atera zein den etiketa handiena eta berri bat +1 gehitzen sortu
+    public function getNextEtiketa(){
+        $emaitza = $this->db->getKonexioa()->query("SELECT etiketa FROM inbentarioa ORDER BY etiketa DESC LIMIT 1");
+        if(!$emaitza) die("ERROREA: Ezin izan da inbentario erregistro handiena eskuratu.");
+        $row = $emaitza->fetch_assoc();
+        if(!$row) return "E0001";
+        $maxEtiketa = $row['etiketa'];
+        $num = intval(substr($maxEtiketa, 1)) + 1;
+        return 'E' . str_pad($num, 4, '0', STR_PAD_LEFT);
+    }
+
+    // Bueltatzen du idEkipamendu-rako etiketatu_gabe kopurua.
+    public function getEtiketatuGabeById($idEkipamendu) {
+        $conn = $this->db->getKonexioa();
+        $id = intval($idEkipamendu);
+        $sql = "
+            SELECT e.stock AS stockTotala,
+            (e.stock - COUNT(i.idEkipamendu)) AS etiketatu_gabe
+            FROM ekipamendua e
+            LEFT JOIN inbentarioa i ON e.id = i.idEkipamendu
+            WHERE e.id = ?
+            GROUP BY e.id, e.stock
+        ";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $row = $res->fetch_assoc();
+        $stmt->close();
+        if(!$row) return null;
+        return intval($row['etiketatu_gabe']);
+    }
 }
