@@ -13,6 +13,16 @@ const gelakService = {
         }
     },
 
+    async update(id, data) {
+        const res = await fetch(`${API_URL}?id=${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        if (!res.ok) throw new Error('Errorea gela eguneratzean');
+        return await res.json();
+    },
+    
     // Erregistro bat lortu ID bidez
     async getById(id) {
         if (typeof id === 'undefined' || id === null) {
