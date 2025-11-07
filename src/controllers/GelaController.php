@@ -53,6 +53,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
+// PUT: eguneratu gela ID-aren arabera
+if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    $body = json_decode(file_get_contents('php://input'), true) ?: $_POST;
+
+    if (!isset($body['id'], $body['izena'], $body['taldea'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Falta dira derrigorrezko datuak']);
+        exit();
+    }
+
+    $res = $gelaDB->update(intval($body['id']), $body['izena'], $body['taldea']);
+
+    if ($res) {
+        echo json_encode(['message' => 'Gela eguneratuta']);
+    } else {
+        http_response_code(500);
+        echo json_encode(['error' => 'Errorea eguneratzean']);
+    }
+    exit();
+}
+
 // DELETE: kendu gela
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $body = json_decode(file_get_contents('php://input'), true) ?: $_GET;

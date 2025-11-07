@@ -50,6 +50,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
+// PUT: eguneratu kategoria ID-aren arabera
+if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    $body = json_decode(file_get_contents('php://input'), true) ?: $_POST;
+
+    if (!isset($body['id'], $body['izena'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Falta dira derrigorrezko datuak']);
+        exit();
+    }
+
+    $res = $kategoriaDB->update(intval($body['id']), $body['izena']);
+
+    if ($res) {
+        echo json_encode(['message' => 'Kategoria eguneratuta']);
+    } else {
+        http_response_code(500);
+        echo json_encode(['error' => 'Errorea eguneratzean']);
+    }
+    exit();
+}
+
 // DELETE: kendu kategoria
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $body = json_decode(file_get_contents('php://input'), true) ?: $_GET;

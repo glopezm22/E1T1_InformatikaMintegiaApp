@@ -86,6 +86,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
+// PUT: eguneratu etiketa (inbentarioa + kokalekua) etiketa eta hasieraData erabiliz
+if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    $body = json_decode(file_get_contents('php://input'), true) ?: $_POST;
+
+    // Klavea behar dugu: etiketa + hasieraData
+    if (!isset($body['etiketa'], $body['hasieraData'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Falta dira derrigorrezko datuak (etiketa edo hasieraData)']);
+        exit();
+    }
+
+    // Derrigorrezkoak eguneratzeko
+    if (!isset($body['idEkipamendu'], $body['erosketaData'], $body['idGela'], $body['amaieraData'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Falta dira derrigorrezko datuak (idEkipamendu, erosketaData, idGela, amaieraData)']);
+        exit();
+    }
+
+    $etiketa = $body['etiketa'];
+    $hasieraData = $body['hasieraData'];
+    $idEkipamendu = intval($body['idEkipamendu']);
+    $erosketaData = $body['erosketaData'];
+    $idGela = intval($body['idGela']);
+    $amaieraData = $body['amaieraData'];
+
+    $conn = $db->getKonexioa();
+    try {
+        $conn->begin_transaction();
+
+        // Actualiza inbentarioa
+        $res1 = $inbentarioDB->update($etiketa, $idEkipamendu, $erosketaData);
+        if (!$res1) throw new Exception('Errorea inbentarioa eguneratzean');
+
+        // Actualiza kokalekua (usa etiketa + hasieraData como clave)
+        $res2 = $kokalekuDB->update($etiketa, $hasieraData, $idGela, $amaieraData);
+        if (!$res2) throw new Exception('Errorea kokalekua eguneratzean');
+
+        $conn->commit();
+        echo json_encode(['message' => 'Etiketa eguneratuta']);
+    } catch (Exception $e) {
+        if ($conn->in_transaction) $conn->rollback();
+        http_response_code(500);
+        echo json_encode(['error' => 'Barneko errorea', 'detail' => $e->getMessage()]);
+    }
+    exit();
+}
 
 // DELETE: kendu etiketa
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {

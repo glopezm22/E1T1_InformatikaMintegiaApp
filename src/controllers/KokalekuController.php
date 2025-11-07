@@ -74,6 +74,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
+// PUT: eguneratu kokaleku etiketa + hasieraData erabiliz
+if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    $body = json_decode(file_get_contents('php://input'), true) ?: $_POST;
+
+    if (!isset($body['etiketa'], $body['hasieraData'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Falta dira derrigorrezko datuak (etiketa edo hasieraData)']);
+        exit();
+    }
+
+    // idGela y amaieraData pueden venir como campos a actualizar
+    if (!isset($body['idGela'], $body['amaieraData'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Falta dira derrigorrezko datuak']);
+        exit();
+    }
+
+    $res = $kokalekuDB->update($body['etiketa'], $body['hasieraData'], intval($body['idGela']), $body['amaieraData']);
+
+    if ($res) {
+        echo json_encode(['message' => 'Kokaleku eguneratuta']);
+    } else {
+        http_response_code(500);
+        echo json_encode(['error' => 'Errorea eguneratzean']);
+    }
+    exit();
+}
+
 // DELETE: kendu kokalekua
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $body = json_decode(file_get_contents('php://input'), true) ?: $_GET;

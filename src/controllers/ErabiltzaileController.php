@@ -57,6 +57,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
+// PUT: eguneratu erabiltzailea NAN-aren arabera (o pasahitza aldatu)
+if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    $body = json_decode(file_get_contents('php://input'), true) ?: $_POST;
+
+    if (!isset($body['nan'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'NAN falta da']);
+        exit();
+    }
+    $nan = $body['nan'];
+
+    // Pasahitza aldaketa
+    if (isset($body['pasahitza']) || isset($body['pasahitzaKonfirm'])) {
+        if (!isset($body['pasahitza'], $body['pasahitzaKonfirm'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Falta dira pasahitza edo pasahitzaren konfirmazioa']);
+            exit();
+        }
+        $res = $erabiltzaileDB->updatePasahitza($nan, $body['pasahitza'], $body['pasahitzaKonfirm']);
+        if ($res) {
+            echo json_encode(['message' => 'Pasahitza eguneratuta']);
+        } else {
+            http_response_code(400);
+            echo json_encode(['error' => 'Pasahitzak ez datoz bat edo errorea eguneratzean']);
+        }
+        exit();
+    }
+
+    // Datu orokorrak eguneratzea
+    if (!isset($body['izena'], $body['abizena'], $body['erabiltzailea'], $body['rola'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Falta dira derrigorrezko datuak']);
+        exit();
+    }
+
+    $res = $erabiltzaileDB->update(
+        $nan,
+        $body['izena'],
+        $body['abizena'],
+        $body['erabiltzailea'],
+        $body['rola']
+    );
+
+    if ($res) {
+        echo json_encode(['message' => 'Erabiltzailea eguneratuta']);
+    } else {
+        http_response_code(500);
+        echo json_encode(['error' => 'Errorea eguneratzean']);
+    }
+    exit();
+}
+
 // DELETE: kendu erabiltzailea
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $body = json_decode(file_get_contents('php://input'), true) ?: $_GET;
