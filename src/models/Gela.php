@@ -15,6 +15,7 @@ class Gela {
         while($row = $emaitza->fetch_assoc()) $datuak[] = $row;
         return $datuak;
     }
+
     // Get id-aren arabera
     public function get($id){
         $stmt = $this->db->getKonexioa()->prepare("SELECT * FROM gela WHERE id = ?");
@@ -24,6 +25,7 @@ class Gela {
         $stmt->close();
         return $emaitza->num_rows ? $emaitza->fetch_assoc() : null;
     }
+
     // Gela berria sortzen du 
     public function create($izena, $taldea){
         $stmt = $this->db->getKonexioa()->prepare(
@@ -34,6 +36,20 @@ class Gela {
         $stmt->close();
         return $emaitza;
     }
+
+    // Gela eguneratzen du ID-aren arabera
+    public function update($id, $izena, $taldea) {
+        $stmt = $this->db->getKonexioa()->prepare(
+            "UPDATE gela
+            SET izena = ?, taldea = ?
+            WHERE id = ?"
+        );
+        $stmt->bind_param("ssi", $izena, $taldea, $id);
+        $emaitza = $stmt->execute();
+        $stmt->close();
+        return $emaitza;
+    }
+
     // Gelak ezabatzen ditu
     public function delete($id){
         $stmt = $this->db->getKonexioa()->prepare("DELETE FROM gela WHERE id = ?");

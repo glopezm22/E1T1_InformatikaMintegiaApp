@@ -55,6 +55,20 @@ class Kokaleku {
         $stmt->close();
         return $emaitza;
     }
+
+    // Kokaleku bat eguneratzen du etiketa eta hasieraData erabiliz (konposizio klabea)
+    public function update($etiketa, $hasieraData, $idGela, $amaieraData) {
+        $stmt = $this->db->getKonexioa()->prepare(
+            "UPDATE kokalekua
+            SET idGela = ?, amaieraData = ?
+            WHERE etiketa = ? AND hasieraData = ?"
+        );
+        $stmt->bind_param("isss", $idGela, $amaieraData, $etiketa, $hasieraData);
+        $emaitza = $stmt->execute();
+        $stmt->close();
+        return $emaitza;
+    }
+
     // Kokalekuak ezabatzen ditu
     public function delete($etiketa,$hasieraData){
         $stmt = $this->db->getKonexioa()->prepare("DELETE FROM kokalekua WHERE etiketa = ? AND hasieraData = ?");

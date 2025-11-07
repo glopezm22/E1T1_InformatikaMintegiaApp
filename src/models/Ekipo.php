@@ -37,6 +37,19 @@ class Ekipo {
         return $emaitza;
     }
 
+    // Ekipamendu bat eguneratzen du ID-aren arabera
+    public function update($id, $izena, $deskribapena, $marka, $modelo, $stock, $idKategoria){
+        $stmt = $this->db->getKonexioa()->prepare(
+            "UPDATE ekipamendua 
+            SET izena = ?, deskribapena = ?, marka = ?, modelo = ?, stock = ?, idKategoria = ?
+            WHERE id = ?"
+        );
+        $stmt->bind_param("ssssiii", $izena, $deskribapena, $marka, $modelo, $stock, $idKategoria, $id);
+        $emaitza = $stmt->execute();
+        $stmt->close();
+        return $emaitza;
+    }
+
     // Ekipamendu bat ezabatzen du ID-aren arabera
     public function delete($id){
         $stmt = $this->db->getKonexioa()->prepare("DELETE FROM ekipamendua WHERE id = ?");

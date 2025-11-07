@@ -71,6 +71,36 @@ class Erabiltzaile {
         return $emaitza;
     }
 
+    // Erabiltzaile bat eguneratzen du NAN-aren arabera
+    public function update($nan, $izena, $abizena, $erabiltzailea, $rola) {
+        $stmt = $this->db->getKonexioa()->prepare(
+            "UPDATE erabiltzailea
+            SET izena = ?, abizena = ?, erabiltzailea = ?, rola = ?
+            WHERE nan = ?"
+        );
+        $stmt->bind_param("sssss", $izena, $abizena, $erabiltzailea, $rola, $nan);
+        $emaitza = $stmt->execute();
+        $stmt->close();
+        return $emaitza;
+    }
+
+    // Erabiltzaile baten pasahitza eguneratzen du NAN-aren arabera. Bi aldiz sartu behar da pasahitza, konfirmatzeko segurtasuna dela eta.
+    public function updatePasahitza($nan, $pasahitza, $pasahitzaKonfirm) {
+        if ($pasahitza !== $pasahitzaKonfirm) {
+            // Pasahitzak ez datoz bat
+            return false;
+        }
+        $stmt = $this->db->getKonexioa()->prepare(
+            "UPDATE erabiltzailea
+            SET pasahitza = ?
+            WHERE nan = ?"
+        );
+        $stmt->bind_param("ss", $pasahitza, $nan);
+        $emaitza = $stmt->execute();
+        $stmt->close();
+        return $emaitza;
+    }
+
     // Erabiltzaile bat ezabatzen du NAN-aren arabera
     public function delete($nan) {
         $stmt = $this->db->getKonexioa()->prepare("DELETE FROM erabiltzailea WHERE nan = ?");

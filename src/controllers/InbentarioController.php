@@ -54,6 +54,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
+// PUT: eguneratu inbentario erregistroa etiketa-aren arabera
+if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    $body = json_decode(file_get_contents('php://input'), true) ?: $_POST;
+
+    if (!isset($body['etiketa'], $body['idEkipamendu'], $body['erosketaData'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Falta dira derrigorrezko datuak']);
+        exit();
+    }
+
+    $res = $inbentarioDB->update($body['etiketa'], intval($body['idEkipamendu']), $body['erosketaData']);
+
+    if ($res) {
+        echo json_encode(['message' => 'Inbentario erregistroa eguneratuta']);
+    } else {
+        http_response_code(500);
+        echo json_encode(['error' => 'Errorea eguneratzean']);
+    }
+    exit();
+}
+
 // DELETE: kendu inbentario erregistroa
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $body = json_decode(file_get_contents('php://input'), true) ?: $_GET;

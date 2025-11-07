@@ -37,6 +37,19 @@ class Inbentario {
         return $emaitza;
     }
 
+    // Inbentario erregistroa eguneratzen du etiketa-aren arabera
+    public function update($etiketa, $idEkipamendu, $erosketaData) {
+        $stmt = $this->db->getKonexioa()->prepare(
+            "UPDATE inbentarioa
+            SET idEkipamendu = ?, erosketaData = ?
+            WHERE etiketa = ?"
+        );
+        $stmt->bind_param("iss", $idEkipamendu, $erosketaData, $etiketa);
+        $emaitza = $stmt->execute();
+        $stmt->close();
+        return $emaitza;
+    }
+
     // Inbentario erregistro bat ezabatzen du etiketa-aren arabera
     public function delete($etiketa){
         $stmt = $this->db->getKonexioa()->prepare("DELETE FROM inbentarioa WHERE etiketa = ?");

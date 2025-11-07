@@ -56,6 +56,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
+// PUT: eguneratu ekipoa ID-aren arabera
+if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    $body = json_decode(file_get_contents('php://input'), true) ?: $_POST;
+
+    if (!isset($body['id'], $body['izena'], $body['deskribapena'], $body['marka'], $body['modelo'], $body['stock'], $body['idKategoria'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Faltan datos obligatorios']);
+        exit();
+    }
+
+    $res = $ekipoDB->update(
+        $body['id'],
+        $body['izena'],
+        $body['deskribapena'],
+        $body['marka'],
+        $body['modelo'],
+        $body['stock'],
+        $body['idKategoria']
+    );
+
+    if ($res) {
+        echo json_encode(['message' => 'Ekipoa eguneratuta']);
+    } else {
+        http_response_code(500);
+        echo json_encode(['error' => 'Errorea eguneratzean']);
+    }
+    exit();
+}
+
 // DELETE: kendu ekipoa
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $body = json_decode(file_get_contents('php://input'), true) ?: $_GET;
