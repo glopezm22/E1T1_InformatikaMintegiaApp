@@ -1,6 +1,6 @@
-import kokalekuService from './services/kokalekuService.js';
-import kategoriaService from './services/kategoriaService.js';
-import gelaService from './services/gelaService.js';
+import kokalekuakService from './services/kokalekuakService.js';
+import kategoriakService from './services/kategoriakService.js';
+import gelakService from './services/gelakService.js';
 
 let kokalekuak = [];
 let kategoriak = [];
@@ -9,9 +9,9 @@ let gelak = [];
 //aldagai globaletan eskaerak ez erreplikatzeko tauletan eta modaletan
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    kokalekuak = await kokalekuService.getAll();
-    kategoriak = await kategoriaService.getAll();
-    gelak = await gelaService.getAll();
+    kokalekuak = await kokalekuakService.getAll();
+    kategoriak = await kategoriakService.getAll();
+    gelak = await gelakService.getAll();
 
     renderizarKokalekuak(kokalekuak);
     renderizarKategoriak(kategoriak);
@@ -223,11 +223,11 @@ function confirmEzabatuModal(item) {
   confirmBtn.onclick = async () => {
     try {
       if (item.etiketa) {
-        await kokalekuService.delete(item.id);
+        await kokalekuakService.delete(item.id);
       } else if (item.taldea) {
-        await gelaService.delete(item.id);
+        await gelakService.delete(item.id);
       } else {
-        await kategoriaService.delete(item.id);
+        await kategoriakService.delete(item.id);
       }
 
       modal.hide();
@@ -291,7 +291,7 @@ async function gordeGela() {
     return;
   }
 
-  await gelaService.update(id, { izena, taldea });
+  await gelakService.update(id, { izena, taldea });
 }
 
 async function gordeKokalekua() {
@@ -310,7 +310,7 @@ async function gordeKokalekua() {
     return;
   }
 
-  await kokalekuService.update(etiketa, { idGela, hasieraData, amaieraData });
+  await kokalekuakService.update(etiketa, { idGela, hasieraData, amaieraData });
 }
 
 async function gordeKategoria() {
@@ -322,7 +322,7 @@ async function gordeKategoria() {
     return;
   }
 
-  await kategoriaService.update(id, { izena });
+  await kategoriakService.update(id, { izena });
 }
 
 document.querySelector('#btnGorde').addEventListener('click', gordeDatuak);
