@@ -9,7 +9,7 @@ $CURRENT_USER = require_auth_view('login');
     <div class="contenedor my-5">
       <h1 class="mb-3 text-dark">Ekipoak</h1>
       <div class="mb-4 me-3 d-flex justify-content-end">
-        <button class="btn btn-sm btnSumar" id="sumarEkipo" alt="Sortu ekipo berria"><i class="fa-solid fa-plus"></i></button>
+        <button class="btn btn-sm btnSumar" id="sumarEkipo" title="Sortu ekipo berria"><i class="fa-solid fa-plus"></i> Sortu</button>
       </div>
       <div class="input-group mb-4 bilatu">
         <input type="text" class="form-control bilatuInput" placeholder="Izena, Marka edo Modelo bidez bilatu ...">
@@ -57,36 +57,19 @@ $CURRENT_USER = require_auth_view('login');
 </div>
 
 <!-- gehitu ekipo modal -->
-<div class="modal fade" id="ekipoakGehituModal" tabindex="-1" aria-labelledby="ekipoakGehituModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+<div class="modal fade" style="margin-top: 50px" id="ekipoModalAdd" tabindex="-1" aria-labelledby="ekipoModalAddLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content ">
       <div class="modal-header d-flex justify-content-between">
-        <h5 class="modal-title" id="ekipoakGehituModalLabel"><i class="fa-solid fa-plus me-2"></i> Gehitu Ekipoa</h5>
+        <h5 class="modal-title" id="ekipoModalAddLabel">Ekipo berria sortu</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-
-      <form method="post" action="#" class="modal-body pe-5 ps-5">
-        <label for="izena" class="form-label">Izena:</label>
-        <input type="text" class="form-control" id="izena" aria-describedby="izena">
-        <label for="deskibapena" class="form-label mt-2">Deskibapena:</label>
-        <input type="text" class="form-control" id="deskibapena" aria-describedby="deskibapena">
-        <label for="marka" class="form-label mt-2">Marka:</label>
-        <input type="text" class="form-control" id="marka" aria-describedby="marka">
-        <label for="modeloa" class="form-label mt-2">Modeloa:</label>
-        <input type="text" class="form-control" id="modeloa" aria-describedby="modeloa">
-        <label for="stock" class="form-label mt-2">Stock:</label>
-        <input type="number" class="form-control" id="stock" aria-describedby="stock">
-        <label for="kategoria" class="form-label mt-2">Kategoria:</label>
-        <select class="form-select" aria-label="kategoria">
-          <option selected>Aukeratu bat ...</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
-        <div class="d-flex justify-content-center mt-4 mb-2">
-          <button class="btn btn-primary" type="submit">Sortu</button>
-        </div>
-      </form>
+      <div class="modal-body">
+       
+      </div>
+      <div class="modal-footer">
+        <button id="btnGordeBerria" type="button" class="btn btn-primary">Sortu</button>
+      </div>
     </div>
   </div>
 </div>

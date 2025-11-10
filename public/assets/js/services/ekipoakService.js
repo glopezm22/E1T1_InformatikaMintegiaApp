@@ -33,16 +33,16 @@ const ekipoakService = {
     },
 
     // Erregistro berria sortu
-    async create(izena, deskribapena, marka, modelo, stock, idKategoria) {
+    async create(data) {
         try {
             const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ izena, deskribapena, marka, modelo, stock, idKategoria })
+                body: JSON.stringify(data)
             });
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.error || 'Ekipamendua: Errorea erregistroa sortzean.');
-            return data;
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.error || 'Ekipamendua: Errorea erregistroa sortzean.');
+            return result;
         } catch (error) {
             console.error('Errorea ekipoa sortzean:', error);
             throw error;

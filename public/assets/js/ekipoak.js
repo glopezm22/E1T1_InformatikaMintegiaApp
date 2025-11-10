@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderizarTabla(ekipoak);
 });
 
-document.querySelector('#sumarEkipo').addEventListener('click', () => ikusiGehitu());
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const inputBusqueda = document.querySelector('.bilatuInput');
@@ -93,27 +93,27 @@ function editatu(ekipoa) {
         <input disabled type="text" class="form-control" id="idInput" value="${ekipoa.id}">
       </div>
       <div class="mb-3">
-        <label class="form-label"><strong>izena</strong></label>
+        <label class="form-label"><strong>Izena</strong></label>
         <input type="text" class="form-control" id="izenaInput" value="${ekipoa.izena}" required>
       </div>
       <div class="mb-3">
-        <label class="form-label"><strong>deskribapena</strong></label>
+        <label class="form-label"><strong>Deskribapena</strong></label>
         <input type="text" class="form-control" id="deskribapenaInput" value="${ekipoa.deskribapena}" required>
       </div>
       <div class="mb-3">
-        <label class="form-label"><strong>marka</strong></label>
+        <label class="form-label"><strong>Marka</strong></label>
         <input type="text" class="form-control" id="markaInput" value="${ekipoa.marka}" required>
       </div>
       <div class="mb-3">
-        <label class="form-label"><strong>modeloa</strong></label>
+        <label class="form-label"><strong>Modeloa</strong></label>
         <input type="text" class="form-control" id="modeloInput" value="${ekipoa.modelo}" required>
       </div>
       <div class="mb-3">
-        <label class="form-label"><strong>stock</strong></label>
+        <label class="form-label"><strong>Stock</strong></label>
         <input type="text" class="form-control" id="stockInput" value="${ekipoa.stock}" required>
       </div>
       <div class="mb-3">
-        <label class="form-label"><strong>kategoria</strong></label>
+        <label class="form-label"><strong>Kategoria</strong></label>
         <select class="form-select" id="kategoriaInput" value="${ekipoa.idKategoria}"></select>
       </div>
     </form>
@@ -147,14 +147,6 @@ function ikusi(ekipoa) {
     const modal = new bootstrap.Modal(document.getElementById('ekipoakModal'));
     modal.show();
 }
-
-function ikusiGehitu() {
-    const modal = new bootstrap.Modal(document.getElementById('ekipoakGehituModal'));
-    modal.show();
-}
-
-
-
 
 
 //Modal ezabatzeko konfirmazioa
@@ -218,5 +210,92 @@ async function gordeDatuak() {
         alert('Errorea datuak gordetzean');
     }
 }
+
+document.querySelector('#sumarEkipo').addEventListener('click', gehituEkipoa);
+
+//modala gehitzeko ekipoa
+function gehituEkipoa() {
+    const modalElement = document.getElementById('ekipoModalAdd');
+    const modal = new bootstrap.Modal(modalElement);
+
+    const modalBody = modalElement.querySelector('.modal-body');
+    modalBody.innerHTML = `
+      <form id="formGehituEkipoa" class="needs-validation" novalidate>
+        <div class="mb-3">
+          <label class="form-label"><strong>Izena</strong></label>
+          <input type="text" class="form-control" id="izenaInput" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label"><strong>Deskribapena</strong></label>
+          <input type="text" class="form-control" id="deskribapenaInput" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label"><strong>Marka</strong></label>
+          <input type="text" class="form-control" id="markaInput" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label"><strong>Modeloa</strong></label>
+          <input type="text" class="form-control" id="modeloInput" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label"><strong>Stock</strong></label>
+          <input type="number" min="0" class="form-control" id="stockInput" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label"><strong>Kategoria</strong></label>
+          <select class="form-select" id="kategoriaInput"></select>
+        </div>
+      </form>
+    `;
+
+    const select = modalBody.querySelector('#kategoriaInput');
+    kategoriak.forEach(k => {
+        const option = document.createElement('option');
+        option.value = k.id;
+        option.textContent = k.izena;
+        select.appendChild(option);
+    });
+
+    const btnGordeBerria = modalElement.querySelector('#btnGordeBerria');
+    btnGordeBerria.onclick = sortuEkipoa;
+
+    modal.show();
+}
+
+
+//ekipoa sortzeko
+async function sortuEkipoa() {
+    const form = document.querySelector('#formGehituEkipoa');
+    if (!form.checkValidity()) {
+        form.classList.add('was-validated');
+        return;
+    }
+
+    const izena = document.querySelector('#izenaInput').value.trim();
+    const deskribapena = document.querySelector('#deskribapenaInput').value.trim();
+    const marka = document.querySelector('#markaInput').value.trim();
+    const modelo = document.querySelector('#modeloInput').value.trim();
+    const stock = document.querySelector('#stockInput').value.trim();
+    const kategoria = document.querySelector('#kategoriaInput').value;
+
+    try {
+        await ekipoakService.create({
+            izena,
+            deskribapena,
+            marka,
+            modelo,
+            stock,
+            idKategoria: kategoria
+        });
+
+        const modal = bootstrap.Modal.getInstance(document.getElementById('ekipoModalAdd'));
+        modal.hide();
+        location.reload();
+    } catch (errorea) {
+        console.error('Errorea ekipoa sortzean:', errorea);
+        alert('Errorea ekipoa sortzean');
+    }
+}
+
 
 document.querySelector('#btnGorde').addEventListener('click', gordeDatuak);
