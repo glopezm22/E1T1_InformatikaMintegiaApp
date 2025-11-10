@@ -60,6 +60,8 @@ function renderizarTabla(erabiltzaileak) {
             </td>
     `;
         tr.querySelector('.btnIkusi').addEventListener('click', () => ikusi(e));
+        tr.querySelector('.btnEditatu').addEventListener('click', () => editatuErabiltzailea(e));
+        tr.querySelector('.btnEzabatu').addEventListener('click', () => confirmEzabatuModal(e));
         tbody.appendChild(tr);
     });
 }
@@ -84,7 +86,188 @@ function ikusi(erabiltzailea) {
     modal.show();
 }
 
-function ikusiGehituErab() {
-    const modal = new bootstrap.Modal(document.getElementById('erabiltzaileaGehituModal'));
-    modal.show();
+//Modal Inbentarioa
+function gehituErabiltzailea() {
+  const modalElement = document.getElementById('erabiltzaileakGehituModal');
+  const modal = new bootstrap.Modal(modalElement);
+
+  const modalTitle = document.querySelector('#erabiltzaileakGehituModalLabel');
+  modalTitle.textContent = 'Erabiltzailea editatu';
+
+  const modalBody = document.querySelector('#erabiltzaileakGehituModal .modal-body');
+
+modalBody.innerHTML = `
+    <form id="formGehituErabiltzaileak" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label class="form-label"><strong>NAN:</strong></label>
+            <input type="text" class="form-control" id="nanErabiltzaileakInput">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><strong>Izena:</strong></label>
+            <input type="text" class="form-control" id="izenaErabiltzaileakInput">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><strong>Abizena:</strong></label>
+            <input type="text" class="form-control" id="abizenaErabiltzaileakInput">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><strong>Erabiltzailea:</strong></label>
+            <input type="text" class="form-control" id="erabiltzaileaErabiltzaileakInput">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><strong>Rola:</strong></label>
+            <select id="selectRola" class="form-select">
+                <option value="A">Admin</option>
+                <option value="U">User</option>
+            </select>
+        </div>
+    </form>
+`;
+
+  modal.show();
 }
+
+//Modal Erabiltzailea Editatu
+function editatuErabiltzailea(erabiltzailea) {
+  const modalElement = document.getElementById('erabiltzaileakEditatuModal');
+  const modal = new bootstrap.Modal(modalElement);
+
+  const modalTitle = document.querySelector('#erabiltzaileakEditatuModalLabel');
+  modalTitle.textContent = 'Erabiltzailea editatu';
+
+  const modalBody = document.querySelector('#erabiltzaileakEditatuModal .modal-body');
+
+modalBody.innerHTML = `
+    <form id="formEditErabiltzaileak" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label class="form-label"><strong>NAN:</strong></label>
+            <input disabled type="text" class="form-control" id="nanErabiltzaileakInput" value="${erabiltzailea.nan}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><strong>Izena:</strong></label>
+            <input type="text" class="form-control" id="izenaErabiltzaileakInput" value="${erabiltzailea.izena}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><strong>Abizena:</strong></label>
+            <input type="text" class="form-control" id="abizenaErabiltzaileakInput" value="${erabiltzailea.abizena}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><strong>Erabiltzailea:</strong></label>
+            <input type="text" class="form-control" id="erabiltzaileaErabiltzaileakInput" value="${erabiltzailea.erabiltzailea}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><strong>Rola:</strong></label>
+            <select id="selectRola" class="form-select">
+                <option value="A" ${erabiltzailea.rola === 'A' ? 'selected' : ''}>Admin</option>
+                <option value="U" ${erabiltzailea.rola === 'U' ? 'selected' : ''}>User</option>
+            </select>
+        </div>
+    </form>
+`;
+
+  modal.show();
+}
+
+//Modal ezabatzeko konfirmazioa
+function confirmEzabatuModal(item) {
+  const modalTitle = document.querySelector('#ezabatuModalLabel');
+
+    modalTitle.textContent = `${item.etiketa} produktua ezabatuko duzu`;
+
+  const modal = new bootstrap.Modal(document.getElementById('ezabatuModal'));
+  modal.show();
+
+  const confirmBtn = document.querySelector('#confirmEzabatuBtn');
+  confirmBtn.onclick = async () => {
+    try {
+      if (item.etiketa) {
+        await inbentarioaService.delete(item.etiketa);
+      }
+
+      modal.hide();
+      location.reload();
+
+    } catch (errorea) {
+      console.error('Errorea elementua ezabatzean:', errorea);
+    }
+  };
+}
+
+async function gordeDatuak(method){
+    if(method == 1){
+        try {
+
+            await updateErabiltzailea();
+        
+            const modal = bootstrap.Modal.getInstance(document.getElementById('erabiltzaileakEditatuModal'));
+            modal.hide();
+            location.reload();
+        } catch (errorea) {
+            console.error('Errorea datuak gordetzean:', errorea);
+            alert('Errorea datuak gordetzean');
+        }
+    }else if(method == 2){
+        try {
+
+            await sortuErabiltzailea();
+        
+            const modal = bootstrap.Modal.getInstance(document.getElementById('erabiltzaileakGehituModal'));
+            modal.hide();
+            location.reload();
+        } catch (errorea) {
+            console.error('Errorea datuak gordetzean:', errorea);
+            alert('Errorea datuak gordetzean');
+        }
+    }
+}
+
+//Service-ra deitzen da eta bidali baino lehen balidazioak
+async function updateErabiltzailea() {
+    const nan = document.querySelector('#nanErabiltzaileakInput').value.trim();
+    const izena = document.querySelector('#izenaErabiltzaileakInput').value.trim();
+    const abizena = document.querySelector('#abizenaErabiltzaileakInput').value.trim();
+    const erabiltzailea = document.querySelector('#erabiltzaileaErabiltzaileakInput').value.trim();
+    const rola = document.querySelector('#selectRola').value.trim();
+
+    if (!izena) {
+        alert('Erabiltzaile izena falta da');
+        return;
+    }
+    if (!abizena) {
+        alert('Erabiltzaile abizena falta da');
+        return;
+    }
+    if (!erabiltzailea) {
+        alert('Erabiltzaileen erabiltzaile-izena falta da');
+        return;
+    }
+
+    await erabiltzaileakService.update(nan, izena, abizena, erabiltzailea, rola);
+}
+
+async function sortuErabiltzailea() {
+    const nan = document.querySelector('#nanErabiltzaileakInput').value.trim();
+    const izena = document.querySelector('#izenaErabiltzaileakInput').value.trim();
+    const abizena = document.querySelector('#abizenaErabiltzaileakInput').value.trim();
+    const erabiltzailea = document.querySelector('#erabiltzaileaErabiltzaileakInput').value.trim();
+    const rola = document.querySelector('#selectRola').value.trim();
+
+    if (!izena) {
+        alert('Erabiltzaile izena falta da');
+        return;
+    }
+    if (!abizena) {
+        alert('Erabiltzaile abizena falta da');
+        return;
+    }
+    if (!erabiltzailea) {
+        alert('Erabiltzaileen erabiltzaile-izena falta da');
+        return;
+    }
+
+    await erabiltzaileakService.update(nan, izena, abizena, erabiltzailea, rola);
+}
+
+document.querySelector('#btnGorde').addEventListener('click', gordeDatuak(1));
+document.querySelector('#btnSortu').addEventListener('click', gordeDatuak(2));
+document.querySelector('#sumarErabiltzaile').addEventListener('click', gehituErabiltzailea);

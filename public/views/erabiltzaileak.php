@@ -55,27 +55,62 @@ $CURRENT_USER = require_admin_view('login', 'home');
   </div>
 </div>
 
-<div class="modal fade" id="erabiltzaileaGehituModal" tabindex="-1" aria-labelledby="erabiltzaileaGehituModalLabel" aria-hidden="true">
+<!-- Gehitzeko modal -->
+<div class="modal fade" id="erabiltzaileakGehitzekoModal" data-mota="" tabindex="-1" aria-labelledby="erabiltzaileakGehitzekoModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header d-flex justify-content-between">
-        <h5 class="modal-title" id="erabiltzaileaGehituModalLabel"><i class="fa-solid fa-plus me-2"></i> Sortu Erabiltzailea</h5>
+        <h5 class="modal-title" id="erabiltzaileakGehitzekoModalLabel"></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <div class="modal-body">
+        <!-- modalaren edulia hemen agertzen da -->
+      </div>
+      <div class="modal-footer">
+        <button id="btnSortu" type="button" class="btn btn-primary">Sortu</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-      <form method="post" action="#" class="modal-body pe-5 ps-5">
-        <label for="nan" class="form-label">NAN:</label>
-        <input type="text" class="form-control" id="nan" aria-describedby="nan">
-        <label for="izena" class="form-label mt-2">Izena:</label>
-        <input type="text" class="form-control" id="izena" aria-describedby="izena">
-        <label for="abizena" class="form-label mt-2">Abizena:</label>
-        <input type="text" class="form-control" id="abizena" aria-describedby="abizena">
-        <label for="erabiltzailea" class="form-label mt-2">Erabiltzailea:</label>
-        <input type="text" class="form-control" id="erabiltzailea" aria-describedby="erabiltzailea">
-        <div class="d-flex justify-content-center mt-4 mb-2">
-          <button class="btn btn-primary" type="submit">Sortu</button>
-        </div>
-      </form>
+<!-- Editatzeko modal -->
+<div class="modal fade" id="erabiltzaileakEditatuModal" data-mota="" tabindex="-1" aria-labelledby="erabiltzaileakEditatuModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-between">
+        <h5 class="modal-title" id="erabiltzaileakEditatuModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- modalaren edulia hemen agertzen da -->
+      </div>
+      <div class="modal-footer">
+        <button id="btnGorde" type="button" class="btn btn-primary">Gorde</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Ezabatzeko modal -->
+<div class="modal fade" id="ezabatuModal" tabindex="-1" aria-labelledby="ezabatuModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ezabatuModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Ziur zaude elementu hori ezabatu nahi duzula?</p>
+        <p class="text-danger">Ekintza hau ez da itzulgarria</p>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Utzi</button>
+        <button type="button" class="btn btn-danger btnEzabatu" id="confirmEzabatuBtn">Ezabatu</button>
+
+      </div>
     </div>
   </div>
 </div>
