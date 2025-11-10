@@ -1,6 +1,22 @@
 import inbentarioaService from './services/inbentarioaService.js';
+import ekipoakService from './services/ekipoakService.js';
+
+let ekipoak = [];
+
+//Kargatzen ditugu datuak
+//aldagai globaletan eskaerak ez erreplikatzeko tauletan eta modaletan
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    ekipoak = await ekipoakService.getAll();
+
+  } catch (errorea) {
+    console.error('Errorea datuak kargatzean:', errorea);
+  }
+});
+
 document.addEventListener('DOMContentLoaded', async () => {
     const produktuak = await inbentarioaService.getAll();
+    
     renderizarTabla(produktuak);
 });
 
@@ -82,8 +98,8 @@ function editatuInbentarioa(produktuak) {
             <input disabled type="text" class="form-control" id="etiketaInbentarioInput" value="${produktuak.etiketa}">
         </div>
         <div class="mb-3">
-            <label class="form-label"><strong>Ekipamendu Id:</strong></label>
-            <input type="number" class="form-control" id="idEkipamenduInbentarioInput" value="${produktuak.idEkipamendu}">
+            <label class="form-label"><strong>Ekipamendua</strong></label>
+            <select id="selectEkipamendua" class="form-select"></select>
         </div>
         <div class="mb-3">
             <label class="form-label"><strong>Erosketa data:</strong></label>
@@ -91,6 +107,16 @@ function editatuInbentarioa(produktuak) {
         </div>
     </form>
   `;
+
+  const select = modalBody.querySelector('#selectEkipamendua');
+
+  ekipoak.forEach(e => {
+    const option = document.createElement('option');
+    option.value = e.id;
+    option.textContent = e.izena;
+    if (e.id === produktuak.idEkipamendu) option.selected = true;
+    select.appendChild(option);
+  });
 
   modal.show();
 }
@@ -136,7 +162,7 @@ async function gordeDatuak(){
 //Service-ra deitzen da eta bidali baino lehen balidazioak
 async function gordeInbentarioa() {
     const etiketa = document.querySelector('#etiketaInbentarioInput').value.trim();
-    const idEkipamendu = document.querySelector('#idEkipamenduInbentarioInput').value;
+    const idEkipamendu = document.querySelector('#selectEkipamendua').value;
     const erosketaData = document.querySelector('#erosketaDataInbentarioInput').value.trim();
 
     if (!idEkipamendu) {
