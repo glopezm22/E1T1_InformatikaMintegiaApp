@@ -26,7 +26,7 @@ $CURRENT_USER = require_auth_view('login');
               <th scope="col">Modeloa</th>
               <th scope="col">Stock</th>
               <th scope="col">Kategoria</th>
-              <th scope="col" colspan="3"></th>
+              <th scope="col" colspan="4"></th>
             </tr>
           </thead>
           <tbody>
@@ -111,6 +111,25 @@ $CURRENT_USER = require_auth_view('login');
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Utzi</button>
         <button type="button" class="btn btn-danger btnEzabatu" id="confirmEzabatuBtn">Ezabatu</button>
 
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- modal etiketatzeko -->
+<div class="modal fade" id="etiketatuModal" tabindex="-1" aria-labelledby="etiketatuModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-between">
+        <h5 class="modal-title" id="etiketatuModalLabel">Etiketa sortu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="btnGordeEtiketa">Sortu</button>
       </div>
     </div>
   </div>

@@ -1,5 +1,8 @@
 import ekipoakService from './services/ekipoakService.js';
 import kategoriakService from './services/kategoriakService.js';
+import inbentarioService from './services/inbentarioaService.js';
+import gelakService from './services/gelakService.js'
+import etiketakService from './services/etiketakService.js'; 
 
 let kategoriak = [];
 document.addEventListener('DOMContentLoaded', async () => {
@@ -47,6 +50,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+function showAlert(message, type = 'info') {
+    
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+    alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    document.body.appendChild(alertDiv);
+
+}
+
 function renderizarTabla(ekipoak) {
     const tbody = document.querySelector('#tabla-ekipoak tbody');
     tbody.innerHTML = '';
@@ -63,14 +79,16 @@ function renderizarTabla(ekipoak) {
             <td>${e.idKategoria}</td>
             <td>
                 <div class="d-flex gap-3 justify-content-end"> 
-                    <button class="btnIkusi btn btn-sm btn-warning" alt='Informazio gehiago'><i class="fa-solid fa-eye"></i></button>
-                    <button class="btnEditatu btn btn-sm btn-warning" alt='Editatu objektua'><i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="btnEzabatu btn btn-sm btn-danger" alt='Ezabatu objektua'><i class="fa-solid fa-trash"></i></button>
+                    <button class="btnIkusi btn btn-sm btn-warning" title='Informazio gehiago'><i class="fa-solid fa-eye"></i></button>
+                    <button class="btnEditatu btn btn-sm btn-warning" title='Editatu ekipoa'><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button class="btnEtiketatu btn btn-sm btn-warning" title='etiketatu ekipoa'><i class="fa-solid fa-tag"></i></button>
+                    <button class="btnEzabatu btn btn-sm btn-danger" title='Ezabatu ekipoa'><i class="fa-solid fa-trash"></i></button>
                 </div>
             </td>
     `;
         tr.querySelector('.btnIkusi').addEventListener('click', () => ikusi(e));
         tr.querySelector('.btnEditatu').addEventListener('click', () => editatu(e));
+        tr.querySelector('.btnEtiketatu').addEventListener('click', () => etiketatu(e));
         tr.querySelector('.btnEzabatu').addEventListener('click', () => confirmEzabatuModal(e));
         tbody.appendChild(tr);
     });
@@ -299,3 +317,103 @@ async function sortuEkipoa() {
 
 
 document.querySelector('#btnGorde').addEventListener('click', gordeDatuak);
+
+//Modala etiketatzeko ekipo bat
+async function etiketatu(ekipoa) {
+    const modalElement = document.getElementById('etiketatuModal'); 
+    const modal = new bootstrap.Modal(modalElement);
+
+    const modalBody = modalElement.querySelector('.modal-body');
+    modalBody.innerHTML = `
+      <form id="etiketaForm" class="needs-validation" novalidate>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Ekipoa</label>
+          <input type="text" class="form-control" value="${ekipoa.izena}" disabled>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Kokapena</label>
+          <select id="selectKokapena" class="form-select" required>
+            <option value="">Aukeratu gela bat...</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Erosketa data</label>
+          <input type="date" id="etiketaData" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Hasiera data</label>
+          <input type="date" id="hasieraData" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Amaiera data</label>
+          <input type="date" id="amaieraData" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Kopurua</label>
+          <small class="text-muted">Stock erabilgarria: ${ekipoa.stock}</small>
+          <input type="number" id="etiketaKopurua" class="form-control" min="1" max="${ekipoa.stock}" value="1" required>
+          
+        </div>
+      </form>
+    `;
+
+
+    const select = modalBody.querySelector('#selectKokapena');
+    try {
+        const gelak = await gelakService.getAll();
+        gelak.forEach(g => {
+            const option = document.createElement('option');
+            option.value = g.id;
+            option.textContent = g.izena;
+            select.appendChild(option);
+        });
+    } catch (error) {
+        alert('Errorea gelak kargatzean');
+    }
+
+    const btnGorde = modalElement.querySelector('#btnGordeEtiketa');
+    btnGorde.onclick = async () => {
+        const form = document.querySelector('#etiketaForm');
+        
+        //Balidazioak bootstrapekin
+        if (!form.checkValidity()) {
+            form.classList.add('was-validated');
+            return;
+        }
+
+        const idGela = select.value;
+        const erosketaData = document.querySelector('#etiketaData').value;
+        const hasieraData = document.querySelector('#hasieraData').value;
+        const amaieraData = document.querySelector('#amaieraData').value;
+        const kopurua = parseInt(document.querySelector('#etiketaKopurua').value) || 1;
+
+        if (!idGela) {
+            alert('Aukeratu gela bat mesedez');
+            return;
+        }
+
+        if (kopurua > ekipoa.stock) {
+            alert(`Kopurua ezin da handiagoa izan stock baino (${ekipoa.stock})`);
+            return;
+        }
+
+        try {
+             await etiketakService.create(
+                ekipoa.id, 
+                idGela, 
+                kopurua, 
+                erosketaData,
+                hasieraData,
+                amaieraData
+            );
+            
+            showAlert('Etiketa sortu da', 'success');
+            modal.hide();
+            location.reload();
+        } catch (error) {
+            showAlert('Errorea sortzean', 'danger');
+        }
+    };
+
+    modal.show();
+}
