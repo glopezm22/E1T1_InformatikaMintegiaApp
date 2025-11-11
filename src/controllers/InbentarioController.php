@@ -22,6 +22,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             http_response_code(404);
             echo json_encode(['error' => 'Ez da aurkitu']);
         }
+    } if (isset($_GET['idEkipamendu'])) {
+        $idEkipamendu = intval($_GET['idEkipamendu']);
+        $etiketatuGabe = $inbentarioDB->getEtiketatuGabeById($idEkipamendu);
+        if ($etiketatuGabe !== null) {
+            echo json_encode([
+            'idEkipamendu' => $idEkipamendu,
+            'etiketatu_gabe' => $etiketatuGabe
+        ]);
+        } else {
+            http_response_code(404);
+            echo json_encode(['error' => 'Ez da aurkitu']);
+        }
     } else {
         $data = $inbentarioDB->getAll();
         echo json_encode($data);
