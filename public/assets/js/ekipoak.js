@@ -88,7 +88,7 @@ function editatu(ekipoa) {
     const modalBody = document.querySelector('#ekipoModal .modal-body');
     modalBody.innerHTML = `
     <form id="formEditKokaleku" class="needs-validation" novalidate>
-      <div class="mb-3">
+      <div class="mb-3" hidden>
         <label class="form-label"><strong>ID</strong></label>
         <input disabled type="text" class="form-control" id="idInput" value="${ekipoa.id}">
       </div>
