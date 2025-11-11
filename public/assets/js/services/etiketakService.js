@@ -35,16 +35,29 @@ const etiketakService = {
     // Erregistro berria sortu
     async create(idEkipamendu, idGela, kopurua, erosketaData, hasieraData, amaieraData) {
         try {
+
             const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ idEkipamendu, idGela, kopurua, erosketaData, hasieraData, amaieraData })
+                body: JSON.stringify({ 
+                    idEkipamendu, 
+                    idGela, 
+                    kopurua, 
+                    erosketaData,
+                    hasieraData,
+                    amaieraData
+                })
             });
+            
             const data = await response.json();
-            if (!response.ok) throw new Error(data.error || 'Gelak: Errorea erregistroa sortzean.');
+            
+            if (!response.ok) {
+                throw new Error(data.error || 'Errorea etiketak sortzean');
+            }
+            
             return data;
         } catch (error) {
-            console.error('Errorea etiketa sortzean:', error);
+            console.error('Errorea etiketak sortzean:', error);
             throw error;
         }
     },
