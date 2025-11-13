@@ -59,7 +59,15 @@
                     </a>
 
                     <div id="profile-menu" class="profile-menu-box card shadow-lg p-3 bg-white border border-secondary rounded-3">
-                        
+                        <p style="margin-bottom: -16px;" name="IzenaAbizena" alt="Erabiltzailearen izena eta abizena">
+                            <?php
+                                if (isset($CURRENT_USER['izena']) && isset($CURRENT_USER['abizena'])) {
+                                    echo htmlspecialchars($CURRENT_USER['izena'] . ' ' . $CURRENT_USER['abizena']);
+                                } else {
+                                    echo 'Erabiltzaile ezezaguna';
+                                }
+                            ?>
+                        </p>
                         <button class="close-btn position-absolute top-0 end-0 m-2 border-0 bg-transparent text-secondary" aria-label="Itxi menua" alt="Itxi menua">
                             <i class="fas fa-times x-cerrar-pront"></i>
                         </button>
