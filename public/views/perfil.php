@@ -12,7 +12,7 @@ $CURRENT_USER = require_auth_view('login');
                         <div class="card-body p-4 p-md-5 bg-white">
                             <div class="row">
                                 <div class="col-md-4 text-center mb-4 mb-md-0 border-end pe-4 nombre-perfil">
-                                    <img src="../assets/img/perfil/perfil.png" alt="Foto de Perfil" class="rounded-circle mb-3 border border-4 border-secondary">
+                                    <img src="./assets/img/perfil/perfil.png" alt="Foto de Perfil" class="rounded-circle mb-3 border border-4 border-secondary">
                                     <h3 id="erabiltzailea" class="fw-bold mb-1 text-uppercase"></h3>
                                     <p class="text-primary fw-medium small text-muted" id="rola"></p>
                                 </div>
@@ -51,4 +51,4 @@ $CURRENT_USER = require_auth_view('login');
 
 <?php require_once "partials/footer.php" ?>
 
-<script src="../assets/js/profileLoad.js"></script>
+<script src="./assets/js/profileLoad.js"></script>

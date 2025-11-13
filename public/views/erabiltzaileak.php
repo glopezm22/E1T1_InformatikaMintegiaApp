@@ -36,7 +36,7 @@ $CURRENT_USER = require_admin_view('login', 'home');
     </div>
   </div>
 </main>
-<script type="module" src="../assets/js/erabiltzaileak.js"></script>
+<script type="module" src="./assets/js/erabiltzaileak.js"></script>
 <?php require_once "partials/footer.php" ?>
 
 

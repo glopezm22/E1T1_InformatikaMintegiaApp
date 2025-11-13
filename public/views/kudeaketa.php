@@ -111,7 +111,7 @@ $CURRENT_USER = require_auth_view('login');
   </main>
 </div>
 
-<script type="module" src="../assets/js/kudeaketa.js"></script>
+<script type="module" src="./assets/js/kudeaketa.js"></script>
 <?php require_once "partials/footer.php" ?>
 
 <!-- Modal editatzeko -->

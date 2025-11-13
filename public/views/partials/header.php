@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../assets/img/icon/icon.ico" />
-    <link rel="stylesheet" href="../assets/vendor/bootstrap.min.css" />
+    <link rel="icon" href="./assets/img/icon/icon.ico" />
+    <link rel="stylesheet" href="./assets/vendor/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="..." crossorigin="anonymous" />
-    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
     <title>FP Santurtzi LH</title>
 </head>
 <body>
 <header>
     <nav class="navbar navbar-expand-lg pb-3 fixed-top">
         
-        <a class="navbar-brand ms-5" href="home" alt="Orri printzipalera joan"><img src="../assets/img/logo/FPSanturtzi_Logo.png" alt="FP Santurtzi LH logoa" /></a>
+        <a class="navbar-brand ms-5" href="home" alt="Orri printzipalera joan"><img src="./assets/img/logo/FPSanturtzi_Logo.png" alt="FP Santurtzi LH logoa" /></a>
         
         <button class="navbar-toggler custom-transition collapsed"
                 type="button" 
@@ -55,7 +55,7 @@
             <ul class="navbar-nav ms-5 mb-2 mb-lg-0">
                 <li class="perfil d-none d-lg-block position-relative">
                     <a href="#" id="profile-toggle" class="profile-toggle d-block">
-                        <img src="../assets/img/perfil/perfil.png" alt="Nire perfila-ren argazkia" />
+                        <img src="./assets/img/perfil/perfil.png" alt="Nire perfila-ren argazkia" />
                     </a>
 
                     <div id="profile-menu" class="profile-menu-box card shadow-lg p-3 bg-white border border-secondary rounded-3">

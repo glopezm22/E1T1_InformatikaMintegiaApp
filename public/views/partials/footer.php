@@ -3,7 +3,7 @@
             <div class="row text-center text-md-start">
 
                 <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <img src="../assets/img/logo/FPSanturtzi_Logo_White.png" 
+                    <img src="./assets/img/logo/FPSanturtzi_Logo_White.png" 
                         alt="FP Santurtzi LH Logoa" 
                         class="img-fluid mb-5" 
                         style="max-width: 150px;" />
@@ -57,7 +57,7 @@
             </div>
         </div>
     </footer>
-    <script src="../assets/vendor/bootstrap.min.js"></script>
-    <script src="../assets/js/profile.js"></script>
+    <script src="./assets/vendor/bootstrap.min.js"></script>
+    <script src="./assets/js/profile.js"></script>
 </body>
 </html>
