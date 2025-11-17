@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderizarKokalekuak(kokalekuak);
     renderizarKategoriak(kategoriak);
     renderizarGelak(gelak);
+
+    document.querySelector('#sumarGela').addEventListener('click', sortuGela);
+    document.querySelector('#sumarKategoria').addEventListener('click', sortuKategoria);
   } catch (errorea) {
     console.error('Errorea datuak kargatzean:', errorea);
   }
@@ -37,8 +40,8 @@ function renderizarKokalekuak(kokalekuak) {
       <td>${p.amaieraData || '-'}</td>
       <td>
         <div class="d-flex gap-3 justify-content-end">
-          <button class="btnEditatu btn btn-sm btn-outline-secondary"><i class="fa-solid fa-pen-to-square"></i></button>
-          <button class="btnEzabatu btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
+          <button aria-label="Editatu" title="Editatu" class="btnEditatu btn btn-sm btn-outline-secondary"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button aria-label="Ezabatu" title="Ezabatu" class="btnEzabatu btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
         </div>
       </td>
     `;
@@ -60,8 +63,8 @@ function renderizarKategoriak(kategoriak) {
       <td>${k.izena}</td>
       <td>
         <div class="d-flex gap-3 justify-content-end">
-          <button class="btnEditatu btn btn-sm btn-outline-secondary"><i class="fa-solid fa-pen-to-square"></i></button>
-          <button class="btnEzabatu btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
+          <button aria-label="Editatu" title="Editatu" class="btnEditatu btn btn-sm btn-outline-secondary"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button aria-label="Ezabatu" title="Ezabatu" class="btnEzabatu btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
         </div>
       </td> 
     `;
@@ -84,8 +87,8 @@ function renderizarGelak(gelak) {
       <td>${g.taldea}</td>
       <td>
         <div class="d-flex gap-3 justify-content-end">
-          <button class="btnEditatu btn btn-sm btn-outline-secondary"><i class="fa-solid fa-pen-to-square"></i></button>
-          <button class="btnEzabatu btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
+          <button aria-label="Editatu" title="Editatu" class="btnEditatu btn btn-sm btn-outline-secondary"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button aria-label="Ezabatu" title="Ezabatu" class="btnEzabatu btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
         </div>
       </td>
     `;
@@ -110,19 +113,19 @@ function editatuKokaleku(kokalekua) {
   modalBody.innerHTML = `
     <form id="formEditKokaleku" class="needs-validation" novalidate>
       <div class="mb-3">
-        <label class="form-label"><strong>Etiketa</strong></label>
+        <label for="etiketaInput" class="form-label"><strong>Etiketa</strong></label>
         <input disabled type="text" class="form-control" id="etiketaInput" value="${kokalekua.etiketa}">
       </div>
       <div class="mb-3">
-        <label class="form-label"><strong>Gela</strong></label>
+        <label for="idGelaInput" class="form-label"><strong>Gela</strong></label>
         <select class="form-select" id="idGelaInput" value="${kokalekua.idGela}"></select>
       </div>
       <div class="mb-3">
-        <label class="form-label"><strong>Hasiera data</strong></label>
-        <input type="date" class="form-control" id="hasieraInput" value="${kokalekua.hasieraData}" required>
+        <label for="hasieraInput" class="form-label"><strong>Hasiera data</strong></label>
+        <input disabled type="date" class="form-control" id="hasieraInput" value="${kokalekua.hasieraData}">
       </div>
       <div class="mb-3">
-        <label class="form-label"><strong>Amaiera data</strong></label>
+        <label for="amaieraInput" class="form-label"><strong>Amaiera data</strong></label>
         <input type="date" class="form-control" id="amaieraInput" value="${kokalekua.amaieraData}" required>
       </div>
     </form>
@@ -154,16 +157,16 @@ function editatuGela(gela) {
   modalBody.innerHTML = `
       <form id="formEditKokaleku" class="needs-validation" novalidate>
         <div class="mb-3">
-          <label class="form-label"><strong>ID</strong></label>
+          <label for="idGelaInput" class="form-label"><strong>ID</strong></label>
           <input disabled type="text" class="form-control" id="idGelaInput" value="${gela.id}">
         </div>
         <div class="mb-3">
-          <label class="form-label"><strong>Izena</strong></label>
-          <input type="text" class="form-control" id="izenaInput" value="${gela.izena}" required>
+          <label for="izenaInput" class="form-label"><strong>Izena</strong></label>
+          <input type="text" class="form-control" id="izenaInput" value="${gela.izena}" maxlength="4" required>
         </div>
         <div class="mb-3">
-          <label class="form-label"><strong>Taldea</strong></label>
-          <input type="text" class="form-control" id="taldeaInput" value="${gela.taldea}" required>
+          <label for="taldeaInput" class="form-label"><strong>Taldea</strong></label>
+          <input type="text" class="form-control" id="taldeaInput" value="${gela.taldea}" maxlength="5" required>
         </div>
       </form>
   `;
@@ -184,16 +187,67 @@ function editatuKategoria(kategoria) {
   modalBody.innerHTML = `
     <form id="formEditKokaleku" class="needs-validation" novalidate>
       <div class="mb-3">
-        <label class="form-label"><strong>ID</strong></label>
+        <label for="idKategoriaInput" class="form-label"><strong>ID</strong></label>
         <input disabled type="text" class="form-control" id="idKategoriaInput" value="${kategoria.id}">
       </div>
       <div class="mb-3">
-        <label class="form-label"><strong>izena</strong></label>
+        <label for="izenaKategoriaInput" class="form-label"><strong>izena</strong></label>
         <input type="text" class="form-control" id="izenaKategoriaInput" value="${kategoria.izena}" required>
       </div>
     </form>
   `;
   
+  modal.show();
+}
+
+
+//Modal sortu Gela
+function sortuGela() {
+  const modalElement = document.getElementById('kudeaketaModal');
+  modalElement.dataset.mota = 'gela';
+  modalElement.dataset.modo = 'sortu';
+  const modal = new bootstrap.Modal(modalElement);
+
+  const modalTitle = document.querySelector('#inbentarioaModalLabel');
+  modalTitle.textContent = 'Gela berria sortu';
+
+  const modalBody = document.querySelector('#kudeaketaModal .modal-body');
+  modalBody.innerHTML = `
+    <form id="formSortuGela" class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label for="izenaInput" class="form-label"><strong>Izena</strong></label>
+        <input type="text" class="form-control" id="izenaInput" required maxlength="4" required>
+      </div>
+      <div class="mb-3">
+        <label for="taldeaInput" class="form-label"><strong>Taldea</strong></label>
+        <input type="text" class="form-control" id="taldeaInput" required maxlength="5" required>
+      </div>
+    </form>
+  `;
+
+  modal.show();
+}
+
+//Modal sortu Kategoria
+function sortuKategoria() {
+  const modalElement = document.getElementById('kudeaketaModal');
+  modalElement.dataset.mota = 'kategoria';
+  modalElement.dataset.modo = 'sortu';
+  const modal = new bootstrap.Modal(modalElement);
+
+  const modalTitle = document.querySelector('#inbentarioaModalLabel');
+  modalTitle.textContent = 'Kategoria berria sortu';
+
+  const modalBody = document.querySelector('#kudeaketaModal .modal-body');
+  modalBody.innerHTML = `
+    <form id="formSortuKategoria" class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label for="izenaKategoriaInput" class="form-label"><strong>Izena</strong></label>
+        <input type="text" class="form-control" id="izenaKategoriaInput" required>
+      </div>
+    </form>
+  `;
+
   modal.show();
 }
 
@@ -234,11 +288,13 @@ function confirmEzabatuModal(item) {
 
 //EKINTZAK
 
-//Editatutako datuak gordetzeko
+//Editatutako eta sortutako datuak gordetzeko
+//Modo bidez sortu edo editatu. EZ BADA SORTU EDITATU DA DEFEKTU
 //Mota bidez ze Service deitzen den erabakitzen da
 async function gordeDatuak() {
   const modalElement = document.getElementById('kudeaketaModal');
   const mota = modalElement.dataset.mota;
+  const modo = modalElement.dataset.modo || 'editatu';
   const form = modalElement.querySelector('form');
 
   if (!form.checkValidity()) {
@@ -248,11 +304,11 @@ async function gordeDatuak() {
 
   try {
     if (mota === 'gela') {
-      await gordeGela();
+      modo === 'sortu' ? await sortuGelaBerria() : await gordeGela();
     } else if (mota === 'kokaleku') {
-      await gordeKokalekua();
+      modo === 'sortu' ? await sortuKokalekuBerria() : await gordeKokalekua();
     } else if (mota === 'kategoria') {
-      await gordeKategoria();
+      modo === 'sortu' ? await sortuKategoriaBerria() : await gordeKategoria();
     }
     
     const modal = bootstrap.Modal.getInstance(document.getElementById('kudeaketaModal'));
@@ -264,7 +320,10 @@ async function gordeDatuak() {
   }
 }
 
+
 //Service-ra deitzen da eta bidali baino lehen balidazioak
+
+//EDITATZEKO FUNTZIOAK
 async function gordeGela() {
   const id = document.querySelector('#idGelaInput').value;
   const izena = document.querySelector('#izenaInput').value.trim();
@@ -274,12 +333,16 @@ async function gordeGela() {
     alert('Izena falta da');
     return;
   }
-  if (izena.length < 2) {
-    alert('izena 2 eta 4 karaktearen artean izan behar ditu');
+  if (izena.length > 4) {
+    alert('Izena ezin da 4 karaktere baino gehiago izan');
     return;
   }
   if (!taldea) {
     alert('Taldea falta da');
+    return;
+  }
+  if (taldea.length > 5) {
+    alert('Taldea ezin da 5 karaktere baino gehiago izan');
     return;
   }
 
@@ -319,3 +382,33 @@ async function gordeKategoria() {
 
 document.querySelector('#btnGorde').addEventListener('click', gordeDatuak);
 
+//SORTZEKO FUNTZIOAK
+
+async function sortuKokalekuBerria() {
+  const etiketa = document.querySelector('#etiketaInput').value.trim();
+  const idGela = document.querySelector('#idGelaInput').value;
+  const hasieraData = document.querySelector('#hasieraInput').value;
+  const amaieraData = document.querySelector('#amaieraInput').value;
+
+  if (!etiketa) {
+    alert('Etiketa falta da');
+    return;
+  }
+  if (!idGela) {
+    alert('Gela hautatu behar da');
+    return;
+  }
+
+  await kokalekuakService.create( etiketa, idGela, hasieraData, amaieraData );
+}
+
+async function sortuGelaBerria() {
+  const izena = document.querySelector('#izenaInput').value.trim();
+  const taldea = document.querySelector('#taldeaInput').value.trim();
+  await gelakService.create( izena, taldea );
+}
+
+async function sortuKategoriaBerria() {
+  const izena = document.querySelector('#izenaKategoriaInput').value.trim();
+  await kategoriakService.create( izena );
+}

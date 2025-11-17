@@ -212,7 +212,7 @@ function editatuErabiltzailea(erabiltzailea) {
 function confirmEzabatuModal(item) {
     const modalTitle = document.querySelector('#ezabatuModalLabel');
 
-    modalTitle.textContent = `${item.etiketa} produktua ezabatuko duzu`;
+    modalTitle.textContent = `${item.nan} produktua ezabatuko duzu`;
 
     const modal = new bootstrap.Modal(document.getElementById('ezabatuModal'));
     modal.show();
@@ -220,8 +220,8 @@ function confirmEzabatuModal(item) {
     const confirmBtn = document.querySelector('#confirmEzabatuBtn');
     confirmBtn.onclick = async () => {
         try {
-            if (item.etiketa) {
-                await inbentarioaService.delete(item.etiketa);
+            if (item.nan) {
+                await erabiltzaileakService.delete(item.nan);
             }
 
             modal.hide();
