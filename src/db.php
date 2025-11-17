@@ -21,7 +21,7 @@ class DB {
      */
     public function __construct()
     {
-        $cfgFile = __DIR__ . '/../secrets/db_credentials.php';
+        $cfgFile = __DIR__ . '/secrets/db_credentials.php';
         if (is_file($cfgFile)) {
             $cfg = require $cfgFile;
             $this->host = $cfg['host'];
