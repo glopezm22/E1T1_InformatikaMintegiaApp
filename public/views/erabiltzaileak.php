@@ -16,7 +16,7 @@ $CURRENT_USER = require_admin_view('login', 'home');
         <input type="text" class="form-control bilatuInput" placeholder="NAN, Izena edo Erabiltzaile bidez bilatu ...">
         <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
       </div>
-      <div style="overflow-y: auto; max-height: 500px;">
+     <div class="scroll-container">
         <table class="table table-hover" id="tabla-erabiltzaileak">
           <thead>
             <tr>

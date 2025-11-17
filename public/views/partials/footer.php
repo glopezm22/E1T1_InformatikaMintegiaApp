@@ -3,10 +3,7 @@
             <div class="row text-center text-md-start">
 
                 <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <img src="./assets/img/logo/FPSanturtzi_Logo_White.png" 
-                        alt="FP Santurtzi LH Logoa" 
-                        class="img-fluid mb-5" 
-                        style="max-width: 150px;" />
+                    <img src="./assets/img/logo/FPSanturtzi_Logo_White.png" alt="FP Santurtzi LH Logoa" class="img-fluid mb-5 logo-footer">
                     <p class="text-white-50">
                         Santurtziko Lanbide Heziketa. Berrikuntza eta enplegua.
                     </p>

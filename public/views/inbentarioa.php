@@ -12,7 +12,7 @@ $CURRENT_USER = require_auth_view('login');
         <input type="text" class="form-control bilatuInput" placeholder="Etiketa bidez bilatu ...">
         <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
       </div>
-      <div style="overflow-y: auto; max-height: 500px;">
+      <div class="scroll-container">
         <table class="table table-hover" id="tabla-inbentarioa">
           <thead>
             <tr>

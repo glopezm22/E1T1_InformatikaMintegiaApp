@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./assets/vendor/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="..." crossorigin="anonymous" />
     <link rel="stylesheet" href="./assets/css/styles.css" />
+     <script src="./assets/js/modoIluna.js"></script>
     <title>FP Santurtzi LH</title>
 </head>
 <body>
@@ -33,7 +34,7 @@
         
         <div class="collapse navbar-collapse me-5 ms-5 ms-lg-0 mt-3 mt-lg-0" id="mainMenu">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> 
-                <hr class="-none d-lg-block">
+                
                 <li class="nav-item">
                     <a class="nav-link" href="./inbentarioa" alt="Inbentariora joan">Inbentarioa</a>
                 </li>
@@ -59,7 +60,7 @@
                     </a>
 
                     <div id="profile-menu" class="profile-menu-box card shadow-lg p-3 bg-white border border-secondary rounded-3">
-                        <p style="margin-bottom: -16px;" name="IzenaAbizena" alt="Erabiltzailearen izena eta abizena">
+                        <p  name="IzenaAbizena" title="Erabiltzailearen izena eta abizena">
                             <?php
                                 if (isset($CURRENT_USER['izena']) && isset($CURRENT_USER['abizena'])) {
                                     echo htmlspecialchars($CURRENT_USER['izena'] . ' ' . $CURRENT_USER['abizena']);
