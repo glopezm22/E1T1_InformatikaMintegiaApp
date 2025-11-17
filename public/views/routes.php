@@ -12,6 +12,7 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
 if ($base === '/') $base = '';
 $route = trim(preg_replace('#^' . preg_quote($base) . '#', '', $uri), '/');
+// $route = trim($uri, '/');
 
 // Biderik ez badago -> landing page
 if ($route === '') {

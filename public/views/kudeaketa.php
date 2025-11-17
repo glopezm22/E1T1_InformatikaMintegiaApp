@@ -17,6 +17,7 @@ $CURRENT_USER = require_auth_view('login');
         <div class="col-lg-12 col-md-10">
           <div class="card-erosketacard shadow-xl rounded-3 border-0">
             <div class="card-body p-0">
+              <!-- PESTAINAK -->
               <ul class="nav nav-tabs erosketak flex-column flex-md-row tab-list-custom" id="myTab">
                 <li class="btn-superior-erosketak flex-md-fill">
                   <button class="nav-link active rounded-top-3 px-4" id="tab-opcion1" 
@@ -40,9 +41,12 @@ $CURRENT_USER = require_auth_view('login');
                   </button>
                 </li>
               </ul>
-
+              <!-- GELAK TAB -->
               <div class="tab-content p-3 p-md-5 radius-inferior-5" id="myTabContent">
                 <div class="tab-pane fade show active" id="content-opcion1" aria-labelledby="tab-opcion1">
+                  <div class="mb-4 me-3 d-flex justify-content-end">
+                    <button class="btn btn-sm btnSumar" id="sumarGela" title="Sortu gela berria"><i class="fa-solid fa-plus"></i> Sortu</button>
+                  </div>
                   <div class="table-responsive table-scroll-container">
                     <table class="table table-hover" id="tabla-gelak">
                       <thead>
@@ -59,6 +63,7 @@ $CURRENT_USER = require_auth_view('login');
                   </div>
                 </div>
 
+                <!-- KOKALEKU TAB -->
                 <div class="tab-pane fade" id="content-opcion2" aria-labelledby="tab-opcion2">
                   <div class="table-responsive table-scroll-container">
                     <table class="table table-hover" id="tabla-kokalekuak">
@@ -78,7 +83,11 @@ $CURRENT_USER = require_auth_view('login');
                   </div>
                 </div>
 
+                <!-- KATEGORIA TAB -->
                 <div class="tab-pane fade" id="content-opcion3" aria-labelledby="tab-opcion3">
+                  <div class="mb-4 me-3 d-flex justify-content-end">
+                    <button class="btn btn-sm btnSumar" id="sumarKategoria" title="Sortu kategoria berria"><i class="fa-solid fa-plus"></i> Sortu</button>
+                  </div>
                   <div class="table-responsive table-scroll-container">
                     <table class="table table-hover" id="tabla-kategoriak">
                       <thead>
@@ -105,7 +114,7 @@ $CURRENT_USER = require_auth_view('login');
 <script type="module" src="./assets/js/kudeaketa.js"></script>
 <?php require_once "partials/footer.php" ?>
 
-
+<!-- Modal editatzeko -->
 <div class="modal fade" id="kudeaketaModal" data-mota="" tabindex="-1" aria-labelledby="inbentarioaModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -122,6 +131,7 @@ $CURRENT_USER = require_auth_view('login');
   </div>
 </div>
 
+<!-- Modal ezabatu -->
 <div class="modal fade" id="ezabatuModal" tabindex="-1" aria-labelledby="ezabatuModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">

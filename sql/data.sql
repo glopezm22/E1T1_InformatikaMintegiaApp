@@ -2,41 +2,41 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 -- Kategoriak txertatu (id auto-increment: 1.. 7)
-INSERT INTO kategoria (id,izena) VALUES
-(1, 'Ordenagailua'),
-(2, 'Portatila'),
-(3, 'Teklatua'),
-(4, 'Arratoia'),
-(5, 'Switch'),
-(6, 'Router'),
-(7, 'Beste batzuk');
+INSERT INTO kategoria (izena) VALUES
+('Ordenagailua'),
+('Portatila'),
+('Teklatua'),
+('Arratoia'),
+('Switch'),
+('Router'),
+('Beste batzuk');
 
 -- Gelak txertatu (id auto-increment 1.. 9)
-INSERT INTO gela (id,izena,taldea) VALUES
-(1, 'A203', '2MSS1A'),
-(2, 'A205', '2MSS1B'),
-(3, 'A103', '2MSS2A'),
-(4, 'A204', '2MSS2B'),
-(5, 'A003', '3PAG1'),
-(6, 'A208', '3PAG2'),
-(7, 'A206', '3WAG1'),
-(8, 'A207', '3WAG2'),
-(9, 'A201', '4IAB1');
+INSERT INTO gela (izena,taldea) VALUES
+('A203', '2MSS1A'),
+('A205', '2MSS1B'),
+('A103', '2MSS2A'),
+('A204', '2MSS2B'),
+('A003', '3PAG1'),
+('A208', '3PAG2'),
+('A206', '3WAG1'),
+('A207', '3WAG2'),
+('A201', '4IAB1');
 
 -- Ekipamendua txertatu (id auto-increment, 1ean hasita)
-INSERT INTO ekipamendua (id,izena,deskribapena,marka,modelo,stock,idKategoria) VALUES
-(1, 'PC_Torre_Asus_1', 'Torre Asus básica. CPU i3, 8GB RAM, 256GB SSD.', 'Asus', 'Basic-i3', 10, 1),
-(2, 'PC_Torre_Asus_2', 'Torre Asus básica. CPU i5, 16GB RAM, 512GB SSD.', 'Asus', 'Basic-i5', 5, 1),
-(3, 'PC_Torre_Asus_3', 'Torre Asus básica. CPU i7, 16GB RAM, 1TB HDD.', 'Asus', 'Basic-i7', 3, 1),
-(4, 'Portatil_MSI_1', 'Portátil MSI para docencia. Ryzen 5, 8GB, 512GB.', 'MSI', 'Edu-5', 6, 2),
-(5, 'Portatil_MSI_2', 'Portátil MSI. Ryzen 7, 16GB, 1TB.', 'MSI', 'Edu-7', 2, 2),
-(6, 'Teklatu_Subblim_1', 'Teclado Subblim básico, USB.', 'Subblim', 'KB-basic', 25, 3),
-(7, 'Teklatu_Subblim_2', 'Teclado Subblim compacto, USB.', 'Subblim', 'KB-compact', 15, 3),
-(8, 'Arratoi_Subblim_1', 'Ratón Subblim óptico, USB.', 'Subblim', 'MS-optic', 30, 4),
-(9, 'Switch_Cisco_1', 'Switch Cisco 24 puertos gestionable.', 'Cisco', 'SG24', 4, 5),
-(10,'Switch_Cisco_2', 'Switch Cisco 8 puertos no gestionable.', 'Cisco', 'NG8', 6, 5),
-(11,'Router_Linksys_1','Router Linksys para red aula.', 'Linksys', 'LR100', 3, 6),
-(12,'Monitor_BrandX_1','Monitor 24" (categoria: Beste batzuk).', 'BrandX', 'M24', 12, 7);
+INSERT INTO ekipamendua (izena,deskribapena,marka,modelo,stock,idKategoria) VALUES
+('PC_Torre_Asus_1', 'Torre Asus básica. CPU i3, 8GB RAM, 256GB SSD.', 'Asus', 'Basic-i3', 10, 1),
+('PC_Torre_Asus_2', 'Torre Asus básica. CPU i5, 16GB RAM, 512GB SSD.', 'Asus', 'Basic-i5', 5, 1),
+('PC_Torre_Asus_3', 'Torre Asus básica. CPU i7, 16GB RAM, 1TB HDD.', 'Asus', 'Basic-i7', 3, 1),
+('Portatil_MSI_1', 'Portátil MSI para docencia. Ryzen 5, 8GB, 512GB.', 'MSI', 'Edu-5', 6, 2),
+('Portatil_MSI_2', 'Portátil MSI. Ryzen 7, 16GB, 1TB.', 'MSI', 'Edu-7', 2, 2),
+('Teklatu_Subblim_1', 'Teclado Subblim básico, USB.', 'Subblim', 'KB-basic', 25, 3),
+('Teklatu_Subblim_2', 'Teclado Subblim compacto, USB.', 'Subblim', 'KB-compact', 15, 3),
+('Arratoi_Subblim_1', 'Ratón Subblim óptico, USB.', 'Subblim', 'MS-optic', 30, 4),
+('Switch_Cisco_1', 'Switch Cisco 24 puertos gestionable.', 'Cisco', 'SG24', 4, 5),
+('Switch_Cisco_2', 'Switch Cisco 8 puertos no gestionable.', 'Cisco', 'NG8', 6, 5),
+('Router_Linksys_1','Router Linksys para red aula.', 'Linksys', 'LR100', 3, 6),
+('Monitor_BrandX_1','Monitor 24" (categoria: Beste batzuk).', 'BrandX', 'M24', 12, 7);
 
 -- Inbentarioa txertatu (etiketa bakarrak), ausazko erosketa-data berriekin
 INSERT INTO inbentarioa (etiketa,idEkipamendu,erosketaData) VALUES

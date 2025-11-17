@@ -65,7 +65,7 @@ CREATE TABLE `erabiltzailea` (
 CREATE TABLE `gela` (
   `id` int NOT NULL AUTO_INCREMENT,
   `izena` varchar(4) NOT NULL,
-  `taldea` varchar(5) DEFAULT NULL,
+  `taldea` varchar(6) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

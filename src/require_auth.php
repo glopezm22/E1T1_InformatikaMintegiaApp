@@ -5,6 +5,16 @@
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/models/Erabiltzaile.php';
 
+// Configuración segura de cookie de sesión para subdominios
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '.talde1.edu',
+    'secure' => true,
+    'httponly' => true,
+    'samesite' => 'None'
+]);
+
 if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 
 $db = new DB();
@@ -29,7 +39,14 @@ function _rebuild_session_from_cookie($model) {
         ];
     } else {
         // token baliogabea/iraila: cookie-a ezabatzen dugu
-        setcookie('remember_me', '', time() - 3600, '/', '', false, true);
+        setcookie('remember_me', '', [
+            'expires' => time() - 3600,
+            'path' => '/',
+            'domain' => '.talde1.edu', // MODIFICADO: para subdominios
+            'secure' => true,
+            'httponly' => true,
+            'samesite' => 'None'
+        ]);
         unset($_COOKIE['remember_me']);
     }
 }
