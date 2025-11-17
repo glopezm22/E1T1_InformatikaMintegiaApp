@@ -91,7 +91,23 @@ $CURRENT_USER = require_admin_view('login', 'home');
   </div>
 </div>
 
-
+<!-- Pasahitza aldatzeko modal -->
+<div class="modal fade" id="erabiltzaileakPasahitzaModal" data-mota="" tabindex="-1" aria-labelledby="erabiltzaileakPasahitzaModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-between">
+        <h5 class="modal-title" id="erabiltzaileakPasahitzaModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- modalaren edulia hemen agertzen da -->
+      </div>
+      <div class="modal-footer">
+        <button id="btnAldatu" type="button" class="btn btn-primary">Aldatu</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Ezabatzeko modal -->
 <div class="modal fade" id="ezabatuModal" tabindex="-1" aria-labelledby="ezabatuModalLabel" aria-hidden="true">

@@ -1,6 +1,6 @@
 <?php
 
-header("Access-Control-Allow-Origin: http://talde1.edu");
+header("Access-Control-Allow-Origin: https://app.talde1.edu");
 header("Access-Control-Allow-Credentials: true");
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
@@ -21,7 +21,7 @@ class DB {
      */
     public function __construct()
     {
-        $cfgFile = __DIR__ . '/../secrets/db_credentials.php';
+        $cfgFile = __DIR__ . '/secrets/db_credentials.php';
         if (is_file($cfgFile)) {
             $cfg = require $cfgFile;
             $this->host = $cfg['host'];

@@ -38,7 +38,7 @@
 
             const resp = await fetch(apiUrl, {
                 method: 'POST',
-                credentials: 'same-origin',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'

@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const res = await fetch('../../src/controllers/AuthController.php?action=logout', {
                 method: 'POST',
-                credentials: 'same-origin'
+                credentials: 'include'
             });
             const data = await res.json();
             //alert(data.message || 'Saioa itxi da.');

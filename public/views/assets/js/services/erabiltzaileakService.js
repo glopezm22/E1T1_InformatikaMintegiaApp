@@ -66,6 +66,23 @@ const erabiltzaileakService = {
         }
     },
 
+    // Pasahitza eguneratu
+    async updatePasahitza(nan, pasahitza, pasahitzaKonfirm) {
+        try {
+            const response = await fetch(API_URL, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nan, pasahitza, pasahitzaKonfirm })
+            });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.error || 'Erabiltzaileak: Errorea pasahitza eguneratzean.');
+            return data;
+        } catch (error) {
+            console.error('Errorea pasahitza eguneratzean:', error);
+            throw error;
+        }
+    },
+
     // Erregistroa ezabatu
     async delete(nan) {
         try {
