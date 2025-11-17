@@ -9,7 +9,7 @@
         try {
             const res = await fetch('../../src/controllers/AuthController.php?action=me', {
                 method: 'GET',
-                credentials: 'same-origin'
+                credentials: 'include'
             });
             const data = await res.json();
 
