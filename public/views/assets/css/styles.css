@@ -95,11 +95,6 @@ th {
     overflow-x: auto;
 }
 
-.scroll-container {
-    overflow-y: auto;
-    max-height: 500px;
-}
-
 .table-scroll-container .table thead th {
     position: sticky;
     top: 0;
@@ -291,10 +286,6 @@ header .index-navbar {
     cursor: pointer;
 }
 
-.profile-menu-box .user-name {
-    margin-bottom: -16px;
-}
-
 .x-cerrar-pront {
     transition: 300ms;
 }
@@ -338,10 +329,6 @@ footer a.text-white-50:hover {
 .btn-social:hover {
     background-color: white !important;
     color: #000000 !important;
-}
-
-.logo-footer {
-    max-width: 150px;
 }
 
 /* ----------- */
@@ -664,6 +651,29 @@ footer a.text-white-50:hover {
 }
 
 /* --------- */
+/* SPAN */
+.mensajeError{
+    display: none;
+    text-align: center;
+    background-color: rgb(255, 155, 155);
+    color: rgb(82, 0, 0);
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid rgb(82, 0, 0);
+}
+
+.mensajeSuccess{
+    display: none;
+    text-align: center;
+    background-color: rgb(163, 255, 155);
+    color: rgb(0, 82, 4);
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid rgb(0, 82, 4);
+}
+/* -------- */
 
 /* ---------- MODO OSCURO ---------- */
 body.dark-mode {

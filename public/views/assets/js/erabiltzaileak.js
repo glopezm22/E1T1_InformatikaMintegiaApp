@@ -49,12 +49,14 @@ function renderizarTabla(erabiltzaileak) {
             <td>${rolaTxt}</td>
             <td>
                 <div class="d-flex gap-3 justify-content-end"> 
-                    <button class="btnIkusi btn btn-sm btn-warning" alt='Informazio gehiago'><i class="fa-solid fa-eye"></i></button>
-                    <button class="btnEditatu btn btn-sm btn-warning" alt='Editatu objektua'><i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="btnEzabatu btn btn-sm btn-danger" alt='Ezabatu objektua'><i class="fa-solid fa-trash"></i></button>
+                    <button class="btnEtiketatu btn btn-sm btn-warning" title='Editatu pasahitza' aria-label='Editatu pasahitza'><i class="fa-solid fa-key"></i></button>
+                    <button class="btnIkusi btn btn-sm btn-warning" title='Informazio gehiago' aria-label='Informazio gehiago'><i class="fa-solid fa-eye"></i></button>
+                    <button class="btnEditatu btn btn-sm btn-warning" title='Editatu objektua' aria-label='Editatu objektua'><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button class="btnEzabatu btn btn-sm btn-danger" title='Ezabatu objektua' aria-label='Ezabatu objektua'><i class="fa-solid fa-trash"></i></button>
                 </div>
             </td>
     `;
+        tr.querySelector('.btnEtiketatu').addEventListener('click', () => editatuPasahitza(e));
         tr.querySelector('.btnIkusi').addEventListener('click', () => ikusi(e));
         tr.querySelector('.btnEditatu').addEventListener('click', () => editatuErabiltzailea(e));
         tr.querySelector('.btnEzabatu').addEventListener('click', () => confirmEzabatuModal(e));
@@ -62,7 +64,39 @@ function renderizarTabla(erabiltzaileak) {
     });
 }
 
+//Modal Pasahitza Editatu
+function editatuPasahitza(erabiltzailea) {
+    const modalElement = document.getElementById('erabiltzaileakPasahitzaModal');
+    const modal = new bootstrap.Modal(modalElement);
 
+    const modalTitle = document.querySelector('#erabiltzaileakPasahitzaModalLabel');
+    modalTitle.textContent = 'Pasahitza aldatu';
+
+    const modalBody = document.querySelector('#erabiltzaileakPasahitzaModal .modal-body');
+
+    modalBody.innerHTML = `
+    <form id="formEditPasahitza" class="needs-validation" novalidate>
+        <span class="mensajeError"></span>
+        <span class="mensajeSuccess"></span>
+        <div class="mb-3">
+            <label class="form-label"><strong>NAN:</strong></label>
+            <input disabled type="text" class="form-control" id="nanErabiltzaileakPasahitzaInput" value="${erabiltzailea.nan}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><strong>Pasahitza:</strong></label>
+            <input type="password" class="form-control" id="pasahitzaErabiltzaileakPasahitzaInput">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><strong>Pasahitza Errepikatu:</strong></label>
+            <input type="password" class="form-control" id="pasahitzaRepeErabiltzaileakPasahitzaInput">
+        </div>
+    </form>
+`;
+
+    modal.show();
+}
+
+// Modal Ikusi
 function ikusi(erabiltzailea) {
     const modalBody = document.querySelector('#erabiltzaileakModal .modal-body');
     let rolaTxt = '';
@@ -82,7 +116,7 @@ function ikusi(erabiltzailea) {
     modal.show();
 }
 
-//Modal Inbentarioa
+//Modal Erabiltzailea Gehitu
 function gehituErabiltzailea() {
     const modalElement = document.getElementById('erabiltzaileakGehitzekoModal');
     const modal = new bootstrap.Modal(modalElement);
@@ -94,6 +128,8 @@ function gehituErabiltzailea() {
 
     modalBody.innerHTML = `
     <form id="formGehitzekoErabiltzaileak" class="needs-validation" novalidate>
+        <span class="mensajeError"></span>
+        <span class="mensajeSuccess"></span>
         <div class="mb-3">
             <label class="form-label"><strong>NAN:</strong></label>
             <input type="text" class="form-control" id="nanErabiltzaileakInput">
@@ -162,8 +198,8 @@ function editatuErabiltzailea(erabiltzailea) {
         <div class="mb-3">
             <label class="form-label"><strong>Rola:</strong></label>
             <select id="selectEditRola" class="form-select">
-                <option value="A" ${erabiltzailea.rola === 'A' ? 'selected' : ''}>Admin</option>
-                <option value="U" ${erabiltzailea.rola === 'U' ? 'selected' : ''}>User</option>
+                <option value="A" ${erabiltzailea.rola === 'A' ? 'selected' : ''}>Administradorea</option>
+                <option value="U" ${erabiltzailea.rola === 'U' ? 'selected' : ''}>Erabiltzailea</option>
             </select>
         </div>
     </form>
@@ -197,19 +233,6 @@ function confirmEzabatuModal(item) {
     };
 }
 
-async function gordeDatuakUpdate() {
-    try {
-        await updateErabiltzailea();
-
-        const modal = bootstrap.Modal.getInstance(document.getElementById('erabiltzaileakEditatuModal'));
-        modal.hide();
-        location.reload();
-    } catch (errorea) {
-        console.error('Errorea datuak gordetzean:', errorea);
-        alert('Errorea datuak gordetzean');
-    }
-}
-
 //Service-ra deitzen da eta bidali baino lehen balidazioak
 async function updateErabiltzailea() {
     const nan = document.querySelector('#nanErabiltzaileakEditInput').value.trim();
@@ -234,65 +257,123 @@ async function updateErabiltzailea() {
     await erabiltzaileakService.update(nan, izena, abizena, erabiltzailea, rola);
 }
 
-async function gordeDatuakSortu() {
-    try {
-        await sortuErabiltzailea();
+//Service-ra deitzen da eta bidali baino lehen balidazioak
+async function updatePasahitza() {
 
-        const modalSortu = bootstrap.Modal.getInstance(document.getElementById('erabiltzaileakGehitzekoModal'));
-        modalSortu.hide();
-        location.reload();
-    } catch (errorea) {
-        console.error('Errorea datuak gordetzean:', errorea);
-        alert('Errorea datuak gordetzean');
+    const nan = document.querySelector('#nanErabiltzaileakPasahitzaInput').value.trim();
+    const pasahitza = document.querySelector('#pasahitzaErabiltzaileakPasahitzaInput');
+    const pasahitzaRepe = document.querySelector('#pasahitzaRepeErabiltzaileakPasahitzaInput');
+    const mensajeError = document.querySelector('.mensajeError');
+    const mensajeSuccess = document.querySelector('.mensajeSuccess');
+
+    if (!pasahitza.value.trim()) {
+        pasahitza.style.border = '1px solid red';
+        document.querySelector('#pasahitzaRepeErabiltzaileakPasahitzaInput').style.border = '1px solid grey';
+        mensajeError.style.display = 'block';
+        mensajeError.innerHTML = 'Pasahitza bat sartu behar da';
+        return;
     }
+
+    if (pasahitza.value.trim().length < 6 || pasahitza.value.trim().length > 20) {
+        pasahitza.style.border = '1px solid red';
+        pasahitzaRepe.style.border = '1px solid grey';
+        mensajeError.style.display = 'block';
+        mensajeError.innerHTML = 'Pasahitza 6-20 caractereen artean egon behar da';
+        return;
+    }
+
+    if (!pasahitzaRepe.value.trim()) {
+        pasahitzaRepe.style.border = '1px solid red';
+        pasahitza.style.border = '1px solid grey';
+        mensajeError.style.display = 'block';
+        mensajeError.innerHTML = 'Pasahitza Errepikatua sartu behar da';
+        return;
+    }
+
+    if (pasahitza.value.trim() != pasahitzaRepe.value.trim()) {
+        pasahitzaRepe.style.border = '1px solid red';
+        pasahitza.style.border = '1px solid red';
+        mensajeError.style.display = 'block';
+        mensajeError.innerHTML = 'Bi pasahitz berdinak sartu behar da';
+        return;
+    }
+
+    await erabiltzaileakService.updatePasahitza(nan, pasahitza.value.trim(), pasahitzaRepe.value.trim());
+
+    mensajeSuccess.style.display = 'block';
+    mensajeSuccess.innerHTML = 'Pasahitza aldatu da';
 }
 
 //Service-ra deitzen da eta bidali baino lehen balidazioak
 async function sortuErabiltzailea() {
-    const nanSortu = document.querySelector('#nanErabiltzaileakInput').value.trim();
-    const izenaSortu = document.querySelector('#izenaErabiltzaileakInput').value.trim();
-    const abizenaSortu = document.querySelector('#abizenaErabiltzaileakInput').value.trim();
-    const erabiltzaileaSortu = document.querySelector('#erabiltzaileaErabiltzaileakInput').value.trim();
-    const pasahitzaBatSortu = document.querySelector('#pasahitzaBatErabiltzaileakInput').value;
-    const pasahitzaBiSortu = document.querySelector('#pasahitzaBiErabiltzaileakInput').value;
+
+    const nanSortu = document.querySelector('#nanErabiltzaileakInput');
+    const izenaSortu = document.querySelector('#izenaErabiltzaileakInput');
+    const abizenaSortu = document.querySelector('#abizenaErabiltzaileakInput');
+    const erabiltzaileaSortu = document.querySelector('#erabiltzaileaErabiltzaileakInput');
+    const pasahitzaBatSortu = document.querySelector('#pasahitzaBatErabiltzaileakInput');
+    const pasahitzaBiSortu = document.querySelector('#pasahitzaBiErabiltzaileakInput');
     const rolaSortu = document.querySelector('#selectRola').value.trim();
+    const mensajeError = document.querySelector('.mensajeError');
+    const mensajeSuccess = document.querySelector('.mensajeSuccess');
 
-    console.log(nanSortu, izenaSortu, abizenaSortu, erabiltzaileaSortu, pasahitzaBatSortu, rolaSortu);
-
-    if (!pasahitzaBatSortu) {
-        alert('Erabiltzaile pasahitza falta da');
-        return;
-    }
-
-    if (!pasahitzaBiSortu) {
-        alert('Erabiltzaile pasahitza errepikatzea falta da');
-        return;
-    }
-
-    if (pasahitzaBatSortu !== pasahitzaBiSortu) {
-        alert('Bi pasahitzak ez dira berdinak');
-        return;
-    }
-
-    if (!nanSortu) {
-        alert('Erabiltzaile NAN falta da');
+    if (!nanSortu.value.trim()) {
+        nanSortu.style.border = '1px solid red';
+        mensajeError.style.display = 'block';
+        mensajeError.innerHTML = 'Erabiltzaile NAN falta da';
         return;
     }
     // NAN Komprobatzeko egiazkoa den
-    if (!komprobatuNAN(nanSortu)) {
-        alert('Erabiltzaile NAN ez da egokia');
+    if (!komprobatuNAN(nanSortu.value.trim())) {
+        nanSortu.style.border = '1px solid red';
+        mensajeError.style.display = 'block';
+        mensajeError.innerHTML = 'Erabiltzaile NAN ez da egokia';
         return;
     }
-    if (!izenaSortu) {
-        alert('Erabiltzaile izena falta da');
+    if (!izenaSortu.value.trim()) {
+        izenaSortu.style.border = '1px solid red';
+        mensajeError.style.display = 'block';
+        mensajeError.innerHTML = 'Erabiltzaile izena falta da';
         return;
     }
-    if (!abizenaSortu) {
-        alert('Erabiltzaile abizena falta da');
+    if (!abizenaSortu.value.trim()) {
+        abizenaSortu.style.border = '1px solid red';
+        mensajeError.style.display = 'block';
+        mensajeError.innerHTML = 'Erabiltzaile abizena falta da';
         return;
     }
-    if (!erabiltzaileaSortu) {
-        alert('Erabiltzaileen erabiltzaile-izena falta da');
+    if (!erabiltzaileaSortu.value.trim()) {
+        erabiltzaileaSortu.style.border = '1px solid red';
+        mensajeError.style.display = 'block';
+        mensajeError.innerHTML = 'Erabiltzaileen erabiltzaile-izena falta da';
+        return;
+    }
+        if (!pasahitzaBatSortu.value) {
+        pasahitzaBatSortu.style.border = '1px solid red';
+        mensajeError.style.display = 'block';
+        mensajeError.innerHTML = 'Erabiltzaile pasahitza falta da';
+        return;
+    }
+
+    if (pasahitzaBatSortu.value.lenght < 6 || pasahitzaBatSortu.value.lenght > 20) {
+        pasahitzaBatSortu.style.border = '1px solid red';
+        mensajeError.style.display = 'block';
+        mensajeError.innerHTML = 'Erabiltzaile pasahitza 6-20 karaktereen artean egon behar da';
+        return;
+    }
+
+    if (!pasahitzaBiSortu.value) {
+        pasahitzaBiSortu.style.border = '1px solid red';
+        mensajeError.style.display = 'block';
+        mensajeError.innerHTML = 'Erabiltzaile pasahitza errepikatzea falta da';
+        return;
+    }
+
+    if (pasahitzaBatSortu.value !== pasahitzaBiSortu.value) {
+        pasahitzaBiSortu.style.border = '1px solid red';
+        pasahitzaBatSortu.style.border = '1px solid red';
+        mensajeError.style.display = 'block';
+        mensajeError.innerHTML = 'Bi pasahitzak ez dira berdinak';
         return;
     }
     if (!rolaSortu) {
@@ -300,7 +381,10 @@ async function sortuErabiltzailea() {
         return;
     }
 
-    await erabiltzaileakService.create(nanSortu, izenaSortu, abizenaSortu, erabiltzaileaSortu, pasahitzaBatSortu, rolaSortu);
+    await erabiltzaileakService.create(nanSortu.value.trim(), izenaSortu.value.trim(), abizenaSortu.value.trim(), erabiltzaileaSortu.value.trim(), pasahitzaBatSortu.value, rolaSortu);
+
+    mensajeSuccess.style.display = 'block';
+    mensajeSuccess.innerHTML = 'Pasahitza aldatu da';
 }
 
 function komprobatuNAN(dni) {
@@ -330,6 +414,7 @@ function komprobatuNAN(dni) {
     return letraCalculada === letra;
 }
 
-document.querySelector('#btnGorde').addEventListener('click', gordeDatuakUpdate);
-document.querySelector('#btnSortu').addEventListener('click', gordeDatuakSortu);
+document.querySelector('#btnGorde').addEventListener('click', updateErabiltzailea);
+document.querySelector('#btnSortu').addEventListener('click', sortuErabiltzailea);
+document.querySelector('#btnAldatu').addEventListener('click', updatePasahitza);
 document.querySelector('#sumarErabiltzaile').addEventListener('click', gehituErabiltzailea);
