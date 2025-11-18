@@ -39,7 +39,7 @@ $CURRENT_USER = require_admin_view('login', 'home');
 <script type="module" src="./assets/js/erabiltzaileak.js"></script>
 <?php require_once "partials/footer.php" ?>
 
-
+<!-- Ikusi modal -->
 <div class="modal fade" id="erabiltzaileakModal" tabindex="-1" aria-labelledby="erabiltzaileakModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
