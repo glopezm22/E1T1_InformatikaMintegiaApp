@@ -2,8 +2,9 @@ import ekipoakService from './services/ekipoakService.js';
 import kategoriakService from './services/kategoriakService.js';
 import inbentarioaService from './services/inbentarioaService.js';
 import gelakService from './services/gelakService.js'
-import etiketakService from './services/etiketakService.js'; 
+import etiketakService from './services/etiketakService.js';
 
+// Inizializatu zerbitzuak
 let kategoriak = [];
 document.addEventListener('DOMContentLoaded', async () => {
     kategoriak = await kategoriakService.getAll();
@@ -127,6 +128,7 @@ function editatu(ekipoa) {
     </form>
   `;
 
+    //   Atera informazioa taulan
     const select = modalBody.querySelector('#kategoriaInput');
     kategoriak.forEach(g => {
         const option = document.createElement('option');
@@ -140,7 +142,7 @@ function editatu(ekipoa) {
 }
 
 
-
+// Ikusi ekipoen xehetasunak
 function ikusi(ekipoa) {
     const modalBody = document.querySelector('#ekipoakModal .modal-body');
     modalBody.innerHTML = `
@@ -185,7 +187,7 @@ function confirmEzabatuModal(item) {
 
 //Gordetzeko datuak
 async function gordeDatuak(e) {
-    if (e && e.preventDefault) e.preventDefault(); 
+    if (e && e.preventDefault) e.preventDefault();
 
     const modalElement = document.getElementById('ekipoModal');
     const form = modalElement.querySelector('form');
@@ -203,7 +205,7 @@ async function gordeDatuak(e) {
 
     if (!form.checkValidity()) {
         form.classList.add('was-validated');
-        
+
         if (mensajeError) {
             mensajeError.style.display = 'block';
             mensajeError.innerHTML = 'Mesedez bete eremu guztiak';
@@ -232,7 +234,7 @@ async function gordeDatuak(e) {
             const modal = bootstrap.Modal.getInstance(document.getElementById('ekipoModal'));
             modal.hide();
             location.reload();
-        }, 2500); 
+        }, 2500);
     } catch (errorea) {
         console.error('Errorea datuak gordetzean:', errorea);
         if (mensajeError) {
@@ -299,10 +301,10 @@ function gehituEkipoa() {
 
 //ekipoa sortzeko
 async function sortuEkipoa(e) {
-    if (e && e.preventDefault) e.preventDefault(); 
-    
+    if (e && e.preventDefault) e.preventDefault();
+
     const form = document.querySelector('#formGehituEkipoa');
-    
+
     const mensajeError = form.querySelector('.mensajeError');
     const mensajeSuccess = form.querySelector('.mensajeSuccess');
 
@@ -317,7 +319,7 @@ async function sortuEkipoa(e) {
 
     if (!form.checkValidity()) {
         form.classList.add('was-validated');
-        
+
         if (mensajeError) {
             mensajeError.style.display = 'block';
             mensajeError.innerHTML = 'Mesedez bete eremu guztiak';
@@ -346,16 +348,16 @@ async function sortuEkipoa(e) {
             mensajeSuccess.style.display = 'block';
             mensajeSuccess.innerHTML = 'Ekipoa zuzen sortu da!';
         }
-        
+
         setTimeout(() => {
             const modal = bootstrap.Modal.getInstance(document.getElementById('ekipoModalAdd'));
             modal.hide();
             location.reload();
-        }, 2500); 
+        }, 2500);
 
     } catch (errorea) {
         console.error('Errorea ekipoa sortzean:', errorea);
-        
+
         if (mensajeError) {
             mensajeError.style.display = 'block';
             const errorMsg = errorea.message || 'Errore ezezaguna gertatu da ekipoa sortzean.';
@@ -367,7 +369,7 @@ async function sortuEkipoa(e) {
 //Modala etiketatzeko ekipo bat
 async function etiketatu(ekipoa) {
     const stockErabilgarria = await inbentarioaService.getEtiketatuGabe(ekipoa.id);
-    const modalElement = document.getElementById('etiketatuModal'); 
+    const modalElement = document.getElementById('etiketatuModal');
     const modal = new bootstrap.Modal(modalElement);
 
     const modalBody = modalElement.querySelector('.modal-body');
@@ -406,7 +408,7 @@ async function etiketatu(ekipoa) {
       </form>
     `;
 
-
+    // Atera dagien informazioa ekipo horretan
     const select = modalBody.querySelector('#selectKokapena');
     try {
         const gelak = await gelakService.getAll();
@@ -420,63 +422,64 @@ async function etiketatu(ekipoa) {
         alert('Errorea gelak kargatzean');
     }
 
+    // Konprobatu etiketak input ondo dauden
     const btnGorde = modalElement.querySelector('#btnGordeEtiketa');
     btnGorde.onclick = async () => {
-      const form = document.querySelector('#etiketaForm');
-      const mensajeError = form.querySelector('.mensajeError');
-      const mensajeSuccess = form.querySelector('.mensajeSuccess');
+        const form = document.querySelector('#etiketaForm');
+        const mensajeError = form.querySelector('.mensajeError');
+        const mensajeSuccess = form.querySelector('.mensajeSuccess');
 
-        
-    if (mensajeError) {
-        mensajeError.style.display = 'none';
-        mensajeError.innerHTML = '';
-    }
-    if (mensajeSuccess) {
-        mensajeSuccess.style.display = 'none';
-        mensajeSuccess.innerHTML = '';
-    }
 
-    if (!form.checkValidity()) {
-        form.classList.add('was-validated');
-        
         if (mensajeError) {
-            mensajeError.style.display = 'block';
-            mensajeError.innerHTML = 'Mesedez bete eremu guztiak';
+            mensajeError.style.display = 'none';
+            mensajeError.innerHTML = '';
         }
-        return;
-    }
+        if (mensajeSuccess) {
+            mensajeSuccess.style.display = 'none';
+            mensajeSuccess.innerHTML = '';
+        }
+
+        if (!form.checkValidity()) {
+            form.classList.add('was-validated');
+
+            if (mensajeError) {
+                mensajeError.style.display = 'block';
+                mensajeError.innerHTML = 'Mesedez bete eremu guztiak';
+            }
+            return;
+        }
 
         const idGela = select.value;
         const erosketaData = document.querySelector('#etiketaData').value;
         const hasieraData = document.querySelector('#hasieraData').value;
         const amaieraData = document.querySelector('#amaieraData').value;
         const kopurua = parseInt(document.querySelector('#etiketaKopurua').value) || 1;
-        
+
         if (kopurua > ekipoa.stock) {
             alert(`Kopurua ezin da handiagoa izan stock baino (${ekipoa.stock})`);
             return;
         }
 
         try {
-             await etiketakService.create(
-                ekipoa.id, 
-                idGela, 
-                kopurua, 
+            await etiketakService.create(
+                ekipoa.id,
+                idGela,
+                kopurua,
                 erosketaData,
                 hasieraData,
                 amaieraData
             );
-            
-        if (mensajeSuccess) {
-            mensajeSuccess.style.display = 'block';
-            mensajeSuccess.innerHTML = 'Etiketa zuzen sortu da!';
-        }
-        
-        setTimeout(() => {
-            const modal = bootstrap.Modal.getInstance(document.getElementById('etiketatuModal'));
-            modal.hide();
-            location.reload();
-        }, 2500); 
+
+            if (mensajeSuccess) {
+                mensajeSuccess.style.display = 'block';
+                mensajeSuccess.innerHTML = 'Etiketa zuzen sortu da!';
+            }
+
+            setTimeout(() => {
+                const modal = bootstrap.Modal.getInstance(document.getElementById('etiketatuModal'));
+                modal.hide();
+                location.reload();
+            }, 2500);
         } catch (error) {
             showAlert('Errorea sortzean', 'danger');
         }

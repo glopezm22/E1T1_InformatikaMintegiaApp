@@ -14,12 +14,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
+// Sartu bariableetan eta haiserasi taula
 document.addEventListener('DOMContentLoaded', async () => {
   const produktuak = await inbentarioaService.getAll();
 
   renderizarTabla(produktuak);
 });
 
+// Bilatzailearen logika
 document.addEventListener('DOMContentLoaded', () => {
   const inputBusqueda = document.querySelector('.bilatuInput');
   const tabla = document.getElementById('tabla-inbentarioa');
@@ -44,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-
+// Atera taula
 function renderizarTabla(produktuak) {
   const tbody = document.querySelector('#tabla-inbentarioa tbody');
   tbody.innerHTML = '';
@@ -63,6 +65,7 @@ function renderizarTabla(produktuak) {
                 </div>
             </td>
     `;
+    // Botoien akzioak
     tr.querySelector('.btnIkusi').addEventListener('click', () => ikusi(p));
     tr.querySelector('.btnEditatu').addEventListener('click', () => editatuInbentarioa(p));
     tr.querySelector('.btnEzabatu').addEventListener('click', () => confirmEzabatuModal(p));
@@ -70,7 +73,7 @@ function renderizarTabla(produktuak) {
   });
 }
 
-
+// Ikusi inbentarioaren xehetasuna
 function ikusi(produktua) {
   const modalBody = document.querySelector('#inbentarioaModal .modal-body');
   modalBody.innerHTML = `
@@ -82,6 +85,7 @@ function ikusi(produktua) {
   modal.show();
 }
 
+// Editatzeko modala
 function editatuInbentarioa(produktuak) {
   const modalElement = document.getElementById('inbentarioaEditatuModal');
   const modal = new bootstrap.Modal(modalElement);
@@ -111,6 +115,7 @@ function editatuInbentarioa(produktuak) {
 
   const select = modalBody.querySelector('#selectEkipamendua');
 
+  // Ekipoaren baloreak atera
   ekipoak.forEach(e => {
     const option = document.createElement('option');
     option.value = e.id;
@@ -122,6 +127,7 @@ function editatuInbentarioa(produktuak) {
   modal.show();
 }
 
+// Ezabatzeko modala
 function confirmEzabatuModal(item) {
   const modalTitle = document.querySelector('#ezabatuModalLabel');
 
@@ -146,6 +152,7 @@ function confirmEzabatuModal(item) {
   };
 }
 
+// Datuak gordetzeko
 async function gordeDatuak() {
   try {
     const etiketa = document.querySelector('#etiketaInbentarioInput').value.trim();
@@ -210,4 +217,6 @@ async function gordeDatuak() {
     alert('Errorea datuak gordetzean');
   }
 }
+
+// Botiari akzioa ipini
 document.querySelector('#btnGorde').addEventListener('click', gordeDatuak);

@@ -1,11 +1,13 @@
 import gelakService from './services/gelakService.js';
+
+// Sartu bariableeta eta hasierasi taula
 document.addEventListener('DOMContentLoaded', async () => {
     const gelak = await gelakService.getAll();
     renderizarTabla(gelak);
 });
 
 
-
+// Atera taula
 function renderizarTabla(gelak) {
     const tbody = document.querySelector('#tabla-gelak tbody');
     tbody.innerHTML = '';
@@ -25,19 +27,19 @@ function renderizarTabla(gelak) {
                 <button class="btnEditatu"><i class="fa-solid fa-pen-to-square"></i></button>
             </td>
     `;
-    tr.querySelector('.btnIkusi').addEventListener('click', () => ikusi(g));
+        tr.querySelector('.btnIkusi').addEventListener('click', () => ikusi(g));
         tbody.appendChild(tr);
     });
 }
 
-
+// Ikusi xehetasunak
 function ikusi(gela) {
-  const modalBody = document.querySelector('#gelakModal .modal-body');
-  modalBody.innerHTML = `
+    const modalBody = document.querySelector('#gelakModal .modal-body');
+    modalBody.innerHTML = `
     <p><strong>ID:</strong> ${gela.id}</p>
     <p><strong>Izena:</strong> ${gela.izena}</p>
     <p><strong>Taldea:</strong> ${gela.taldea}</p>
   `;
-  const modal = new bootstrap.Modal(document.getElementById('gelakModal'));
-  modal.show();
+    const modal = new bootstrap.Modal(document.getElementById('gelakModal'));
+    modal.show();
 }

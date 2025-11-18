@@ -2,6 +2,7 @@ import ekipoakService from './services/ekipoakService.js'
 import gelakService from './services/gelakService.js'
 import inbentarioService from './services/inbentarioaService.js';
 
+// Gorde bariabletan 
 document.addEventListener('DOMContentLoaded', async () => {
   const produktuak = await ekipoakService.getAll();
   const select1 = document.querySelector('#select1');
@@ -30,31 +31,31 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // formulario inbentarioa
   inbentarioForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const idEkipamendu = select1.value;
-  const idGela = select2.value;
-  const erosketaData = document.querySelector('#erosketaData').value.trim();
-  const kopurua = parseInt(document.querySelector('#numberInput').value) || 1;
+    const idEkipamendu = select1.value;
+    const idGela = select2.value;
+    const erosketaData = document.querySelector('#erosketaData').value.trim();
+    const kopurua = parseInt(document.querySelector('#numberInput').value) || 1;
 
-  // Balidazioak
-  if (!idEkipamendu || !idGela || !erosketaData) {
-    showAlert('Bete eremu guztiak', 'danger');
-    return;
-  }
+    // Balidazioak
+    if (!idEkipamendu || !idGela || !erosketaData) {
+      showAlert('Bete eremu guztiak', 'danger');
+      return;
+    }
 
-  try {
-    const res = await inbentarioService.create(idEkipamendu, idGela, kopurua, erosketaData);
+    try {
+      const res = await inbentarioService.create(idEkipamendu, idGela, kopurua, erosketaData);
 
-    console.log("Erregistro sortuak:", res);
-    showAlert(`${kopurua} etiketa sortu dira`, 'success');
-    inbentarioForm.reset();
+      console.log("Erregistro sortuak:", res);
+      showAlert(`${kopurua} etiketa sortu dira`, 'success');
+      inbentarioForm.reset();
 
-  } catch (error) {
-    console.error('Errorea sortzean:', error);
-    showAlert('Errorea sortzean', 'danger');
-  }
-});
+    } catch (error) {
+      console.error('Errorea sortzean:', error);
+      showAlert('Errorea sortzean', 'danger');
+    }
+  });
 
   //hemen kokapen berria sortzen da balidazioekin
   kokapenaForm.addEventListener('submit', async (e) => {
@@ -94,6 +95,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
+  // Atera alertak 
   function showAlert(message, type = 'info') {
 
     const alertPlaceholder = document.getElementById('alertPlaceholder');

@@ -1,11 +1,13 @@
 import kategoriakService from './services/kategoriakService.js';
+
+// Sartu bariableetan eta haiserasi taula
 document.addEventListener('DOMContentLoaded', async () => {
     const kategoriak = await kategoriakService.getAll();
     renderizarTabla(kategoriak);
 });
 
 
-
+// Atera taula
 function renderizarTabla(kategoriak) {
     const tbody = document.querySelector('#tabla-kategoriak tbody');
     tbody.innerHTML = '';
@@ -24,18 +26,18 @@ function renderizarTabla(kategoriak) {
                 <button class="btnEditatu"><i class="fa-solid fa-pen-to-square"></i></button>
             </td>
     `;
-    tr.querySelector('.btnIkusi').addEventListener('click', () => ikusi(k));
+        tr.querySelector('.btnIkusi').addEventListener('click', () => ikusi(k));
         tbody.appendChild(tr);
     });
 }
 
-
+// Ikusi kategoriaren xehetasuna
 function ikusi(kategoria) {
-  const modalBody = document.querySelector('#kategoriakModal .modal-body');
-  modalBody.innerHTML = `
+    const modalBody = document.querySelector('#kategoriakModal .modal-body');
+    modalBody.innerHTML = `
     <p><strong>ID:</strong> ${kategoria.id}</p>
     <p><strong>Izena:</strong> ${kategoria.izena}</p>
   `;
-  const modal = new bootstrap.Modal(document.getElementById('kategoriakModal'));
-  modal.show();
+    const modal = new bootstrap.Modal(document.getElementById('kategoriakModal'));
+    modal.show();
 }
