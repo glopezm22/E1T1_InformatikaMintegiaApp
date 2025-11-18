@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderizarTabla(erabiltzaileak);
 });
 
+// Taularen bilatzilearen logika
 document.querySelector('.bilatuInput').addEventListener('keyup', function () {
     let input, filter, table, tr, tdNAN, tdIzena, tdErabiltzailea, i, txtValue;
     input = document.querySelector('.bilatuInput');
@@ -29,6 +30,7 @@ document.querySelector('.bilatuInput').addEventListener('keyup', function () {
     }
 });
 
+// Taularen informazioa atera
 function renderizarTabla(erabiltzaileak) {
     const tbody = document.querySelector('#tabla-erabiltzaileak tbody');
     tbody.innerHTML = '';
@@ -243,7 +245,7 @@ async function updateErabiltzailea() {
     const abizenaInput = document.querySelector('#abizenaErabiltzaileakEditInput');
     const erabiltzaileaInput = document.querySelector('#erabiltzaileaErabiltzaileakEditInput');
     const rolaInput = document.querySelector('#selectEditRola');
-    
+
     // Testu-balioak lortu, espazio zuriak kenduz (trim)
     const nan = nanInput ? nanInput.value.trim() : '';
     const izena = izenaInput ? izenaInput.value.trim() : '';
@@ -261,10 +263,10 @@ async function updateErabiltzailea() {
         });
 
         if (inputElement) {
-            inputElement.style.border = '1px solid red'; 
+            inputElement.style.border = '1px solid red';
             inputElement.focus();
         }
-        
+
         if (mensajeError) {
             mensajeError.style.display = 'block';
             mensajeError.innerHTML = mezua;
@@ -273,7 +275,7 @@ async function updateErabiltzailea() {
             mensajeSuccess.style.display = 'none';
         }
     };
-    
+
     if (!nan) {
         erakutsiErrorea(nanInput, 'NAN zenbakia falta da.');
         return;
@@ -293,7 +295,7 @@ async function updateErabiltzailea() {
         erakutsiErrorea(erabiltzaileaInput, 'Erabiltzaileen erabiltzaile-izena falta da.');
         return;
     }
-    
+
     if (!rola || rola === 'aukeratu') {
         erakutsiErrorea(rolaInput, 'Erabiltzailearen **rola** aukeratu behar duzu.');
         return;
@@ -311,25 +313,26 @@ async function updateErabiltzailea() {
         }
 
         [nanInput, izenaInput, abizenaInput, erabiltzaileaInput, rolaInput].forEach(el => {
-             if (el) el.style.border = '1px solid #ced4da';
+            if (el) el.style.border = '1px solid #ced4da';
         });
-        
+
         setTimeout(() => {
             const modalElement = document.getElementById('erabiltzaileakEditatuModal');
             const modal = modalElement ? bootstrap.Modal.getInstance(modalElement) : null;
-            
+
             if (modal) {
-                 modal.hide();
+                modal.hide();
             }
             location.reload();
         }, 2500);
-        
+
     } catch (error) {
         console.error('Errorea erabiltzailea eguneratzean:', error);
         erakutsiErrorea(null, `Errore bat gertatu da: ${error.message || 'Ezin izan da erabiltzailea eguneratu.'}`);
     }
 }
 
+// Pasahitza aldatu
 async function updatePasahitza() {
 
     const nan = document.querySelector('#nanErabiltzaileakPasahitzaInput').value.trim();
@@ -381,9 +384,9 @@ async function updatePasahitza() {
     mensajeSuccess.innerHTML = 'Pasahitza aldatu da';
 
     setTimeout(() => {
-      const modal = bootstrap.Modal.getInstance(document.getElementById('erabiltzaileakPasahitzaModal'));
-      modal.hide();
-      location.reload();
+        const modal = bootstrap.Modal.getInstance(document.getElementById('erabiltzaileakPasahitzaModal'));
+        modal.hide();
+        location.reload();
     }, 2500);
 }
 
@@ -435,7 +438,7 @@ async function sortuErabiltzailea() {
         mensajeError.innerHTML = 'Erabiltzaileen erabiltzaile-izena falta da';
         return;
     }
-        if (!pasahitzaBatSortu.value) {
+    if (!pasahitzaBatSortu.value) {
         pasahitzaBatSortu.style.border = '1px solid red';
         mensajeError.style.display = 'block';
         mensajeSuccess.style.display = 'none';
@@ -481,12 +484,13 @@ async function sortuErabiltzailea() {
     mensajeSuccess.innerHTML = 'Erabiltzailea sortu da';
 
     setTimeout(() => {
-      const modal = bootstrap.Modal.getInstance(document.getElementById('erabiltzaileakGehitzekoModal'));
-      modal.hide();
-      location.reload();
+        const modal = bootstrap.Modal.getInstance(document.getElementById('erabiltzaileakGehitzekoModal'));
+        modal.hide();
+        location.reload();
     }, 2500);
 }
 
+// Konprobatzeko NAN-a
 function komprobatuNAN(dni) {
     const letras = 'TRWAGMYFPDXBNJZSQVHLCKE';
 
@@ -514,6 +518,7 @@ function komprobatuNAN(dni) {
     return letraCalculada === letra;
 }
 
+// Botoien akzioak
 document.querySelector('#btnGorde').addEventListener('click', updateErabiltzailea);
 document.querySelector('#btnSortu').addEventListener('click', sortuErabiltzailea);
 document.querySelector('#btnAldatu').addEventListener('click', updatePasahitza);

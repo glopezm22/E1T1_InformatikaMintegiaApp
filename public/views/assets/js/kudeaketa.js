@@ -351,11 +351,11 @@ async function gordeGela() {
     mensajeError.innerHTML = 'Taldea falta da';
     return;
   }
-  if (taldea.value.trim().length > 5) {
+  if (taldea.value.trim().length > 6) {
     taldea.style.border = '1px solid red';
     izena.style.border = '1px solid grey';
     mensajeError.style.display = 'block';
-    mensajeError.innerHTML = 'Taldea ezin da 5 karaktere baino gehiago izan';
+    mensajeError.innerHTML = 'Taldea ezin da 6 karaktere baino gehiago izan';
     return;
   }
 
@@ -509,7 +509,7 @@ async function sortuKategoriaBerria() {
   const mensajeError = document.querySelector('.mensajeError');
   const mensajeSuccess = document.querySelector('.mensajeSuccess');
 
-  await kategoriakService.create( izena );
+  await kategoriakService.create( izena.value.trim() );
 
   mensajeSuccess.style.display = 'block';
   mensajeError.style.display = 'none';

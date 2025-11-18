@@ -34,7 +34,7 @@ $CURRENT_USER = require_auth_view('login');
                                             <p id="abizena" class="fw-normal fs-6 text-dark ms-3"></p>
                                         </li>
                                     </ul>
-
+                                    <!-- BOTON MODO OSCURO Y CERRAR SESION -->
                                     <hr class="mt-4 mb-3">
                                     <button id="themeToggle" class="btn btn-sm btnIkusi btn-iluna ms-3 me-sm-2" title="kolore modua aldatu">
                                         <i class="theme-icon fas fa-moon"></i>
