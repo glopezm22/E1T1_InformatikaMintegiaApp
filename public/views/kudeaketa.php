@@ -12,7 +12,7 @@ $CURRENT_USER = require_auth_view('login');
 
   <main class="py-3 py-md-5" style="min-height: 80vh;">
 
-    <div class="container mt-3 mt-md-5">
+    <div class="container color-ez mt-3 mt-md-5">
       <div class="row justify-content-center">
         <div class="col-lg-12 col-md-10">
           <div class="card-erosketacard shadow-xl rounded-3 border-0">
