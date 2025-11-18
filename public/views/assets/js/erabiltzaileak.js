@@ -122,7 +122,7 @@ function gehituErabiltzailea() {
     const modal = new bootstrap.Modal(modalElement);
 
     const modalTitle = document.querySelector('#erabiltzaileakGehitzekoModalLabel');
-    modalTitle.textContent = 'Erabiltzailea editatu';
+    modalTitle.textContent = 'Erabiltzailea Gehitu';
 
     const modalBody = document.querySelector('#erabiltzaileakGehitzekoModal .modal-body');
 
@@ -179,6 +179,8 @@ function editatuErabiltzailea(erabiltzailea) {
 
     modalBody.innerHTML = `
     <form id="formEditErabiltzaileak" class="needs-validation" novalidate>
+        <span class="mensajeError"></span>
+        <span class="mensajeSuccess"></span>
         <div class="mb-3">
             <label class="form-label"><strong>NAN:</strong></label>
             <input disabled type="text" class="form-control" id="nanErabiltzaileakEditInput" value="${erabiltzailea.nan}">
@@ -235,29 +237,99 @@ function confirmEzabatuModal(item) {
 
 //Service-ra deitzen da eta bidali baino lehen balidazioak
 async function updateErabiltzailea() {
-    const nan = document.querySelector('#nanErabiltzaileakEditInput').value.trim();
-    const izena = document.querySelector('#izenaErabiltzaileakEditInput').value.trim();
-    const abizena = document.querySelector('#abizenaErabiltzaileakEditInput').value.trim();
-    const erabiltzailea = document.querySelector('#erabiltzaileaErabiltzaileakEditInput').value.trim();
-    const rola = document.querySelector('#selectEditRola').value.trim();
+    // 1. Elementuak lortu eta balioak zuzen lortu
+    const nanInput = document.querySelector('#nanErabiltzaileakEditInput');
+    const izenaInput = document.querySelector('#izenaErabiltzaileakEditInput');
+    const abizenaInput = document.querySelector('#abizenaErabiltzaileakEditInput');
+    const erabiltzaileaInput = document.querySelector('#erabiltzaileaErabiltzaileakEditInput');
+    const rolaInput = document.querySelector('#selectEditRola');
+    
+    // Testu-balioak lortu, espazio zuriak kenduz (trim)
+    const nan = nanInput ? nanInput.value.trim() : '';
+    const izena = izenaInput ? izenaInput.value.trim() : '';
+    const abizena = abizenaInput ? abizenaInput.value.trim() : '';
+    const erabiltzailea = erabiltzaileaInput ? erabiltzaileaInput.value.trim() : '';
+    const rola = rolaInput ? rolaInput.value.trim() : '';
+
+    const mensajeError = document.querySelector('.mensajeError');
+    const mensajeSuccess = document.querySelector('.mensajeSuccess');
+
+    // Funztio laguntzailea erroreak kudeatzeko
+    const erakutsiErrorea = (inputElement, mezua) => {
+        [nanInput, izenaInput, abizenaInput, erabiltzaileaInput, rolaInput].forEach(el => {
+            if (el) el.style.border = '1px solid #ced4da';
+        });
+
+        if (inputElement) {
+            inputElement.style.border = '1px solid red'; 
+            inputElement.focus();
+        }
+        
+        if (mensajeError) {
+            mensajeError.style.display = 'block';
+            mensajeError.innerHTML = mezua;
+        }
+        if (mensajeSuccess) {
+            mensajeSuccess.style.display = 'none';
+        }
+    };
+    
+    if (!nan) {
+        erakutsiErrorea(nanInput, 'NAN zenbakia falta da.');
+        return;
+    }
 
     if (!izena) {
-        alert('Erabiltzaile izena falta da');
-        return;
-    }
-    if (!abizena) {
-        alert('Erabiltzaile abizena falta da');
-        return;
-    }
-    if (!erabiltzailea) {
-        alert('Erabiltzaileen erabiltzaile-izena falta da');
+        erakutsiErrorea(izenaInput, 'Erabiltzaile izena falta da.');
         return;
     }
 
-    await erabiltzaileakService.update(nan, izena, abizena, erabiltzailea, rola);
+    if (!abizena) {
+        erakutsiErrorea(abizenaInput, 'Erabiltzaile abizena falta da.');
+        return;
+    }
+
+    if (!erabiltzailea) {
+        erakutsiErrorea(erabiltzaileaInput, 'Erabiltzaileen erabiltzaile-izena falta da.');
+        return;
+    }
+    
+    if (!rola || rola === 'aukeratu') {
+        erakutsiErrorea(rolaInput, 'Erabiltzailearen **rola** aukeratu behar duzu.');
+        return;
+    }
+
+    try {
+        await erabiltzaileakService.update(nan, izena, abizena, erabiltzailea, rola);
+
+        if (mensajeSuccess) {
+            mensajeSuccess.style.display = 'block';
+            mensajeSuccess.innerHTML = 'Erabiltzailea ondo aldatu da.';
+        }
+        if (mensajeError) {
+            mensajeError.style.display = 'none';
+        }
+
+        [nanInput, izenaInput, abizenaInput, erabiltzaileaInput, rolaInput].forEach(el => {
+             if (el) el.style.border = '1px solid #ced4da';
+        });
+        
+        setTimeout(() => {
+            const modalElement = document.getElementById('erabiltzaileakEditatuModal');
+            const modal = modalElement ? bootstrap.Modal.getInstance(modalElement) : null;
+            
+            if (modal) {
+                 modal.hide();
+            }
+            location.reload();
+        }, 2500);
+        
+    } catch (error) {
+        console.error('Errorea erabiltzailea eguneratzean:', error);
+        erakutsiErrorea(null, `Errore bat gertatu da: ${error.message || 'Ezin izan da erabiltzailea eguneratu.'}`);
+    }
 }
 
-//Service-ra deitzen da eta bidali baino lehen balidazioak
 async function updatePasahitza() {
 
     const nan = document.querySelector('#nanErabiltzaileakPasahitzaInput').value.trim();
@@ -285,6 +357,7 @@ async function updatePasahitza() {
     if (!pasahitzaRepe.value.trim()) {
         pasahitzaRepe.style.border = '1px solid red';
         pasahitza.style.border = '1px solid grey';
+        mensajeSuccess.style.display = 'none';
         mensajeError.style.display = 'block';
         mensajeError.innerHTML = 'Pasahitza Errepikatua sartu behar da';
         return;
@@ -294,14 +367,24 @@ async function updatePasahitza() {
         pasahitzaRepe.style.border = '1px solid red';
         pasahitza.style.border = '1px solid red';
         mensajeError.style.display = 'block';
+        mensajeSuccess.style.display = 'none';
         mensajeError.innerHTML = 'Bi pasahitz berdinak sartu behar da';
         return;
     }
 
     await erabiltzaileakService.updatePasahitza(nan, pasahitza.value.trim(), pasahitzaRepe.value.trim());
 
+    pasahitzaRepe.style.border = '1px solid grey';
+    pasahitza.style.border = '1px solid grey';
     mensajeSuccess.style.display = 'block';
+    mensajeError.style.display = 'none';
     mensajeSuccess.innerHTML = 'Pasahitza aldatu da';
+
+    setTimeout(() => {
+      const modal = bootstrap.Modal.getInstance(document.getElementById('erabiltzaileakPasahitzaModal'));
+      modal.hide();
+      location.reload();
+    }, 2500);
 }
 
 //Service-ra deitzen da eta bidali baino lehen balidazioak
@@ -327,30 +410,35 @@ async function sortuErabiltzailea() {
     if (!komprobatuNAN(nanSortu.value.trim())) {
         nanSortu.style.border = '1px solid red';
         mensajeError.style.display = 'block';
+        mensajeSuccess.style.display = 'none';
         mensajeError.innerHTML = 'Erabiltzaile NAN ez da egokia';
         return;
     }
     if (!izenaSortu.value.trim()) {
         izenaSortu.style.border = '1px solid red';
         mensajeError.style.display = 'block';
+        mensajeSuccess.style.display = 'none';
         mensajeError.innerHTML = 'Erabiltzaile izena falta da';
         return;
     }
     if (!abizenaSortu.value.trim()) {
         abizenaSortu.style.border = '1px solid red';
         mensajeError.style.display = 'block';
+        mensajeSuccess.style.display = 'none';
         mensajeError.innerHTML = 'Erabiltzaile abizena falta da';
         return;
     }
     if (!erabiltzaileaSortu.value.trim()) {
         erabiltzaileaSortu.style.border = '1px solid red';
         mensajeError.style.display = 'block';
+        mensajeSuccess.style.display = 'none';
         mensajeError.innerHTML = 'Erabiltzaileen erabiltzaile-izena falta da';
         return;
     }
         if (!pasahitzaBatSortu.value) {
         pasahitzaBatSortu.style.border = '1px solid red';
         mensajeError.style.display = 'block';
+        mensajeSuccess.style.display = 'none';
         mensajeError.innerHTML = 'Erabiltzaile pasahitza falta da';
         return;
     }
@@ -358,6 +446,7 @@ async function sortuErabiltzailea() {
     if (pasahitzaBatSortu.value.lenght < 6 || pasahitzaBatSortu.value.lenght > 20) {
         pasahitzaBatSortu.style.border = '1px solid red';
         mensajeError.style.display = 'block';
+        mensajeSuccess.style.display = 'none';
         mensajeError.innerHTML = 'Erabiltzaile pasahitza 6-20 karaktereen artean egon behar da';
         return;
     }
@@ -365,6 +454,7 @@ async function sortuErabiltzailea() {
     if (!pasahitzaBiSortu.value) {
         pasahitzaBiSortu.style.border = '1px solid red';
         mensajeError.style.display = 'block';
+        mensajeSuccess.style.display = 'none';
         mensajeError.innerHTML = 'Erabiltzaile pasahitza errepikatzea falta da';
         return;
     }
@@ -373,18 +463,28 @@ async function sortuErabiltzailea() {
         pasahitzaBiSortu.style.border = '1px solid red';
         pasahitzaBatSortu.style.border = '1px solid red';
         mensajeError.style.display = 'block';
+        mensajeSuccess.style.display = 'none';
         mensajeError.innerHTML = 'Bi pasahitzak ez dira berdinak';
-        return;
-    }
-    if (!rolaSortu) {
-        alert('Erabiltzaileen rola falta da');
         return;
     }
 
     await erabiltzaileakService.create(nanSortu.value.trim(), izenaSortu.value.trim(), abizenaSortu.value.trim(), erabiltzaileaSortu.value.trim(), pasahitzaBatSortu.value, rolaSortu);
 
+    nanSortu.style.border = '1px solid grey';
+    izenaSortu.style.border = '1px solid grey';
+    abizenaSortu.style.border = '1px solid grey';
+    erabiltzaileaSortu.style.border = '1px solid grey';
+    pasahitzaBatSortu.style.border = '1px solid grey';
+    pasahitzaBiSortu.style.border = '1px solid grey';
     mensajeSuccess.style.display = 'block';
+    mensajeError.style.display = 'none';
     mensajeSuccess.innerHTML = 'Pasahitza aldatu da';
+
+    setTimeout(() => {
+      const modal = bootstrap.Modal.getInstance(document.getElementById('erabiltzaileakGehitzekoModal'));
+      modal.hide();
+      location.reload();
+    }, 2500);
 }
 
 function komprobatuNAN(dni) {

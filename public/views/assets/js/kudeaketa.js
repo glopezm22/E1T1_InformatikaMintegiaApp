@@ -112,6 +112,8 @@ function editatuKokaleku(kokalekua) {
   const modalBody = document.querySelector('#kudeaketaModal .modal-body');
   modalBody.innerHTML = `
     <form id="formEditKokaleku" class="needs-validation" novalidate>
+      <span class="mensajeError"></span>
+      <span class="mensajeSuccess"></span>
       <div class="mb-3">
         <label for="etiketaInput" class="form-label"><strong>Etiketa</strong></label>
         <input disabled type="text" class="form-control" id="etiketaInput" value="${kokalekua.etiketa}">
@@ -156,6 +158,8 @@ function editatuGela(gela) {
   const modalBody = document.querySelector('#kudeaketaModal .modal-body');
   modalBody.innerHTML = `
       <form id="formEditKokaleku" class="needs-validation" novalidate>
+        <span class="mensajeError"></span>
+        <span class="mensajeSuccess"></span>
         <div class="mb-3">
           <label for="idGelaInput" class="form-label"><strong>ID</strong></label>
           <input disabled type="text" class="form-control" id="idGelaInput" value="${gela.id}">
@@ -166,7 +170,7 @@ function editatuGela(gela) {
         </div>
         <div class="mb-3">
           <label for="taldeaInput" class="form-label"><strong>Taldea</strong></label>
-          <input type="text" class="form-control" id="taldeaInput" value="${gela.taldea}" maxlength="5" required>
+          <input type="text" class="form-control" id="taldeaInput" value="${gela.taldea}" maxlength="6" required>
         </div>
       </form>
   `;
@@ -186,6 +190,8 @@ function editatuKategoria(kategoria) {
   const modalBody = document.querySelector('#kudeaketaModal .modal-body');
   modalBody.innerHTML = `
     <form id="formEditKokaleku" class="needs-validation" novalidate>
+      <span class="mensajeError"></span>
+      <span class="mensajeSuccess"></span>
       <div class="mb-3">
         <label for="idKategoriaInput" class="form-label"><strong>ID</strong></label>
         <input disabled type="text" class="form-control" id="idKategoriaInput" value="${kategoria.id}">
@@ -214,13 +220,15 @@ function sortuGela() {
   const modalBody = document.querySelector('#kudeaketaModal .modal-body');
   modalBody.innerHTML = `
     <form id="formSortuGela" class="needs-validation" novalidate>
+      <span class="mensajeError"></span>
+      <span class="mensajeSuccess"></span>
       <div class="mb-3">
         <label for="izenaInput" class="form-label"><strong>Izena</strong></label>
         <input type="text" class="form-control" id="izenaInput" required maxlength="4" required>
       </div>
       <div class="mb-3">
         <label for="taldeaInput" class="form-label"><strong>Taldea</strong></label>
-        <input type="text" class="form-control" id="taldeaInput" required maxlength="5" required>
+        <input type="text" class="form-control" id="taldeaInput" required maxlength="6" required>
       </div>
     </form>
   `;
@@ -241,6 +249,8 @@ function sortuKategoria() {
   const modalBody = document.querySelector('#kudeaketaModal .modal-body');
   modalBody.innerHTML = `
     <form id="formSortuKategoria" class="needs-validation" novalidate>
+      <span class="mensajeError"></span>
+      <span class="mensajeSuccess"></span>
       <div class="mb-3">
         <label for="izenaKategoriaInput" class="form-label"><strong>Izena</strong></label>
         <input type="text" class="form-control" id="izenaKategoriaInput" required>
@@ -255,7 +265,7 @@ function sortuKategoria() {
 function confirmEzabatuModal(item) {
   const modalTitle = document.querySelector('#ezabatuModalLabel');
   if (item.etiketa) {
-    modalTitle.textContent = `${item.izena} kokalekua ezabatuko duzu`;
+    modalTitle.textContent = `Kokalekua ezabatuko duzu`;
   } else if (item.taldea) {
     modalTitle.textContent = `${item.izena} gela ezabatuko duzu`;
   } else {
@@ -289,18 +299,11 @@ function confirmEzabatuModal(item) {
 //EKINTZAK
 
 //Editatutako eta sortutako datuak gordetzeko
-//Modo bidez sortu edo editatu. EZ BADA SORTU EDITATU DA DEFEKTU
-//Mota bidez ze Service deitzen den erabakitzen da
 async function gordeDatuak() {
   const modalElement = document.getElementById('kudeaketaModal');
   const mota = modalElement.dataset.mota;
   const modo = modalElement.dataset.modo || 'editatu';
   const form = modalElement.querySelector('form');
-
-  if (!form.checkValidity()) {
-    form.classList.add('was-validated');
-    return;
-  }
 
   try {
     if (mota === 'gela') {
@@ -310,10 +313,7 @@ async function gordeDatuak() {
     } else if (mota === 'kategoria') {
       modo === 'sortu' ? await sortuKategoriaBerria() : await gordeKategoria();
     }
-    
-    const modal = bootstrap.Modal.getInstance(document.getElementById('kudeaketaModal'));
-    modal.hide();
-    location.reload();
+
   } catch (errorea) {
     console.error('Errorea datuak gordetzean:', errorea);
     alert('Errorea datuak gordetzean');
@@ -326,58 +326,122 @@ async function gordeDatuak() {
 //EDITATZEKO FUNTZIOAK
 async function gordeGela() {
   const id = document.querySelector('#idGelaInput').value;
-  const izena = document.querySelector('#izenaInput').value.trim();
-  const taldea = document.querySelector('#taldeaInput').value.trim();
+  const izena = document.querySelector('#izenaInput');
+  const taldea = document.querySelector('#taldeaInput');
+  const mensajeError = document.querySelector('.mensajeError');
+  const mensajeSuccess = document.querySelector('.mensajeSuccess');
 
-  if (!izena) {
-    alert('Izena falta da');
+  if (!izena.value.trim()) {
+    izena.style.border = '1px solid red';
+    taldea.style.border = '1px solid grey';
+    mensajeError.style.display = 'block';
+    mensajeError.innerHTML = 'Izena falta da';
     return;
   }
-  if (izena.length > 4) {
-    alert('Izena ezin da 4 karaktere baino gehiago izan');
+  if (izena.value.trim().length > 4) {
+    izena.style.border = '1px solid red';
+    taldea.style.border = '1px solid grey';
+    mensajeError.style.display = 'block';
+    mensajeError.innerHTML = 'Izena ezin da 4 karaktere baino gehiago izan';
     return;
   }
-  if (!taldea) {
-    alert('Taldea falta da');
+  if (!taldea.value.trim()) {
+    taldea.style.border = '1px solid red';
+    izena.style.border = '1px solid grey';
+    mensajeError.style.display = 'block';
+    mensajeError.innerHTML = 'Taldea falta da';
     return;
   }
-  if (taldea.length > 5) {
-    alert('Taldea ezin da 5 karaktere baino gehiago izan');
+  if (taldea.value.trim().length > 5) {
+    taldea.style.border = '1px solid red';
+    izena.style.border = '1px solid grey';
+    mensajeError.style.display = 'block';
+    mensajeError.innerHTML = 'Taldea ezin da 5 karaktere baino gehiago izan';
     return;
   }
 
-  await gelakService.update(id, izena, taldea);
+  await gelakService.update(id, izena.value.trim(), taldea.value.trim());
+
+  izena.style.border = '1px solid grey';
+  taldea.style.border = '1px solid grey';
+  mensajeSuccess.style.display = 'block';
+  mensajeError.style.display = 'none';
+  mensajeSuccess.innerHTML = 'Gela aldatu da';
+
+    setTimeout(() => {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('kudeaketaModal'));
+    modal.hide();
+    location.reload();
+  }, 2500);
 }
 
 async function gordeKokalekua() {
   const etiketa = document.querySelector('#etiketaInput').value;
-  const idGela = document.querySelector('#idGelaInput').value;
-  const hasieraData = document.querySelector('#hasieraInput').value;
-  const amaieraData = document.querySelector('#amaieraInput').value;
+  const idGela = document.querySelector('#idGelaInput');
+  const hasieraData = document.querySelector('#hasieraInput');
+  const amaieraData = document.querySelector('#amaieraInput');
+  const mensajeError = document.querySelector('.mensajeError');
+  const mensajeSuccess = document.querySelector('.mensajeSuccess');
 
-  if (!idGela) {
-    alert('Gela falta da');
+  if (!idGela.value) {
+    idGela.style.border = '1px solid red';
+    hasieraData.style.border = '1px solid grey';
+    amaieraData.style.border = '1px solid grey';
+    mensajeError.style.display = 'block';
+    mensajeError.innerHTML = 'Gela falta da';
     return;
   }
 
-  if (hasieraData && amaieraData && new Date(hasieraData) > new Date(amaieraData)) {
-    alert('Amaiera data ezin da hasiera data baino lehenago izan.');
+  if (hasieraData.value && amaieraData.value && new Date(hasieraData.value) > new Date(amaieraData.value)) {
+    idGela.style.border = '1px solid grey';
+    hasieraData.style.border = '1px solid red';
+    amaieraData.style.border = '1px solid red';
+    mensajeError.style.display = 'block';
+    mensajeError.innerHTML = 'Amaiera data ezin da hasiera data baino lehenago izan.';
     return;
   }
 
-  await kokalekuakService.update(etiketa, idGela, hasieraData, amaieraData);
+  await kokalekuakService.update(etiketa, idGela.value, hasieraData.value, amaieraData.value);
+
+  idGela.style.border = '1px solid grey';
+  hasieraData.style.border = '1px solid grey';
+  amaieraData.style.border = '1px solid grey';
+  mensajeSuccess.style.display = 'block';
+  mensajeError.style.display = 'none';
+  mensajeSuccess.innerHTML = 'Kokalekua aldatu da';
+
+    setTimeout(() => {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('kudeaketaModal'));
+    modal.hide();
+    location.reload();
+  }, 2500);
 }
 
 async function gordeKategoria() {
   const id = document.querySelector('#idKategoriaInput').value;
-  const izena = document.querySelector('#izenaKategoriaInput').value;
+  const izena = document.querySelector('#izenaKategoriaInput');
+  const mensajeError = document.querySelector('.mensajeError');
+  const mensajeSuccess = document.querySelector('.mensajeSuccess');
 
-  if (!izena) {
-    alert('Izena falta da');
+  if (!izena.value) {
+    izena.style.border = '1px solid red';
+    mensajeError.style.display = 'block';
+    mensajeError.innerHTML = 'Izena falta da';
     return;
   }
 
-  await kategoriakService.update(id, izena);
+  await kategoriakService.update(id, izena.value);
+
+  izena.style.border = '1px solid grey';
+  mensajeSuccess.style.display = 'block';
+  mensajeError.style.display = 'none';
+  mensajeSuccess.innerHTML = 'Kategoria aldatu da';
+
+    setTimeout(() => {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('kudeaketaModal'));
+    modal.hide();
+    location.reload();
+  }, 2500);
 }
 
 document.querySelector('#btnGorde').addEventListener('click', gordeDatuak);
@@ -385,30 +449,76 @@ document.querySelector('#btnGorde').addEventListener('click', gordeDatuak);
 //SORTZEKO FUNTZIOAK
 
 async function sortuKokalekuBerria() {
-  const etiketa = document.querySelector('#etiketaInput').value.trim();
-  const idGela = document.querySelector('#idGelaInput').value;
+  const etiketa = document.querySelector('#etiketaInput');
+  const idGela = document.querySelector('#idGelaInput');
   const hasieraData = document.querySelector('#hasieraInput').value;
   const amaieraData = document.querySelector('#amaieraInput').value;
+  const mensajeError = document.querySelector('.mensajeError');
+  const mensajeSuccess = document.querySelector('.mensajeSuccess');
 
-  if (!etiketa) {
-    alert('Etiketa falta da');
+  if (!etiketa.value.trim()) {
+    etiketa.style.border = '1px solid red';
+    idGela.style.border = '1px solid grey';
+    mensajeError.style.display = 'block';
+    mensajeError.innerHTML = 'Etiketa falta da';
     return;
   }
-  if (!idGela) {
-    alert('Gela hautatu behar da');
+  if (!idGela.value) {
+    idGela.style.border = '1px solid red';
+    etiketa.style.border = '1px solid grey';
+    mensajeError.style.display = 'block';
+    mensajeError.innerHTML = 'Gela hautatu behar da';
     return;
   }
 
-  await kokalekuakService.create( etiketa, idGela, hasieraData, amaieraData );
+  await kokalekuakService.create(etiketa.value.trim(), idGela.value, hasieraData, amaieraData );
+
+  etiketa.style.border = '1px solid grey';
+  idGela.style.border = '1px solid grey';
+  mensajeSuccess.style.display = 'block';
+  mensajeError.style.display = 'none';
+  mensajeSuccess.innerHTML = 'Kokalekua sortu da';
+
+    setTimeout(() => {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('kudeaketaModal'));
+    modal.hide();
+    location.reload();
+  }, 2500);
 }
 
 async function sortuGelaBerria() {
-  const izena = document.querySelector('#izenaInput').value.trim();
-  const taldea = document.querySelector('#taldeaInput').value.trim();
-  await gelakService.create( izena, taldea );
+  const izena = document.querySelector('#izenaInput');
+  const taldea = document.querySelector('#taldeaInput');
+  const mensajeError = document.querySelector('.mensajeError');
+  const mensajeSuccess = document.querySelector('.mensajeSuccess');
+
+  await gelakService.create( izena.value.trim(), taldea.value.trim());
+
+  mensajeSuccess.style.display = 'block';
+  mensajeError.style.display = 'none';
+  mensajeSuccess.innerHTML = 'Kokalekua sortu da';
+
+    setTimeout(() => {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('kudeaketaModal'));
+    modal.hide();
+    location.reload();
+  }, 2500);
 }
 
 async function sortuKategoriaBerria() {
   const izena = document.querySelector('#izenaKategoriaInput').value.trim();
+  const mensajeError = document.querySelector('.mensajeError');
+  const mensajeSuccess = document.querySelector('.mensajeSuccess');
+
   await kategoriakService.create( izena );
+
+  mensajeSuccess.style.display = 'block';
+  mensajeError.style.display = 'none';
+  mensajeSuccess.innerHTML = 'Kokalekua sortu da';ç
+  
+    setTimeout(() => {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('kudeaketaModal'));
+    modal.hide();
+    location.reload();
+  }, 2500);
 }
