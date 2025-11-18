@@ -95,6 +95,11 @@ th {
     overflow-x: auto;
 }
 
+.scroll-container {
+    overflow-y: auto;
+    max-height: 500px;
+}
+
 .table-scroll-container .table thead th {
     position: sticky;
     top: 0;
@@ -286,6 +291,10 @@ header .index-navbar {
     cursor: pointer;
 }
 
+.profile-menu-box .user-name {
+    margin-bottom: -16px;
+}
+
 .x-cerrar-pront {
     transition: 300ms;
 }
@@ -332,6 +341,10 @@ footer a.text-white-50:hover {
 }
 
 /* ----------- */
+
+.logo-footer {
+    max-width: 150px;
+}
 
 /* LOGIN */
 .body-login {
