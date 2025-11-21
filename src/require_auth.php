@@ -9,10 +9,10 @@ require_once __DIR__ . '/models/Erabiltzaile.php';
 session_set_cookie_params([
     'lifetime' => 0,
     'path' => '/',
-    'domain' => '.talde1.edu',
-    'secure' => true,
-    'httponly' => true,
-    'samesite' => 'None'
+    'domain' => '', # Produkzioko aplikazioan .talde1.edu jartzen da.
+    'secure' => false, # Produkzioko aplikazioan secure true jartzen da HTTPS konexiorako.
+    'httponly' => true#,
+    #'samesite' => 'None' # Produkzioko aplikazioan (zerbitzarian) lerro hau deskomentatzen da.
 ]);
 
 if (session_status() !== PHP_SESSION_ACTIVE) session_start();
@@ -39,14 +39,9 @@ function _rebuild_session_from_cookie($model) {
         ];
     } else {
         // token baliogabea/iraila: cookie-a ezabatzen dugu
-        setcookie('remember_me', '', [
-            'expires' => time() - 3600,
-            'path' => '/',
-            'domain' => '.talde1.edu', // MODIFICADO: para subdominios
-            'secure' => true,
-            'httponly' => true,
-            'samesite' => 'None'
-        ]);
+        setcookie('remember_me', '', time() - 3600, '/', '', false, true);
+        #samesite 'None' -> Produkzioko aplikazioan (zerbitzarian) lerro hau jartzen da da.
+        # Produkzioko aplikazioan (zerbitzarian) '.talde1.edu' jartzen da domeinu bezala.
         unset($_COOKIE['remember_me']);
     }
 }

@@ -44,7 +44,9 @@ function tryRebuildSessionFromCookie($model) {
             ];
         } else {
             // token baliogabea edo iraungia -> cookiea ezabatu segurtasunagatik
-            setcookie('remember_me', '', time() - 3600, '/', '', true, true);
+            setcookie('remember_me', '', time() - 3600, '/', '', false, true);
+            #samesite 'None' -> Produkzioko aplikazioan (zerbitzarian) lerro hau jartzen da da.
+            # Produkzioko aplikazioan (zerbitzarian) '.talde1.edu' jartzen da domeinu bezala.
         }
     }
 }
@@ -84,9 +86,9 @@ if ($method === 'POST' && $action === 'login') {
         $expira_ts = time() + (7 * 24 * 60 * 60);
         $expira = date('Y-m-d H:i:s', $expira_ts);
         $model->createRememberToken($u['nan'], $token, $expira);
-        // secure flags: mark secure = false, http lokalean lan egiten baduzu; ekoizpenean pon true
-        // ESAN ORAINGOZ EZ DAGOELA HTTPS $secure = (! empty ($_SERVER ['HTTPS']) & & $_SERVER ['HTTPS']! = = 'off');
         setcookie('remember_me', $token, $expira_ts, '/', '', false, true);
+        #samesite 'None' -> Produkzioko aplikazioan (zerbitzarian) lerro hau jartzen da da.
+        # Produkzioko aplikazioan (zerbitzarian) '.talde1.edu' jartzen da domeinu bezala.   
     }
 
     json_ok(['message' => 'Saioa ondo hasi da.', 'user' => $_SESSION['user']]);
@@ -101,6 +103,8 @@ if ($method === 'POST' && $action === 'logout') {
     if (!empty($_COOKIE['remember_me'])) {
         $model->deleteRememberToken($_COOKIE['remember_me']);
         setcookie('remember_me', '', time() - 3600, '/', '', false, true);
+        #samesite 'None' -> Produkzioko aplikazioan (zerbitzarian) lerro hau jartzen da da.
+        # Produkzioko aplikazioan (zerbitzarian) '.talde1.edu' jartzen da domeinu bezala.         
     }
 
     $_SESSION = [];
